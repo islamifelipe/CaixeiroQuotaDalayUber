@@ -25,7 +25,7 @@ using namespace std;
 	OK 	*	sorteia-se o bonus (100 a 999) a partir de um fator de correlaçao
 	 	*/
 	 	
-	//OK   /*A cota mínima deve ser sorteada entre s/3 e s/2, onde s é a soma dos bonus de todos os vértices*/
+	//OK   /*A cota mínima deve ser sorteada entre s/4 e s/3, onde s é a soma dos bonus de todos os vértices*/
 
 	//OK  /*sorteia-se randomicamente (e livremente) a origem e o destino de cada passageiro*/
 
@@ -48,7 +48,6 @@ using namespace std;
 
 
 /* TODO: 
-	quantidade de passageiros
 	penalidade
 	assimétrica
 
@@ -273,7 +272,7 @@ int main (int argc, char *argv[]){
 
 		s+=vertices[i][0]; // soma o bonus
 	}
-	cota = rand()%(s/2 - s/3 + 1) + s/3; ///
+	cota = rand()%(s/3 - s/4 + 1) + s/4; ///
 
 	cout<<cota<<endl;
 	for (int i=0; i<n; i++){
@@ -281,27 +280,7 @@ int main (int argc, char *argv[]){
 		cout<<i<<" "<<vertices[i][0]<<" "<<vertices[i][1]<<endl;
 	}
 
-
 	cout<<endl;
-
-	// antiga maneira como eu calculava os passageiros nos vértices
-	// for (int i=0; i<n; i++){
-	// 	int v= rand()%n;
-	// 	if (v==i){
-	// 		i--;
-	// 		continue;
-	// 	}
-	// 	passageiros[i].push_back(v);  
-	// }
-	// // for (int cont=0; cont<num_passageiros-n; cont++){
-	// // 	int origem = rand()%n;
-	// // 	int destino = rand()%n;
-	// // 	if (origem==destino){
-	// // 		cont--;
-	// // 		continue;
-	// // 	}
-	// // 	passageiros[origem].push_back(destino); 
-	// // }
 
 	int treeCustos = getPesoAGM(custos, n); //define custo maximo que o passageiro quer pagar
 
@@ -317,5 +296,36 @@ int main (int argc, char *argv[]){
 		}
 	}
 
+	/*Calcular as penalidades: 
+		Para cada vértice, ver a aresta incidente de maior custos
+		soma tais arestas de maiores custos para todos os vértices.
+		tira a média (divide por n)
+		a penalidade wij (deixar o passageiro i no vértice j) deve ser sortada entre 40 e 70% da média
+		*/
+
+	int sum = 0;
+	for (int i=0; i<n; i++){
+		int max = 0;
+		for (int j=0; j<n; j++){
+			if (custos[i][j]>max) max = custos[i][j];
+		}
+		sum+=max;
+	}	
+	int avg = (int) (sum/n);
+	int pas_id2 = 0;
+	cout<<endl;
+	for (int i=0; i<n; i++){
+		for (int j=0; j<passageiros[i].size(); j++){
+			for (int vv = 0; vv<n; vv++){ // penalidade de deixar o passageiro pas_id2 em v
+				if (vv == passageiros[i][j]){
+					cout<<pas_id2<<" "<<vv<<" "<<0<<endl;
+				} else {
+					int w = rand()%((int)(avg*0.7) - (int)(avg*0.4) + 1) + (int)(avg*0.4);
+					cout<<pas_id2<<" "<<vv<<" "<<w<<endl;
+				}
+			}
+			pas_id2++;
+		}
+	}
 	return 0;
 }

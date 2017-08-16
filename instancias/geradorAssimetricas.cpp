@@ -6,7 +6,7 @@
 #=======================================================================
 */
 
-/*Instâncias simétricas*/
+/*Instâncias assimétricas*/
 
 
 #include <iostream>
@@ -40,18 +40,14 @@ using namespace std;
 //	OK /*Para cada vértice, associar um valor de tempo (20 - 99). O bonus e o tempo do vértice sao correlacionados */
 
 
-	 // OK /* Como gerar o tempo maximo que cada passageiro está disposto a ficar dentro do carro? Tree */
+	 // OK /* Como gerar o tempo maximo que cada passageiro está disposto a ficar dentro do carro? Path */
 
 
 	 /*para cada passageiro i e vértice j, associa-se um valor (? - ?) wij que representa o valor que será acrescido no custo final da funcao objetivo. */
 
 
 
-/* TODO: 
-	penalidade
-	assimétrica
 
-*/
 
 //esta funçao implementa um algorimo de PRIM, bem de simples e retorna o peso da arvore resultante
 int getPesoAGM(int **pesos, int n){
@@ -303,7 +299,7 @@ int main (int argc, char *argv[]){
 		Para cada vértice, ver a aresta incidente de maior custos
 		soma tais arestas de maiores custos para todos os vértices.
 		tira a média (divide por n)
-		a penalidade wij (deixar o passageiro i no vértice j) deve ser sortada entre 40 e 70% da média
+		a penalidade wij (deixar o passageiro i no vértice j) deve ser sortada entre 20 e 40% da média
 		*/
 
 	int sum = 0;

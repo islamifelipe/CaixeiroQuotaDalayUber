@@ -50,7 +50,6 @@ using namespace std;
 /* TODO: 
 	penalidade
 	assimétrica
-
 */
 
 //esta funçao implementa um algorimo de PRIM, bem de simples e retorna o peso da arvore resultante

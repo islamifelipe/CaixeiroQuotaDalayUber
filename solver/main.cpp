@@ -94,16 +94,47 @@ int main(){
 	/****************** VARIAVEIS DO MODELO ******************/
 
 	GRBVar *u; //usada pelas restricoes de subcilo
+	GRBVar *q; // q[a] = 1 se o passageiro 0<=a<l embarcou
+	GRBVar *p; // p[i] = 1 se o caixeiro apanha o bonus do vertice 0<=i<n
 	GRBVar **x; //diz se o caixeiro passou pela aresta ij
+	GRBVar **f; //f[a][i] = 1 se o passageiro 0<=a<l desce no vértice 0<=i<n
+	GRBVar ***z; //z[i][j][a] 0<=i,j<n 0<=a<R
+	GRBVar ***v; //v[i][j][a]=1 se o passageiro 'a' trafega pela aresta (i,j) 0<=i,j<n 0<=a<l 
 
+	u = new GRBVar[n];
+	q = new GRBVar[l];
+	p = new GRBVar[n];
 	x = new GRBVar*[n]; 
-   	u = new GRBVar[n];
+	f = new GRBVar*[l]; 
+   	z = new GRBVar**[n];
+   	v = new GRBVar**[n];  
 
    	for (int i=0; i<n;i++){
+   		p[i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "p"+std::to_string(i));
         x[i] = new GRBVar[n];
+        z[i] = new GRBVar*[n];
+        v[i] = new GRBVar*[n];
+        for (int j=0; j<n; j++){
+        	z[i][j] =  new GRBVar[R];
+        	v[i][j] =  new GRBVar[l];
+        	if (i!=j){
+        		for (int a=0; a<R; a++){
+        			z[i][j][a] = model.addVar(0.0, 1, 0.0, GRB_CONTINUOUS, "z"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+        		}
+        		for (int a=0; a<l; a++){
+					v[i][j][a] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "v"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+        		}
+        	}
+        }
    	}
 
-	/****************** FUNCAO OBJETIVO E RESTRICOES DO MODELO ******************/
+   	for (int a=0; a<l; a++){
+   		q[a] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "q"+std::to_string(a));
+   		f[a] = new GRBVar[n];
+   		for (int i=0; i<n; i++){
+   			f[a][i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "f"+std::to_string(a)+std::to_string(i)); 
+   		}
+   	}
 
    	for (int i=0; i<n; i++){ // se o grafo for direcionado, exitira uma aresta ij e outra ji
 		for (int j=i+1; j<n; j++){
@@ -117,8 +148,12 @@ int main(){
 	}
 
 	model.update();
+
+	/****************** FUNCAO OBJETIVO E RESTRICOES DO MODELO ******************/
+
    
    	int constrCont = 0;
+
 
     GRBLinExpr exprObjet;
     GRBLinExpr rest1,nova;
@@ -159,15 +194,15 @@ int main(){
 
 
     double menos1=-1;
-    double p = n-1;
+    double pp = n-1;
     for (int i=1; i<n; i++){
     	for (int j=1; j<n; j++){
     	 	if(i!=j){
     	 		GRBLinExpr rest4;
     			rest4.addTerms(&um,&u[i],1);
     	 		rest4.addTerms(&menos1,&u[j],1);
-    	 		rest4.addTerms(&p,&x[i][j],1); // grafo nao completo
-         		model.addConstr(rest4, GRB_LESS_EQUAL, p-1,std::to_string(constrCont++));
+    	 		rest4.addTerms(&pp,&x[i][j],1); // grafo nao completo
+         		model.addConstr(rest4, GRB_LESS_EQUAL, pp-1,std::to_string(constrCont++));
   			 
           	}
     	}

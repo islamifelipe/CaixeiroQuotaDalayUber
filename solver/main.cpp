@@ -179,21 +179,21 @@ int main(){
    	int constrCont = 0;
 
     GRBLinExpr exprObjet;
-    double um = 1;
-    double menos1=-1;
 
     for (int i=0; i<n; i++){
-    	for (int j=i+1; j<n; j++){
-    		exprObjet = exprObjet + custos[i][j]*x[i][j];
-    		//exprObjet.addTerms(&custos[i][j], &x[i][j],1);  // sentido direto (conceitual) da aresta
-   			GRBLinExpr newsum;
-   			for (int aa=0; aa<R; aa++){
-   				int a = aa+1; // aqui fazemos de 0...R-1. Mas o modelo pede de 1...R
-   				double coef = custos[i][j]/(a*(a+1));
-   				newsum = newsum + coef*z[i][j][aa];
-				//newsum.addTerms(&coef, &z[i][j][aa],1);  // sentido direto (conceitual) da aresta
-   			}
-   			exprObjet = exprObjet - newsum;
+    	for (int j=0; j<n; j++){
+            if (i!=j){
+        		exprObjet = exprObjet + custos[i][j]*x[i][j];
+        		//exprObjet.addTerms(&custos[i][j], &x[i][j],1);  // sentido direto (conceitual) da aresta
+       			GRBLinExpr newsum;
+       			for (int aa=0; aa<R; aa++){
+       				int a = aa+1; // aqui fazemos de 0...R-1. Mas o modelo pede de 1...R
+       				double coef = custos[i][j]/(a*(a+1));
+       				newsum = newsum + coef*z[i][j][aa];
+    				//newsum.addTerms(&coef, &z[i][j][aa],1);  // sentido direto (conceitual) da aresta
+       			}
+       			exprObjet = exprObjet - newsum;
+            }
     	}
     }
     GRBLinExpr secondPartObj;
@@ -373,7 +373,7 @@ int main(){
     GRBLinExpr srs1;
     GRBLinExpr srs2;
     for (int ll=0; ll<l; ll++){
-    	srs1 = srs1 + f[l][s];
+    	srs1 = srs1 + f[ll][s];
     	for (int j=0; j<n; j++){
     		if (j!=s){
     			srs2 = srs2 + v[j][s][ll];
@@ -383,6 +383,96 @@ int main(){
     // TODO: GRB_EQUAL or GRB_LESS_EQUAL?????
     model.addConstr(srs1, GRB_EQUAL, srs2 ,std::to_string(constrCont++)); 
     
+
+    /************ FUNCOES LINEARIZADAS ***************/
+
+     for (int i=0; i<n; i++){
+    	for (int j=0; j<n; j++){
+    	 	if(i!=j){
+    	 		GRBLinExpr sum1;
+    			GRBLinExpr sum2;
+    			for (int a=0; a<R; a++){
+    				sum1 = sum1 + z[i][j][a];
+    			}
+    			for (int ll=0; ll<l; ll++){
+    				sum2 = sum2 + v[i][j][ll];
+    			}
+    			model.addConstr(sum1, GRB_EQUAL, sum2 ,std::to_string(constrCont++)); 
+    	 	}
+    	}
+    }
+
+  	for (int ll=0; ll<l; ll++){
+  		GRBLinExpr sum1;
+  		for (int i=0; i<n; i++){
+  			sum1 = sum1 + delta[ll][i];
+  		}
+  		model.addConstr(sum1, GRB_LESS_EQUAL, L[ll][0] ,std::to_string(constrCont++)); // L[ll][0] é a tarifa maxima que o passageiro 'll' espera pagar
+  	}
+
+  	for (int ll=0; ll<l; ll++){
+	    for (int i=0; i<n; i++){
+	    	GRBLinExpr res;
+	    	for (int j=0; j<n; j++){
+                if (i!=j){
+    	    		res = res + custos[i][j]*v[i][j][ll];
+    	    		GRBLinExpr newsum;
+    	   			for (int aa=0; aa<R; aa++){
+    	   				int a = aa+1; // aqui fazemos de 0...R-1. Mas o modelo pede de 1...R
+    	   				double coef = custos[i][j]/(a*(a+1));
+    	   				newsum = newsum + coef*z[i][j][aa];
+    					//newsum.addTerms(&coef, &z[i][j][aa],1);  // sentido direto (conceitual) da aresta
+    	   			}
+    	   			res = res - newsum;
+                }
+	    	}
+            model.addConstr(res, GRB_LESS_EQUAL, delta[ll][i] ,std::to_string(constrCont++)); 
+         }
+	}
+
+    GRBLinExpr res5;
+    for (int i=0; i<n; i++){
+        for (int j=0; j<n; j++){
+            if(i!=j){
+                GRBLinExpr res42, res43, res44; // aproveitamos esse laço pra calcular estas restricoes =)
+                res42 = x[i][j] - beta[i][j];
+                res43 = 1 - p[i];
+                res44 = x[i][j] - p[i];
+                
+                model.addConstr(alfa[i][j], GRB_EQUAL, res42 ,std::to_string(constrCont++)); 
+                model.addConstr(beta[i][j], GRB_LESS_EQUAL, res43 ,std::to_string(constrCont++)); 
+                model.addConstr(beta[i][j], GRB_GREATER_EQUAL, res44 ,std::to_string(constrCont++)); 
+     
+                res5 = res5 + alfa[i][j]*vertices[i][0]; //vertices[i][0] é o bonus do vértice i
+                
+            }
+        }
+    }
+    model.addConstr(res5, GRB_GREATER_EQUAL, K ,std::to_string(constrCont++)); 
+    
+
+    for (int ll=0; ll<n; ll++){
+        for (int i=0; i<n; i++){
+            model.addConstr(phi[ll][i], GRB_EQUAL, f[ll][i] ,std::to_string(constrCont++));
+            GRBLinExpr res46 = q[ll] - psi[ll][i];
+            model.addConstr(phi[ll][i], GRB_EQUAL, res46 ,std::to_string(constrCont++)); 
+            
+            GRBLinExpr summ1, summ2;
+            for (int j=0; j<n; j++){
+                if (i!=j){
+                    summ1 = summ1 + v[i][j][ll];
+                    summ2 = summ2 + v[j][i][ll];
+                }
+            } 
+            GRBLinExpr resr1 = 1 - (summ1 - summ2);
+            GRBLinExpr resr2 = q[ll] - (summ1 - summ2);
+            model.addConstr(psi[ll][i], GRB_LESS_EQUAL, resr1 ,std::to_string(constrCont++)); 
+            model.addConstr(psi[ll][i], GRB_GREATER_EQUAL, resr2 ,std::to_string(constrCont++)); 
+        }
+    }
+
+
+
 
 	//////////////////// FIM DA CONSTRUÇAO DO MODELO ////////////////////
 

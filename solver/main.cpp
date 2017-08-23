@@ -218,7 +218,6 @@ int main(){
     model.setObjective(obj, GRB_MINIMIZE);
 
     for (int i = 0; i < n; i++) {
-        //x[i][i].set(GRB_DoubleAttr_UB, 0);
         taxaRateio[i][i].set(GRB_DoubleAttr_UB, 0);
     }
 
@@ -227,43 +226,16 @@ int main(){
 
     int constrCont = 0;
 
- //    GRBLinExpr exprObjet;
-
- //    for (int i=0; i<n; i++){
- //    	for (int j=0; j<n; j++){
- //            if (i!=j){
- //        		exprObjet = exprObjet + custos[i][j]*x[i][j];
- //        		//exprObjet.addTerms(&custos[i][j], &x[i][j],1);  // sentido direto (conceitual) da aresta
- //       			GRBLinExpr newsum;
- //       			for (int aa=0; aa<R; aa++){
- //       				int a = aa+1; // aqui fazemos de 0...R-1. Mas o modelo pede de 1...R
- //       				double coef = custos[i][j]/(a*(a+1));
- //       				newsum = newsum + coef*z[i][j][aa];
- //    				//newsum.addTerms(&coef, &z[i][j][aa],1);  // sentido direto (conceitual) da aresta
- //       			}
- //       			exprObjet = exprObjet - newsum;
- //            }
- //    	}
- //    }
- //    GRBLinExpr secondPartObj;
- //    for (int ll=0; ll<l; ll++){
- //    	for (int j=0; j<n; j++){
- //    		secondPartObj = secondPartObj + penalidades[ll][j]*f[ll][j];
- //    	}
- //    }
-
- //    exprObjet = secondPartObj + exprObjet;
-	// model.setObjective(exprObjet,GRB_MINIMIZE); 
-   	
 	/****************** RESTRICOES DO MODELO ******************/
 
 
-	//Estas restriçoes garantem que o tour do caixeiro se dá num subconjunto de vértices.
+	//Restricoes 1 e 2 e 6 - Estas restriçoes garantem que o tour do caixeiro se dá num subconjunto de vértices.
+    
     for (int j=0; j<n; j++){
     	if (j!=s){ // para todo j diferente de 's'
-    		 GRBLinExpr rest1;
-    		 GRBLinExpr rest2;
-    		 GRBLinExpr subtracao; // RESTRICAO que obriga que o caixeiro deve sempre sair de uma cidade que ele entrou (deferente de s)
+    		 GRBLinExpr rest1 = 0;
+    		 GRBLinExpr rest2 = 0;
+    		 GRBLinExpr subtracao = 0; // RESTRICAO 6 que obriga que o caixeiro deve sempre sair de uma cidade que ele entrou (deferente de s)
     		 for (int i=0; i<n; i++){
     		 	if (i!=j){ // indice do somatorio diferente do j
     		 		rest1 = rest1 + x[i][j];
@@ -277,9 +249,9 @@ int main(){
     	}
     }
 
-    //Estas restriçoes obrigam que o tour comece e termine em s.
-    GRBLinExpr rest3;
-   	GRBLinExpr rest4;
+    //Restricoes 4 e 5 - Estas restriçoes obrigam que o tour comece e termine em s.
+    GRBLinExpr rest3 = 0;
+   	GRBLinExpr rest4 = 0;
    	for (int i=0; i<n; i++){ // indice so somatorio 
 	 	if (i!=s){ // indice do somatorio diferente de 's'
 	 		rest3 = rest3 + x[s][i];
@@ -290,7 +262,7 @@ int main(){
 	model.addConstr(rest4, GRB_EQUAL, 1,std::to_string(constrCont++));
 
 
-	//Restriçoes de subtour
+	//Restricao 7 - Restriçoes de subtour
 	double pp = n-1;
     for (int i=1; i<n; i++){
     	for (int j=1; j<n; j++){
@@ -302,6 +274,22 @@ int main(){
     	}
     }
 
+     // Restricao 8 - LINEARIZADA
+
+    //RESTRICAO 9
+    for (int ll = 0; ll < l; ll++) {
+        GRBQuadExpr quadConstraint = 0;
+        for (int i = 0; i < n; i++) {
+
+            for (int j = 0; j < n; j++) {
+                if (j!=i)
+                    quadConstraint += v[i][j][ll] * tempo[i][j] + p[i] * vertices[i][1] * v[i][j][ll];
+            }
+        }
+        model.addQConstr(quadConstraint <= L[ll][1], "rest9_tempoLimitePassageiro" +std::to_string(constrCont++));
+    }
+
+    // Restricao 10
     //TODO : verificar se é redundante: executar com esta restriçao desligada
     //acopla o trajeto dos passageiros ao do caixeiro, bem como garante que a capacidade R máxima do carro não seja ultrapassada. 
     for (int i=0; i<n; i++){
@@ -317,179 +305,16 @@ int main(){
     	}
     }
 
-   //  // realiza o acoplamento entre as variáveis do ciclo hamiltoniano, variáveis de carregamento e transporte de passageiros
-   //  for (int i=0; i<n; i++){
-   //  	for (int j=0; j<n; j++){
-   //  	 	if(i!=j){
-   //  	 		GRBLinExpr sum1 = 0;
-   //  	 		GRBLinExpr sum2 = 0;
-   //  	 		GRBLinExpr sum3 = 0;
-   //  	 		GRBLinExpr dir = 0;
-   //  	 		GRBLinExpr res = 0;
-   //  	 		for (int ll=0; ll<l; ll++){
-   //  	 			if (L[ll][2] == i) {// origem do passageiro ll
-   //  	 				sum1 = sum1 + q[ll];
-   //  	 			}
-   //  	 			sum3 = sum3 + f[ll][i];
-   //  	 		}
-   //  	 		for (int aa = 0; aa<n; aa++){
-   //  	 			if (aa!=i){
-   //  	 				for (int ll=0; ll<l; ll++){
-   //  	 					sum2 = sum2 + v[aa][i][ll];
-   //  	 				}
-   //  	 			}
-   //  	 		}
-   //  	 		res = sum1 + sum2 - sum3;
-   //  	 		dir = R*x[i][j];
-   //  	 		model.addConstr(res, GRB_LESS_EQUAL, dir ,std::to_string(constrCont++)); // L[ll][1] é o tempo maximo que o passageiro ll deseja ficar no carro
-			// }
-   //  	}
-   //  }
-
-
-   //  for (int ll=0; ll<l; ll++){
-   //  	for (int i=0; i<n; i++){
-   //  		if (L[ll][2] == i) {// origem do passageiro ll
-   //  			GRBLinExpr sum1 = 0;
-   //  			for (int j=0; j<n; j++){
-   //  				if (i!=j){
-   //  					sum1 = sum1 + v[i][j][ll];
-   //  				}
-   //  			}
-   //  			model.addConstr(sum1, GRB_EQUAL, q[ll] ,std::to_string(constrCont++)); 
-			// 	model.addConstr(sum1, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
-			// }
-   //  	}
-   //  }
-
- 	// for (int ll=0; ll<l; ll++){
-  //   	for (int i=0; i<n; i++){
-  //   		GRBLinExpr sum1;
-		// 	for (int j=0; j<n; j++){
-		// 		if (i!=j){
-		// 			sum1 = sum1 + v[i][j][ll];
-		// 		}
-		// 	}
-		// 	sum1 = sum1 + f[ll][i];
-		// 	model.addConstr(sum1, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
-		// }
-  //   }
-
-    
+    //restricao 11
     for (int ll=0; ll<l; ll++){
-    	GRBLinExpr sum1;
+    	GRBLinExpr sum1 = 0;
     	for (int j=0; j<n; j++){
     		sum1 = sum1 + f[ll][j];
     	}
     	model.addConstr(sum1, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
     }
 
-    // //for (int i=0; i<n; i++){
-    // //int i=s;
-    // 	GRBLinExpr sum1;
-    // 	GRBLinExpr sum2;
-    // 	for (int ll=0; ll<l; ll++){
-    // 		if (L[ll][2] == s) {// origem do passageiro ll
-    // 			sum1 = sum1 + q[ll];
-    // 		}
-    // 		for (int j=0; j<n; j++){
-    // 			if (s!=j){
-    // 				sum2 = sum2 + v[s][j][ll];
-    // 			}
-    // 		}
-    // 	}
-    // 	model.addConstr(sum1, GRB_EQUAL, sum2 ,std::to_string(constrCont++)); 
-    // //}
-
-    // for (int ll=0; ll<l; ll++){
-    //     GRBLinExpr srs1;
-    //     GRBLinExpr srs2;
-    // 	srs1 = f[ll][s];
-    // 	for (int j=0; j<n; j++){
-    // 		if (j!=s){
-    // 			srs2 = srs2 + v[j][s][ll];
-    // 		}
-    // 	}
-    //     model.addConstr(srs1, GRB_EQUAL, srs2 ,std::to_string(constrCont++)); 
-    
-    // }
-
-    // //NOVA
-    // for (int ll=0; ll<l; ll++){
-    //     for (int i=0; i<n; i++){
-    //         for (int j=0; j<n; j++){
-    //             if (i!=j){
-    //                  model.addConstr(v[i][j][ll], GRB_LESS_EQUAL, q[ll] ,std::to_string(constrCont++)); 
-    
-    //             }
-    //         }
-    //     }
-    // }
-
-    // //NOVA2
-    // for (int ll=0; ll<n; ll++){
-    //     for (int j=0; j<n; j++){
-    //         if (L[ll][2]==j){
-    //             GRBLinExpr srs2 = 0;
-    //             for (int i=0; i<n; i++){
-    //                 if (i!=j){
-    //                     srs2 = srs2 + v[i][j][ll];   
-    //                 }
-    //             }
-    //             srs2 = srs2 + q[ll];
-    //             model.addConstr(srs2, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
-    
-    //         }
-    //     }
-    // }
-
-    /************ FUNCOES LINEARIZADAS ***************/
-
-    //  for (int i=0; i<n; i++){
-    // 	for (int j=0; j<n; j++){
-    // 	 	if(i!=j){
-    // 	 		GRBLinExpr sum1;
-    // 			GRBLinExpr sum2;
-    // 			for (int a=0; a<R; a++){
-    // 				sum1 = sum1 + z[i][j][a];
-    // 			}
-    // 			for (int ll=0; ll<l; ll++){
-    // 				sum2 = sum2 + v[i][j][ll];
-    // 			}
-    // 			model.addConstr(sum1, GRB_EQUAL, sum2 ,std::to_string(constrCont++)); 
-    // 	 	}
-    // 	}
-    // }
-
- //  	for (int ll=0; ll<l; ll++){
- //  		GRBLinExpr sum1;
- //  		for (int i=0; i<n; i++){
- //  			sum1 = sum1 + delta[ll][i];
- //  		}
- //  		model.addConstr(sum1, GRB_LESS_EQUAL, L[ll][0] ,std::to_string(constrCont++)); // L[ll][0] é a tarifa maxima que o passageiro 'll' espera pagar
- //  	}
-
- //  	for (int ll=0; ll<l; ll++){
-	//     for (int i=0; i<n; i++){
-	//     	GRBLinExpr res;
-	//     	for (int j=0; j<n; j++){
- //                if (i!=j){
- //    	    		res = res + custos[i][j]*v[i][j][ll];
- //    	    		GRBLinExpr newsum;
- //    	   			for (int aa=0; aa<R; aa++){
- //    	   				int a = aa+1; // aqui fazemos de 0...R-1. Mas o modelo pede de 1...R
- //    	   				double coef = custos[i][j]/(a*(a+1));
- //    	   				newsum = newsum + coef*z[i][j][aa];
- //    					//newsum.addTerms(&coef, &z[i][j][aa],1);  // sentido direto (conceitual) da aresta
- //    	   			}
- //    	   			res = res - newsum;
- //                }
-	//     	}
- //            model.addConstr(res, GRB_LESS_EQUAL, delta[ll][i] ,std::to_string(constrCont++)); 
- //         }
-	// }
-
-    //RESTRICAO 11
+    //RESTRICAO 12
     for (int ll = 0; ll < l; ll++) {
         GRBQuadExpr  quadConstraint = 0;
         for (int i = 0; i < n; i++) {
@@ -498,11 +323,14 @@ int main(){
                     quadConstraint += v[i][j][ll] * custos[i][j] * taxaRateio[i][j];
             }
         }
-
         model.addQConstr(quadConstraint <= L[ll][0], std::to_string(constrCont++));
 
     }
 
+
+    /* ============================== Restriçoes linearizadas ============================== */
+
+    // Restricao 8 - LINEARIZADA
     GRBLinExpr res5;
     for (int i=0; i<n; i++){
         for (int j=0; j<n; j++){
@@ -523,105 +351,11 @@ int main(){
     }
     model.addConstr(res5, GRB_GREATER_EQUAL, K ,std::to_string(constrCont++)); 
     
-    // for (int ll=0; ll<n; ll++){
-    //     for (int j=0; j<n; j++){
-    //         GRBLinExpr summ1 = 0, summ2 =0;
-    //         for (int i=0; i<n; i++){
-    //             if (i!=j){
-    //                 summ1 = summ1 + v[i][j][ll];
-    //             }
-    //         } 
-    //         for (int i=0; i<n; i++){
-    //             if (i!=j){
-    //                 summ2 = summ2 + v[j][i][ll];
-    //             }
-    //         } 
-    //         GRBQuadExpr qdf = q[ll]*(summ1 - summ2);
-    //         model.addQConstr(qdf, GRB_EQUAL, f[ll][j] ,std::to_string(constrCont++)); 
-    
-    //     }
-    // }
-    // for (int ll=0; ll<n; ll++){
-    //     for (int j=0; j<n; j++){
-    //         //if (j==s) continue;
-    //         model.addConstr(phi[ll][j], GRB_EQUAL, f[ll][j] ,std::to_string(constrCont++));
-    //         GRBLinExpr res46 = q[ll] - psi[ll][j];
-    //         model.addConstr(phi[ll][j], GRB_EQUAL, res46 ,std::to_string(constrCont++)); 
-            
-    //         GRBLinExpr summ1, summ2;
-    //         for (int i=0; i<n; i++){
-    //             if (i!=j){// && i!=s){
-    //                 summ1 = summ1 + v[i][j][ll];
-    //                 summ2 = summ2 + v[j][i][ll];
-    //             }
-    //         } 
-    //         GRBLinExpr resr1 = 1 - (summ1 - summ2);
-    //         GRBLinExpr resr2 = q[ll] - (summ1 - summ2);
-    //         model.addConstr(psi[ll][j], GRB_LESS_EQUAL, resr1 ,std::to_string(constrCont++)); 
-    //         model.addConstr(psi[ll][j], GRB_GREATER_EQUAL, resr2 ,std::to_string(constrCont++)); 
-    //     }
-    // }
-
-
-
-
-            //RESTRICAO 9
-            for (int ll = 0; ll < l; ll++) {
-
-                GRBQuadExpr quadConstraint = 0;
-
-                for (int i = 0; i < n; i++) {
-
-                    for (int j = 0; j < n; j++) {
-                        if (j!=i)
-                            quadConstraint += v[i][j][ll] * tempo[i][j] + p[i] * vertices[i][1] * v[i][j][ll];
-                        
-                    }
-
-
-                }
-
-                model.addQConstr(quadConstraint <= L[ll][1], "rest9_tempoLimitePassageiro" +std::to_string(constrCont++));
-
-            }
-
-
-    // //NOVA LINEARIZACAO garantem que cada passageiro permaneça no carro no maaximo L[ll][1] unidades de tempo.
-    // for (int ll=0; ll<l; ll++){
-    //     GRBLinExpr sum1;
-    //     GRBLinExpr sum2;
-    //     for (int i=0; i<n; i++){
-    //         //if (i!=s){
-    //             sum2 = sum2 + zeta[ll][i]*vertices[i][1]; // vertices[i][1] delay associado ao vértice i
-    //             for (int j=0; j<n; j++){
-    //                 if (i!=j)// && j!=s)
-    //                     sum1 = sum1 + v[i][j][ll]*tempo[i][j];
-    //             }
-    //         //}
-    //     }
-    //     GRBLinExpr restr = sum1 + sum2;
-    //     model.addConstr(restr, GRB_LESS_EQUAL, L[ll][1] ,std::to_string(constrCont++)); // L[ll][1] é o tempo maximo que o passageiro ll deseja ficar no carro
-    // }
-
-    // for (int ll=0; ll<l; ll++){
-    //     for (int i=0; i<n; i++){
-    //         GRBLinExpr subs1 = q[ll] - mu[ll][i];
-    //         GRBLinExpr subs2 = 1 - p[i];
-    //         GRBLinExpr subs3 = q[ll] - p[i];
-
-    //         model.addConstr(zeta[ll][i], GRB_EQUAL, subs1 ,std::to_string(constrCont++));
-    //         model.addConstr(mu[ll][i], GRB_LESS_EQUAL, subs2 ,std::to_string(constrCont++));
-    //         model.addConstr(mu[ll][i], GRB_GREATER_EQUAL,subs3 ,std::to_string(constrCont++));
-    //     }
-    // }
-
-
-
 
 
             //******************************************************** NOVAS **********************************************************
 
-            //RESTRICAO A - CALCULO DA TAXA DE RATEIO
+            //RESTRICAO 13 A - CALCULO DA TAXA DE RATEIO
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     
@@ -636,42 +370,45 @@ int main(){
                 }
             }
 
-            //RESTRICAO B
+            //RESTRICAO 14 B
             for (int ll = 0; ll < l; ll++) {
-                //inst.P_D[l + 1][3]-1 e igual a origem do passageiro l o qual vc vai colocar no teu formato
-                //l+1 È pq a na minha instancia, os elemtnos s„o indexados de 1 a N, e aqui de 0 a N-1
-                //Mesmo pensamento para justificar [3]-1
                 int oriem =(int) L[ll][2];
                 GRBLinExpr constraint = f[ll][oriem];
                 model.addConstr(constraint == 0, "restB_passageiroNaoDesembarcaNaSuaOrigem" +  std::to_string(constrCont++));
 
             }
 
-            //RESTRICAO C
+            //RESTRICAO 15 C
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     if (i != j) {
                         for (int ll = 0; ll < l; ll++) {
-                            model.addConstr(v[i][j][ll] <= x[i][j], "restC_soPassaPassageiroPorOndePassaVeiculo" +  std::to_string(constrCont++));
+                            model.addConstr(v[i][j][ll] <= q[ll], "restC_soPassaPassageiroPorOndePassaVeiculo" +  std::to_string(constrCont++));
+                            
                         }
                     }
                 }
             }
 
-            //RESTRICAO D
+            //RESTRICAO 16 D 
             for (int ll = 0; ll < l; ll++) {
                 for (int j = 0; j < n; j++) {
-                    GRBLinExpr constraint = 0;
-                    for (int i = 0; i < n; i++) {
-                        if (i != j) {
-                            constraint += v[i][j][ll];
+                    if (L[ll][2]!=j){
+                        GRBLinExpr constraint = 0;
+                        GRBLinExpr constraint2 = 0;
+                        for (int i = 0; i < n; i++) {
+                            if (i != j) {
+                                constraint += v[i][j][ll];
+                                constraint2 += v[j][i][ll];
+                            }
                         }
+                        model.addConstr(constraint - constraint2 == f[ll][j], "restD_PassageiroDesembarcaConformeValorDeF" +  std::to_string(constrCont++));
                     }
-                    model.addConstr(constraint - f[ll][j] == 0, "restD_PassageiroDesembarcaConformeValorDeF" +  std::to_string(constrCont++));
                 }
             }
 
-            //RESTRICAO E
+
+            //RESTRICAO 17 E
             for (int ll = 0; ll < l; ll++) {
 
                 GRBLinExpr constraint = 0;
@@ -684,11 +421,10 @@ int main(){
 
             }
 
-            //RESTRICAO F
+
+            //RESTRICAO 18 F
             for (int ll = 0; ll < l; ll++) {
                 
-                //inst.P_D[l + 1][3]-1 e igual a origem do passageiro l o qual vc vai colocar no teu formato
-
                 int i = L[ll][2];
                 
                 GRBLinExpr constraint = 0;
@@ -699,13 +435,77 @@ int main(){
                     }
                 }
 
-                constraint -= q[ll];
-                
-                model.addConstr(constraint == 0, "restF_PassageiroEhEmbarcadoApenasNaOrigem" + std::to_string(constrCont++));
+                model.addConstr(constraint == q[ll], "restF_PassageiroEhEmbarcadoApenasNaOrigem" + std::to_string(constrCont++));
+                //model.addConstr(constraint <= 1, "restF_PassageiroEhEmbarcadoApenasNaOrigem" + std::to_string(constrCont++));
 
             }
 
+            //RESTRICAO 19
+        for (int ll=0; ll<l; ll++){
+            for (int i=0; i<n; i++){
+                 GRBLinExpr sum1 = 0;
+                 for (int j=0; j<n; j++){
+                     if (i!=j){
+                         sum1 = sum1 + v[i][j][ll];
+                     }
+                 }
+                 sum1 = sum1 + f[ll][i];
+                 model.addConstr(sum1, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
+            }
+        }
 
+
+
+
+            //garante que na aresta ij, onde j é origem de l, nao trafega l
+        //RESTRICAO 20
+            for (int ll=0; ll<l; ll++){
+                for (int j=0; j<n; j++){
+                    if (L[ll][2] == j){
+                        GRBLinExpr constraint = 0;
+                        for (int i = 0; i < n; i++) {
+                            if (i != j) {
+                                constraint += v[i][j][ll];
+                            }
+                        }
+                        model.addConstr(constraint == 0, "restG_passageiroNaoVolta" + std::to_string(constrCont++));
+                
+                    }
+                }
+            }
+
+            //RESTRICAO 21
+            for (int ll=0; ll<l; ll++){
+                GRBLinExpr srs1;
+                GRBLinExpr srs2;
+                 srs1 = f[ll][s];
+                 for (int j=0; j<n; j++){
+                     if (j!=s){
+                         srs2 = srs2 + v[j][s][ll];
+                     }
+                 }
+                model.addConstr(srs1, GRB_EQUAL, srs2 ,std::to_string(constrCont++)); 
+            
+            }
+
+            //garante que so sai da origem que estiver na origem (origem do caixero)
+                    //for (int i=0; i<n; i++){
+            //int i=s;
+            //RESTRICAO 22
+             GRBLinExpr sum1 = 0;
+             GRBLinExpr sum2 = 0;
+             for (int ll=0; ll<l; ll++){
+                 if (L[ll][2] == s) {// origem do passageiro ll
+                     sum1 = sum1 + q[ll];
+                 }
+                 for (int j=0; j<n; j++){
+                     if (s!=j){
+                         sum2 = sum2 + v[s][j][ll];
+                     }
+                 }
+             }
+             model.addConstr(sum2 <= sum1,std::to_string(constrCont++)); 
+            //}
 
 
 	//////////////////// FIM DA CONSTRUÇAO DO MODELO ////////////////////
@@ -718,13 +518,13 @@ int main(){
 		for (int i=0; i<n; i++){
 			for (int j=i+1; j<n; j++){
 				try{
-	        		if (x[j][i].get(GRB_DoubleAttr_X)==1){
+	        		if (x[j][i].get(GRB_DoubleAttr_X)>0){
                         cout<<"("<<j+1<<","<<i+1<<") ";
-                    } else if (x[i][j].get(GRB_DoubleAttr_X)==1){
+                    } else if (x[i][j].get(GRB_DoubleAttr_X)>0){
 	        			cout<<"("<<i+1<<","<<j+1<<") ";
 	        		}
 
-                    if (x[i][j].get(GRB_DoubleAttr_X)==1 && x[j][i].get(GRB_DoubleAttr_X)==1){
+                    if (x[i][j].get(GRB_DoubleAttr_X)>0 && x[j][i].get(GRB_DoubleAttr_X)>0){
                         cout<<"ERRO: ISSO NAO DEVERIA ACONTECER!!!"<<endl;
                     }
         		} catch(GRBException ex){
@@ -734,24 +534,35 @@ int main(){
 
 			}
 		}
-        try{
-            for (int ll=0; ll<l; ll++){
-                //cout<<"q_"<<ll<<" = "<<q[ll].get(GRB_DoubleAttr_X)<<endl;
-                if (q[ll].get(GRB_DoubleAttr_X)==1){
-                    cout<<"Passageiro "<<ll<<" embarcou em "<<L[ll][2]+1<<" ";
-                    for (int i=0; i<n; i++){
-                        //cout<<"f_"<<ll<<"_"<<i+1<<" = "<<f[ll][i].get(GRB_DoubleAttr_X)<<endl;
-               
-                        if (f[ll][i].get(GRB_DoubleAttr_X)==1){
-                            cout<<"e desembarcou em "<<i+1;
-                        }
+        for (int ll=0; ll<l; ll++){
+            if (q[ll].get(GRB_DoubleAttr_X)>0){
+                cout<<"Passageiro "<<ll<<" embarcou em "<<L[ll][2]+1<<" ";
+                for (int i=0; i<n; i++){
+                    if (f[ll][i].get(GRB_DoubleAttr_X)>0){
+                        cout<<"e desembarcou em "<<i+1;
                     }
-                    cout<<endl;
                 }
-
+                cout<<endl;
             }
-        }catch(GRBException ex){
 
+        }
+        for (int i=0; i<n; i++){
+            for (int j=0; j<n; j++){
+                if (i!=j){
+                    cout<<"x_"<<i<<j<<" = "<<x[i][j].get(GRB_DoubleAttr_X)<<endl;
+            
+                }
+            }
+        }
+        for (int ll=0; ll<l; ll++){
+            for (int i=0; i<n; i++){
+                cout<<"f_"<<ll<<i<<" = "<<f[ll][i].get(GRB_DoubleAttr_X)<<endl;
+                
+            }              
+        }
+        for (int ll=0; ll<l; ll++){
+            cout<<"q_"<<ll<<" = "<<q[ll].get(GRB_DoubleAttr_X)<<endl;
+                           
         }
         for (int i=0; i<n; i++){
             for (int j=0; j<n; j++){

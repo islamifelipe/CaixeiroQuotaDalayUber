@@ -304,7 +304,7 @@ int main(){
 			}
     	}
     }
-
+    // cout<<"Sem a restriçao 11\n"<<endl;
     //restricao 11
     for (int ll=0; ll<l; ll++){
     	GRBLinExpr sum1 = 0;

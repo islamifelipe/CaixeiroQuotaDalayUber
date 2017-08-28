@@ -100,15 +100,13 @@ int main(){
 	GRBVar *p; // p[i] = 1 se o caixeiro apanha o bonus do vertice 0<=i<n
 	GRBVar **x; //diz se o caixeiro passou pela aresta ij
 	GRBVar **beta; // variavel de linearizaçao. Matriz nxn
-	GRBVar **alfa; // variavel de linearizaçao.  Matriz nxn
+	GRBVar **theta; // variavel de linearizaçao.  Matriz nxn
 	GRBVar **f; //f[a][i] = 1 se o passageiro 0<=a<l desce no vértice 0<=i<n
-	GRBVar **phi; // variavel de linearizaçao. Matriz lxn
-	GRBVar **psi; // variavel de linearizaçao. Matriz lxn
-	GRBVar **delta; // variavel de linearizaçao. Matriz lxn
+	GRBVar ***psi; // variavel de linearizacao nxnxl
 	GRBVar ***z; //z[i][j][a] 0<=i,j<n 0<=a<R
 	GRBVar ***v; //v[i][j][a]=1 se o passageiro 'a' trafega pela aresta (i,j) 0<=i,j<n 0<=a<l 
-    GRBVar **mu; // NOVA linearizacao matriz lxn
-    GRBVar **zeta; // NOVA linearizacao matriz lxn
+    GRBVar ***mu; // linearizacao nxnxl
+    GRBVar ***zeta; // linearizacao nxnxl
 
 
     GRBVar **taxaRateio = new GRBVar*[n];
@@ -117,15 +115,13 @@ int main(){
 	p = new GRBVar[n];
 	x = new GRBVar*[n]; 
 	f = new GRBVar*[l]; 
-	psi = new GRBVar*[l]; 
-	phi = new GRBVar*[l]; 
-	delta = new GRBVar*[l]; 
 	beta = new GRBVar*[n];
-	alfa = new GRBVar*[n];
+	theta = new GRBVar*[n];
    	z = new GRBVar**[n];
    	v = new GRBVar**[n];  
-    zeta = new GRBVar*[l];
-    mu = new GRBVar*[l];
+    zeta = new GRBVar**[n];
+    mu = new GRBVar**[n];
+    psi = new GRBVar**[n];
 
     for (int i = 0; i < n; i++) {
         taxaRateio[i] = new GRBVar[n];
@@ -137,19 +133,29 @@ int main(){
    		p[i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "p"+std::to_string(i));
         x[i] = new GRBVar[n];
         beta[i] = new GRBVar[n];
-        alfa[i] = new GRBVar[n];
+        theta[i] = new GRBVar[n];
         z[i] = new GRBVar*[n];
         v[i] = new GRBVar*[n];
+        mu[i] = new GRBVar*[n];
+        zeta[i] = new GRBVar*[n];
+        psi[i] = new GRBVar*[n];
         for (int j=0; j<n; j++){
-        	z[i][j] =  new GRBVar[R];
-        	v[i][j] =  new GRBVar[l];
-        	//if (i!=j){
+        	z[i][j]   =  new GRBVar[R];
+        	v[i][j]   =  new GRBVar[l];
+            mu[i][j]  =  new GRBVar[l];
+            zeta[i][j]=  new GRBVar[l];
+            psi[i][j] =  new GRBVar[l];
+           //if (i!=j){
         		for (int a=0; a<R; a++){
         			z[i][j][a] = model.addVar(0.0, 1, 0.0, GRB_CONTINUOUS, "z"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
         		}
         		for (int a=0; a<l; a++){
-					v[i][j][a] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "v"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
-        		}
+					v[i][j][a] = model.addVar(0, 1, 0.0, GRB_BINARY, "v"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+        		    mu[i][j][a] = model.addVar(0, 1, 0.0, GRB_BINARY, "mu"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+                    zeta[i][j][a] = model.addVar(0, 1, 0.0, GRB_BINARY, "zeta"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+                    psi[i][j][a] = model.addVar(0, 1, 0.0, GRB_CONTINUOUS, "psi"+std::to_string(i)+std::to_string(j)+std::to_string(a)); 
+                    
+                }
         	//}
         }
    	}
@@ -157,19 +163,8 @@ int main(){
    	for (int a=0; a<l; a++){
    		q[a] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "q"+std::to_string(a));
    		f[a] = new GRBVar[n];
-   		psi[a] = new GRBVar[n];
-   		phi[a] = new GRBVar[n];
-        zeta[a] = new GRBVar[n];
-        mu[a] = new GRBVar[n];
-   		delta[a] = new GRBVar[n];
    		for (int i=0; i<n; i++){
    			f[a][i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "f"+std::to_string(a)+std::to_string(i)); 
-   			psi[a][i] = model.addVar(0.0,100000,0.0, GRB_CONTINUOUS, "psi"+std::to_string(a)+std::to_string(i));
-   			phi[a][i] = model.addVar(0.0,1,0.0, GRB_BINARY, "phi"+std::to_string(a)+std::to_string(i));
-   			delta[a][i] = model.addVar(0.0,100000,0.0, GRB_CONTINUOUS, "delta"+std::to_string(a)+std::to_string(i));
-   			zeta[a][i] = model.addVar(0.0,1,0.0, GRB_BINARY, "zeta"+std::to_string(a)+std::to_string(i));
-            mu[a][i] = model.addVar(0.0,100000,0.0, GRB_CONTINUOUS, "mu"+std::to_string(a)+std::to_string(i));
-            
    		}
    	}
 
@@ -179,8 +174,8 @@ int main(){
 			x[j][i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "x"+std::to_string(j)+std::to_string(i));
 			beta[i][j] = model.addVar(0.0, 100000, 0.0, GRB_CONTINUOUS, "beta"+std::to_string(i)+std::to_string(j)); 
 			beta[j][i] = model.addVar(0.0, 100000, 0.0, GRB_CONTINUOUS, "beta"+std::to_string(j)+std::to_string(i));
-			alfa[i][j] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "alfa"+std::to_string(i)+std::to_string(j)); 
-			alfa[j][i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "alfa"+std::to_string(j)+std::to_string(i));
+			theta[i][j] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "theta"+std::to_string(i)+std::to_string(j)); 
+			theta[j][i] = model.addVar(0.0, 1, 0.0, GRB_BINARY, "theta"+std::to_string(j)+std::to_string(i));
 		}
 	}
 
@@ -276,18 +271,18 @@ int main(){
 
      // Restricao 8 - LINEARIZADA
 
-    //RESTRICAO 9
-    for (int ll = 0; ll < l; ll++) {
-        GRBQuadExpr quadConstraint = 0;
-        for (int i = 0; i < n; i++) {
+    // //RESTRICAO 9 // LINEARIZADA
+    // for (int ll = 0; ll < l; ll++) {
+    //     GRBQuadExpr quadConstraint = 0;
+    //     for (int i = 0; i < n; i++) {
 
-            for (int j = 0; j < n; j++) {
-                if (j!=i)
-                    quadConstraint += v[i][j][ll] * tempo[i][j] + p[i] * vertices[i][1] * v[i][j][ll];
-            }
-        }
-        model.addQConstr(quadConstraint <= L[ll][1], "rest9_tempoLimitePassageiro" +std::to_string(constrCont++));
-    }
+    //         for (int j = 0; j < n; j++) {
+    //             if (j!=i)
+    //                 quadConstraint += v[i][j][ll] * tempo[i][j] + p[i] * vertices[i][1] * v[i][j][ll];
+    //         }
+    //     }
+    //     model.addQConstr(quadConstraint <= L[ll][1], "rest9_tempoLimitePassageiro" +std::to_string(constrCont++));
+    // }
 
     // Restricao 10
     //TODO : verificar se é redundante: executar com esta restriçao desligada
@@ -314,18 +309,18 @@ int main(){
     	model.addConstr(sum1, GRB_LESS_EQUAL, 1 ,std::to_string(constrCont++)); 
     }
 
-    //RESTRICAO 12
-    for (int ll = 0; ll < l; ll++) {
-        GRBQuadExpr  quadConstraint = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (i!=j)
-                    quadConstraint += v[i][j][ll] * custos[i][j] * taxaRateio[i][j];
-            }
-        }
-        model.addQConstr(quadConstraint <= L[ll][0], std::to_string(constrCont++));
+    // //RESTRICAO 12 LINEARIZADA
+    // for (int ll = 0; ll < l; ll++) {
+    //     GRBQuadExpr  quadConstraint = 0;
+    //     for (int i = 0; i < n; i++) {
+    //         for (int j = 0; j < n; j++) {
+    //             if (i!=j)
+    //                 quadConstraint += v[i][j][ll] * custos[i][j] * taxaRateio[i][j];
+    //         }
+    //     }
+    //     model.addQConstr(quadConstraint <= L[ll][0], std::to_string(constrCont++));
 
-    }
+    // }
 
 
     /* ============================== Restriçoes linearizadas ============================== */
@@ -340,11 +335,11 @@ int main(){
                 res43 = 1 - p[i];
                 res44 = x[i][j] - p[i];
                 
-                model.addConstr(alfa[i][j], GRB_EQUAL, res42 ,std::to_string(constrCont++)); 
+                model.addConstr(theta[i][j], GRB_EQUAL, res42 ,std::to_string(constrCont++)); 
                 model.addConstr(beta[i][j], GRB_LESS_EQUAL, res43 ,std::to_string(constrCont++)); 
                 model.addConstr(beta[i][j], GRB_GREATER_EQUAL, res44 ,std::to_string(constrCont++)); 
      
-                res5 = res5 + alfa[i][j]*vertices[i][0]; //vertices[i][0] é o bonus do vértice i
+                res5 = res5 + theta[i][j]*vertices[i][0]; //vertices[i][0] é o bonus do vértice i
                 
             }
         }
@@ -352,23 +347,71 @@ int main(){
     model.addConstr(res5, GRB_GREATER_EQUAL, K ,std::to_string(constrCont++)); 
     
 
+    // RESTRICAO 9 LINEARIZADA
+    for (int ll = 0; ll < l; ll++) {
+        GRBLinExpr rest9 = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (j!=i){
+                    rest9 += v[i][j][ll] * tempo[i][j] + vertices[i][1] * mu[i][j][ll];
+                    model.addConstr(mu[i][j][ll] == p[i] - zeta[i][j][ll] ,std::to_string(constrCont++));
+                    model.addConstr(zeta[i][j][ll] <= 1 - v[i][j][ll] ,std::to_string(constrCont++));
+                    model.addConstr(zeta[i][j][ll] >= p[i] - v[i][j][ll] ,std::to_string(constrCont++));
+                }
+            }
+        }
+        model.addConstr(rest9 <= L[ll][1], "rest9_tempoLimitePassageiro" +std::to_string(constrCont++));
+    }
+
+
+    //RESTRICAO 12  LINEARIZADA
+    for (int ll = 0; ll < l; ll++) {
+        GRBLinExpr  rest12 = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i!=j){
+                    rest12 += custos[i][j] * psi[i][j][ll];
+                    model.addConstr(psi[i][j][ll] <= v[i][j][ll],std::to_string(constrCont++));
+                    model.addConstr(psi[i][j][ll] <=  taxaRateio[i][j] ,std::to_string(constrCont++));
+                    model.addConstr(psi[i][j][ll] >= taxaRateio[i][j] - 1 + v[i][j][ll],std::to_string(constrCont++));
+                    
+                }
+            }
+        }
+        model.addConstr(rest12 <= L[ll][0], std::to_string(constrCont++));
+
+    }
+
+
+    //RESTRICAO 13 A - LINEARIZADA - CALCULO DA TAXA DE RATEIO
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i != j) {
+                GRBLinExpr kdjfkdf = taxaRateio[i][j];
+                for (int ll = 0; ll < l; ll++) {
+                    kdjfkdf += psi[i][j][ll];
+                }
+                model.addConstr(kdjfkdf == 1.0, "restA_quantidadeDePassageirosNaAresta1" + std::to_string(constrCont++));
+            }
+        }
+    }
 
             //******************************************************** NOVAS **********************************************************
 
-            //RESTRICAO 13 A - CALCULO DA TAXA DE RATEIO
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
+            // //RESTRICAO 13 A - LINEARIZADA - CALCULO DA TAXA DE RATEIO
+            // for (int i = 0; i < n; i++) {
+            //     for (int j = 0; j < n; j++) {
                     
-                    if (i != j) {
-                        GRBLinExpr constraint = 1;
-                        for (int ll = 0; ll < l; ll++) {
-                            constraint += v[i][j][ll];
-                        }
-                        model.addQConstr((constraint)* taxaRateio[i][j] == 1.0, "restA_quantidadeDePassageirosNaAresta" + std::to_string(constrCont++));
-                    }
+            //         if (i != j) {
+            //             GRBLinExpr constraint = 1;
+            //             for (int ll = 0; ll < l; ll++) {
+            //                 constraint += v[i][j][ll];
+            //             }
+            //             model.addQConstr((constraint)* taxaRateio[i][j] == 1.0, "restA_quantidadeDePassageirosNaAresta" + std::to_string(constrCont++));
+            //         }
 
-                }
-            }
+            //     }
+            // }
 
             //RESTRICAO 14 B
             for (int ll = 0; ll < l; ll++) {
@@ -489,8 +532,7 @@ int main(){
             }
 
             //garante que so sai da origem que estiver na origem (origem do caixero)
-                    //for (int i=0; i<n; i++){
-            //int i=s;
+                
             //RESTRICAO 22
              GRBLinExpr sum1 = 0;
              GRBLinExpr sum2 = 0;
@@ -505,7 +547,7 @@ int main(){
                  }
              }
              model.addConstr(sum2 <= sum1,std::to_string(constrCont++)); 
-            //}
+           
 
 
 	//////////////////// FIM DA CONSTRUÇAO DO MODELO ////////////////////

@@ -182,7 +182,10 @@ int main(){
 		for (int i=0; i<n; i++){
 			for (int j=i+1; j<n; j++){
 				try{
-	        		if (x[j][i].get(GRB_DoubleAttr_X)==1 || x[i][j].get(GRB_DoubleAttr_X)==1){
+	        		if (x[j][i].get(GRB_DoubleAttr_X)>0){
+	        			cout<<"("<<j<<","<<i<<") ";
+	        		}
+	        		else if(x[i][j].get(GRB_DoubleAttr_X)>0){
 	        			cout<<"("<<i<<","<<j<<") ";
 	        		}
         		} catch(GRBException ex){

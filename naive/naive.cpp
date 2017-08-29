@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
 	/****************** EXECUCAO DO Lin-Kernighan ******************/
 
 
-	LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("TSP"));
+	LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("ATSP"));
     vector<int> path = parser.LKHSolution();
     for (int i=0; i<path.size(); i++){
     	cout<<path[i]<<" ";

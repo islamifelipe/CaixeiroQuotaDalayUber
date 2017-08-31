@@ -19,7 +19,25 @@
 #include "gurobi_c++.h"
 #include <sys/times.h>
 #include <unistd.h>
+#include <sstream>
 using namespace std;
+
+
+template <typename T>
+    std::string to_string(T value)
+    {
+      //create an output string stream
+      std::ostringstream os ;
+
+      //throw the value into the string stream
+      os << value ;
+
+      //convert the string stream into a string and return
+      return os.str() ;
+    }
+
+
+
 
 
 int main(){
@@ -87,12 +105,12 @@ int main(){
 	//////////////////// CONSTRUINDO MODELO ////////////////////
 
 	GRBEnv env = GRBEnv();; 
- 	env.set("OutputFlag","0"); // desliga o output do solver
+ 	//env.set("OutputFlag","0"); // desliga o output do solver
  	GRBModel model = GRBModel(env);; // cria modelo
 
  	env.set(GRB_IntParam_Method, 1); // 1 é mais rapido //primal
   	env.set(GRB_IntParam_SiftMethod,1);
-
+    env.set(GRB_DoubleParam_TimeLimit, 80000); 
 	/****************** VARIAVEIS DO MODELO ******************/
 
 	GRBVar *u; //usada pelas restricoes de subcilo
@@ -576,6 +594,7 @@ int main(){
 
 			}
 		}
+        cout<<endl;
         for (int ll=0; ll<l; ll++){
             if (q[ll].get(GRB_DoubleAttr_X)>0){
                 cout<<"Passageiro "<<ll<<" embarcou em "<<L[ll][2]+1<<" ";

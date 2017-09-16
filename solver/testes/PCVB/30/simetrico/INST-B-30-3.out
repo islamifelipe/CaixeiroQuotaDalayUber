@@ -1,0 +1,40 @@
+Optimize a model with 901 rows, 960 columns and 5858 nonzeros
+Model has 1 quadratic constraint
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+01]
+  Objective range [1e+02, 7e+02]
+  Bounds range    [1e+00, 3e+01]
+  RHS range       [1e+00, 3e+01]
+Presolve removed 0 rows and 32 columns
+Presolve time: 0.07s
+Presolved: 1743 rows, 1769 columns, 9222 nonzeros
+Variable types: 0 continuous, 1769 integer (1740 binary)
+
+Root relaxation: objective 2.920000e+02, 36 iterations, 0.01 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  292.00000    0   19          -  292.00000      -     -    0s
+     0     0  292.00000    0   19          -  292.00000      -     -    0s
+     0     0  292.00000    0   20          -  292.00000      -     -    0s
+     0     0  292.00000    0   21          -  292.00000      -     -    0s
+     0     0  292.00000    0   20          -  292.00000      -     -    0s
+     0     0  292.00000    0   20          -  292.00000      -     -    0s
+     0     0  292.00000    0   20          -  292.00000      -     -    0s
+     0     0  292.00000    0   20          -  292.00000      -     -    0s
+H    0     0                    7960.0000000  292.00000  96.3%     -    0s
+     0     2  292.00000    0   20 7960.00000  292.00000  96.3%     -    0s
+H  729   729                    2676.0000000  336.00000  87.4%   1.6    2s
+H  841   788                    1721.0000000 1625.70213  5.54%   2.2    2s
+
+Cutting planes:
+  Learned: 6
+
+Explored 902 nodes (3084 simplex iterations) in 3.06 seconds
+Thread count was 1 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.721000000000e+03, best bound 1.721000000000e+03, gap 0.0%
+1721
+(0,14) (25,0) (6,2) (2,24) (7,3) (3,8) (19,6) (13,7) (8,25) (11,9) (9,13) (24,11) (14,19) 

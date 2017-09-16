@@ -1,0 +1,39 @@
+Optimize a model with 2501 rows, 2600 columns and 16758 nonzeros
+Model has 1 quadratic constraint
+Coefficient statistics:
+  Matrix range    [1e+00, 5e+01]
+  Objective range [1e+02, 7e+02]
+  Bounds range    [1e+00, 5e+01]
+  RHS range       [1e+00, 5e+01]
+Presolve removed 0 rows and 52 columns
+Presolve time: 0.16s
+Presolved: 4903 rows, 4949 columns, 26362 nonzeros
+Variable types: 0 continuous, 4949 integer (4900 binary)
+
+Root relaxation: objective 2.580000e+02, 81 iterations, 0.01 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  258.00000    0   42          -  258.00000      -     -    0s
+     0     0  258.00000    0   42          -  258.00000      -     -    0s
+     0     0  258.00000    0   42          -  258.00000      -     -    0s
+     0     0  258.00000    0   45          -  258.00000      -     -    0s
+     0     0  258.00000    0   42          -  258.00000      -     -    0s
+     0     0  258.00000    0   42          -  258.00000      -     -    0s
+     0     0  258.00000    0   45          -  258.00000      -     -    0s
+     0     0  258.00000    0   45          -  258.00000      -     -    1s
+H    0     0                    3055.0000000  258.00000  91.6%     -    1s
+     0     2  258.00000    0   45 3055.00000  258.00000  91.6%     -    1s
+   662   664  258.00000  662   43 3055.00000  258.00000  91.6%   1.8    5s
+H  999   999                    2797.0000000  258.00000  90.8%   1.5    7s
+  1387  1389  258.00000 1387   41 2797.00000  258.00000  90.8%   1.4   10s
+  2249  2247 2075.13390 2238   41 2797.00000  388.00000  86.1%   1.5   15s
+
+Explored 2922 nodes (15757 simplex iterations) in 17.64 seconds
+Thread count was 1 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.797000000000e+03, best bound 2.797000000000e+03, gap 0.0%
+2797
+(0,47) (49,0) (4,19) (24,4) (5,12) (19,5) (8,29) (39,8) (12,10) (10,39) (11,18) (20,11) (15,23) (36,15) (17,24) (25,17) (18,43) (47,20) (26,22) (22,49) (23,25) (34,26) (29,34) (43,36) 

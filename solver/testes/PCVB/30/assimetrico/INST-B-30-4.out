@@ -1,0 +1,41 @@
+Optimize a model with 901 rows, 960 columns and 5858 nonzeros
+Model has 1 quadratic constraint
+Coefficient statistics:
+  Matrix range    [1e+00, 3e+01]
+  Objective range [1e+02, 7e+02]
+  Bounds range    [1e+00, 3e+01]
+  RHS range       [1e+00, 3e+01]
+Presolve removed 0 rows and 32 columns
+Presolve time: 0.01s
+Presolved: 1743 rows, 1769 columns, 9222 nonzeros
+Variable types: 0 continuous, 1769 integer (1740 binary)
+
+Root relaxation: objective 3.580000e+02, 53 iterations, 0.00 seconds
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+     0     0  358.00000    0   25          -  358.00000      -     -    0s
+     0     0  358.00000    0   27          -  358.00000      -     -    0s
+     0     0  358.00000    0   25          -  358.00000      -     -    0s
+     0     0  358.00000    0   26          -  358.00000      -     -    0s
+     0     0  358.00000    0   28          -  358.00000      -     -    0s
+     0     0  358.00000    0   26          -  358.00000      -     -    0s
+     0     0  358.00000    0   26          -  358.00000      -     -    0s
+H    0     0                    2021.0000000  358.00000  82.3%     -    0s
+     0     2  358.00000    0   26 2021.00000  358.00000  82.3%     -    0s
+H  729   727                    1787.0000000  396.00000  77.8%   1.7    1s
+*  792   716              36    1734.0000000 1707.04571  1.55%   3.2    2s
+*  794   677              37    1726.0000000 1707.41005  1.08%   3.2    2s
+*  795   642              37    1723.0000000 1707.41005  0.90%   3.3    2s
+
+Cutting planes:
+  Implied bound: 1
+
+Explored 801 nodes (3485 simplex iterations) in 2.05 seconds
+Thread count was 1 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.723000000000e+03, best bound 1.723000000000e+03, gap 0.0%
+1723
+(0,6) (19,0) (16,1) (1,26) (6,29) (8,22) (29,8) (9,16) (25,9) (22,10) (10,25) (11,15) (26,11) (15,18) (18,19) 

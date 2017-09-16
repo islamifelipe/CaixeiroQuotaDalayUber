@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 	//////////////////// CONSTRUINDO MODELO ////////////////////
 
 	GRBEnv env = GRBEnv();; 
- 	env.set("OutputFlag","0"); // desliga o output do solver
+ 	//env.set("OutputFlag","0"); // desliga o output do solver
  	GRBModel model = GRBModel(env);; // cria modelo
 
  	env.set(GRB_IntParam_Method, 1); // 1 é mais rapido //primal
@@ -189,12 +189,17 @@ int main(int argc, char *argv[])
 	/****************** EXECUCAO DO Lin-Kernighan ******************/
 
 
-	LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("ATSP"));
+	cout<<"Rota do caixeiro dada pelo LK = ";
+        LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("ATSP"));
     vector<int> path = parser.LKHSolution();
-    for (int i=0; i<path.size(); i++){
-    	cout<<path[i]<<" ";
+        int custosdf = 0;
+    for (int i=0; i<path.size()-1; i++){
+        cout<<path[i]<<" ";
+        custosdf +=  custos_vector[path[i]][path[i+1]];
     }
-    cout<<endl;
+    cout<<path[path.size()-1]<<" ";
+    custosdf +=  custos_vector[path[path.size()-1]][path[0]];
+    cout<<"Custo TSP = "<<custosdf<<endl;
 
     /****************** PREENCHE A MATRIZ X[i][j] COM OS VALORES DE PATH ******************/
 

@@ -6,7 +6,7 @@ Coefficient statistics:
   Bounds range    [1e+00, 3e+01]
   RHS range       [1e+00, 3e+01]
 Presolve removed 0 rows and 32 columns
-Presolve time: 0.01s
+Presolve time: 0.04s
 Presolved: 1743 rows, 1769 columns, 9222 nonzeros
 Variable types: 0 continuous, 1769 integer (1740 binary)
 
@@ -18,3 +18,23 @@ Root relaxation: objective 3.440000e+02, 54 iterations, 0.00 seconds
      0     0  344.00000    0   25          -  344.00000      -     -    0s
      0     0  344.00000    0   26          -  344.00000      -     -    0s
      0     0  344.00000    0   28          -  344.00000      -     -    0s
+     0     0  344.00000    0   25          -  344.00000      -     -    0s
+     0     0  344.00000    0   26          -  344.00000      -     -    0s
+     0     0  344.00000    0   28          -  344.00000      -     -    0s
+     0     0  344.00000    0   27          -  344.00000      -     -    0s
+H    0     0                    2005.0000000  344.00000  82.8%     -    0s
+     0     2  344.00000    0   27 2005.00000  344.00000  82.8%     -    0s
+H  768   718                    1960.0000000 1867.72503  4.71%   2.2    2s
+* 1005   682              37    1953.0000000 1887.21571  3.37%   7.0    2s
+H 1024   631                    1936.0000000 1888.39689  2.46%   7.2    3s
+
+Cutting planes:
+  Implied bound: 1
+
+Explored 1595 nodes (16551 simplex iterations) in 3.71 seconds
+Thread count was 1 (of 4 available processors)
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 1.936000000000e+03, best bound 1.936000000000e+03, gap 0.0%
+1936
+(2,0) (0,23) (22,2) (3,15) (26,3) (4,10) (18,4) (10,22) (11,13) (19,11) (13,18) (15,19) (24,20) (20,26) (23,29) (29,24) 

@@ -1,0 +1,30 @@
++++ Representação do cromossomo - Desenho na pasta
+oó 
++++ Populaçao inicial
+	(1) como o grafo é completo, sorteia-se v vértices, incluindo o vértice s, desde que a soma dos bonus associados seja maior ou igual a K (quota)
+	(2) Toma-se a clique correspondente
+	(3) aplica-se LK à clique
+
+
++++ SA para busca da melhor configuraçao dos passageiros
+
+	(1) Temperatura inicial alta
+	(2) Conforme a temperatura vai diminuindo, diminui-se a probabilidade de uma soluçao **pior** ser aceita. 
+	(3) Com temperatura alta, ha maior probabilidade de soluçao pior ser aceita.
+	(4) Ideia:
+		(4.1) Escolhe-se um passageiro p aleatorio 
+		(4.2) Se p nao estiver embarcado, tenta-se embarcá-lo e desembarcá-lo em algum vértice (de modo que a soluçao continue viavel)
+		(4.3) Se p estiver embarcado, tenta-se mudar o desembarque ou retirar p do cromossomo (p nao embarcou), de modo que a soluçao continue viavel
+		(4.4) Se o fitness do cromossomo melhorar, aceita
+		(4.5) Se o fitness do cromosso piorar, aceita-se com probabilidade do SA
+		(4.6) Repita de (4.1) a (4.5) #intrT vezes para uma tempreratua T
+		(4.7) Decremente T e execute (4.6)
+
++++ Busca local simples para a determinaçao de quais vértices o bonus deve ser coletado.
+
++++ Busca local classica do PCV para a sequência de cidades ?????? 
+
+===> Transposson 1: busca VNS
+	===> Sobre a rota? 
+	===> Sobre o carregamento?
+===> Plasmideo 1: T

@@ -19,6 +19,9 @@
 #include <sys/types.h>
 #include <iostream>
 
+#include "cromossomo.h"
+#include "param.h"
+
 using namespace std;
 
 int s; // vértice origem
@@ -69,7 +72,7 @@ void leituraDaInstancia(){
 		for (int j=0; j<4; j++){
 			cin>>L[i][j];
 		}
-        L[i][2]--; /*a instância deve indicar a origem entre 1 e n*/
+        L[i][2]--; /*a instância fornecida indica a origem entre 1 e n, mas o probrama numera os vértices de 0 a n*/
         L[i][3]--; /*idem*/
 	}
 
@@ -93,6 +96,9 @@ void leituraDaInstancia(){
 	//////////////////// FIM DA LEITURA DA INSTÂNCIA ////////////////////
 
 }
+
+
+
 
 int main(){
 

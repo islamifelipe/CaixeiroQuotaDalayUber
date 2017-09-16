@@ -1,10 +1,13 @@
 +++ Representação do cromossomo - Desenho na pasta
-oó 
+
 +++ Populaçao inicial
 	(1) como o grafo é completo, sorteia-se v vértices, incluindo o vértice s, desde que a soma dos bonus associados seja maior ou igual a K (quota)
 	(2) Toma-se a clique correspondente
 	(3) aplica-se LK à clique
 
+++ Manter uma variavel com o ótimo encontrado até agora
+	Pois um ótimo que estava na populaçao pode se puder 
+	e nao aparecer na proxima geraçao
 
 +++ SA para busca da melhor configuraçao dos passageiros
 
@@ -20,11 +23,26 @@ oó
 		(4.6) Repita de (4.1) a (4.5) #intrT vezes para uma tempreratua T
 		(4.7) Decremente T e execute (4.6)
 
-+++ Busca local simples para a determinaçao de quais vértices o bonus deve ser coletado.
 
-+++ Busca local classica do PCV para a sequência de cidades ?????? 
 
-===> Transposson 1: busca VNS
-	===> Sobre a rota? 
-	===> Sobre o carregamento?
-===> Plasmideo 1: T
++++ Um operador de mutaçao para o bonus
+	(1) Desliga o bonus de uma cidade e liga em outra, tal que a restriçao do bonus minimo K continue satisfeita
+	(2) Aplica SA para os passageiros
+
++++ *** Heuristica simples para a determinaçao de quais vértices o bonus deve ser coletado. 
+	(1) Ordena os bonus em ordem decrescente 
+	(2) Escolhe os bonus tais que a soma seja maior ou igual a K
+	(3) Troca probabilistística do bonus (desliga um, liga outro), satisfazendo a restriçao do K
+
+
++++ Busca Multi-operadores
+	(1) 2-OPT nas cidades
+	(2) Escolhe os bonus tais que a soma seja maior ou igual a K
+	(3) Troca probabilistística do bonus (desliga um, liga outro), satisfazendo a restriçao do K
+	(4) Aplica SA para passageiros
+
++++ Um operador de mutaçao pra remover cidade (Ver Matheus) ??????
++++ TEMPERATURA GLOBAL ??????
+
++++ Outros operadores de mutaçao
++++ Operadores de cruzamento

@@ -21,7 +21,7 @@
 
 #include "param.h"
 #include "populacaoInicial.cpp"
-#include "solucao.cpp"
+#include "Solucao.cpp"
 
 using namespace std;
 
@@ -38,6 +38,7 @@ double **L; // matriz lx4 de passageiros: tarifa maxxima, tempo maximo, origem e
 double **penalidades; // matriz lxn de penalidades: penalidade[i][j] = penalidade de desembarcar i em j
 double **vertices; // matriz nx2 do bonus e delay de cada vértice 
 
+Solucao *populacao[POPSIZE]; // populaçao 
 
 void leituraDaInstancia(){
 	//////////////////// LEITURA DA INSTÂNCIA ////////////////////
@@ -104,7 +105,7 @@ void leituraDaInstancia(){
 int main(int argc, char *argv[]){
 	TRandomMersenne rg(atoi(argv[1]));
 	leituraDaInstancia(); // semente
-	populacaoInicial(rg);
+	populacaoInicial(rg,populacao);
 
 
 	return 0;

@@ -1,6 +1,6 @@
-+++ Representação do cromossomo - Desenho na pasta
++++ (OK) Representação do cromossomo - Desenho na pasta
 
-+++ Populaçao inicial
++++ (OK) Populaçao inicial
 	(1) como o grafo é completo, sorteia-se v vértices, incluindo o vértice s, desde que a soma dos bonus associados seja maior ou igual a K (quota)
 	(2) Toma-se a clique correspondente
 	(3) aplica-se LK à clique
@@ -29,6 +29,12 @@
 	(1) Desliga o bonus de uma cidade e liga em outra, tal que a restriçao do bonus minimo K continue satisfeita
 	(2) Aplica SA para os passageiros
 
++++ Um operador de mutaçao pra trocar cidade (Ver Matheus)
+
++++ Um operador de mutaçao pra adicionar cidade 
+
++++ Um operador para inverter a ordem de duas cidades adjacentes
+
 +++ *** Heuristica simples para a determinaçao de quais vértices o bonus deve ser coletado. 
 	(1) Ordena os bonus em ordem decrescente 
 	(2) Escolhe os bonus tais que a soma seja maior ou igual a K
@@ -41,7 +47,7 @@
 	(3) Troca probabilistística do bonus (desliga um, liga outro), satisfazendo a restriçao do K
 	(4) Aplica SA para passageiros
 
-+++ Um operador de mutaçao pra remover cidade (Ver Matheus) ??????
+ 
 +++ TEMPERATURA GLOBAL ??????
 
 +++ Outros operadores de mutaçao

@@ -60,8 +60,8 @@ void getKliqueK(){
 }
 
 
-Solucao* getIndividuo(TRandomMersenne &rg){
-	Solucao *sol = new Solucao(rg);
+void getIndividuo(TRandomMersenne &rg, Solucao *sol){
+	//Solucao *sol = new Solucao(rg);
 	std::vector<int> verticesOrdenados; // gurda os vértices ordenados por bonus
 	for (int i=0; i<n; i++)verticesOrdenados.push_back(i); // o i-ésimo vértice
 	sort(verticesOrdenados.begin(),verticesOrdenados.end(), compare);
@@ -100,10 +100,15 @@ Solucao* getIndividuo(TRandomMersenne &rg){
    // double custosdf = 0;
     for (int i=0; i<path.size(); i++){
     	sol->cidades.push_back(vert[path[i]]);
-    	cout<<vert[path[i]]<<" ";
+    	sol->bonus.push_back(1);
+    	//cout<<vert[path[i]]<<" ";
        // custosdf +=  custos_vector[path[i]][path[i+1]];
     }
-    cout<<endl;
+    for(int i=0; i<l; i++){
+    	sol->embarques.push_back(0);
+    	sol->desembarques.push_back(0);
+    }
+   // cout<<endl;
     // cout<<path[path.size()-1]<<" ";
     // custosdf +=  custos_vector[path[path.size()-1]][path[0]];
     // cout<<"\nCusto TSP = "<<custosdf<<endl;
@@ -112,14 +117,14 @@ Solucao* getIndividuo(TRandomMersenne &rg){
 	// cout<<"comprimentoMinimo = "<<comprimentoMinimo<<endl;
 	// cout<<"K = "<<K<<endl;
 	// cout<<"sumK = "<<sumK<<endl;
-	return sol;
 }
 
 void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 	cout<<"Gerando populaçao inicial"<<endl;
 	for (int i=0; i<POPSIZE; i++){
-		Solucao *sol = getIndividuo(rg);
-		populacao[i] = sol;
+		populacao[i] = new Solucao(rg);
+		getIndividuo(rg, populacao[i]);
+		
 	}
 }
 

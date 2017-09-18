@@ -18,7 +18,8 @@ class Solucao {
 	std::vector<int> embarques; // diz se o passageiro correspondente embarcou ou nao
 	std::vector<int> desembarques; // diz onde o passageiro desembarcou
 	/* os vetores "cidades" e "bonus" têm o mesmo tamanho 
-		os vetores "embarques" e "desembarques" têm o mesmo tamanho
+		os vetores "embarques" e "desembarques" têm o comprimento da quantidade de passageiros (total, de todos os vértices)
+
 	*/
 
 	public:

@@ -1,6 +1,8 @@
 #ifndef CROMOSSOMO_H
 #define CROMOSSOMO_H
 
+//////////////////////// DEPRECIATED
+
 #include <vector>
 
 // representaçao do cromossomo (de tamanho variado)

@@ -19,8 +19,9 @@
 #include <sys/types.h>
 #include <iostream>
 
-#include "cromossomo.h"
 #include "param.h"
+#include "populacaoInicial.cpp"
+#include "solucao.cpp"
 
 using namespace std;
 
@@ -94,15 +95,16 @@ void leituraDaInstancia(){
 	}
 
 	//////////////////// FIM DA LEITURA DA INSTÂNCIA ////////////////////
-
+	cout<<"Instância lida com sucesso!"<<endl;
 }
 
 
 
 
-int main(){
-
-
+int main(int argc, char *argv[]){
+	TRandomMersenne rg(atoi(argv[1]));
+	leituraDaInstancia(); // semente
+	populacaoInicial(rg);
 
 
 	return 0;

@@ -31,12 +31,12 @@ Mas este subconnjunto deve conter o vértice inicial s*/
 bool getSubsetKVertices(int nv, int vert[MAX_N], TRandomMersenne &rg){
 	double sum = 0;
 	int tentativaCont = 0, index, v;
-	std::vector<int> amostral;
-	vert[0] = s;
 	do {
+		std::vector<int> amostral;
+		vert[0] = s;
 		for (int i=0; i<n; i++) 
 			if (i!=s) amostral.push_back(i);
-		sum = 0;
+		sum = vertices[s][0]; // soma o bonus
 		for (int i=1; i<nv; i++){ // sorteia-se nv-1 (o vértice s ja está no vetor final) vértices
 			index = rg.IRandom(0,amostral.size()-1);
 			v = amostral[index];//sorteia um vértice;
@@ -65,13 +65,14 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
 	std::vector<int> verticesOrdenados; // gurda os vértices ordenados por bonus
 	for (int i=0; i<n; i++)verticesOrdenados.push_back(i); // o i-ésimo vértice
 	sort(verticesOrdenados.begin(),verticesOrdenados.end(), compare);
-	comprimentoMinimo=0;
+	comprimentoMinimo=0; // a quantidade minima de vértices (com os maiores bonus), tal que é possivel atingir K
 	double sumK=0;
 	for (int i=0; i<n && sumK<K; i++) {
 		sumK+=vertices[verticesOrdenados[i]][0];
 		comprimentoMinimo++;
 	}
-	int vert[MAX_N];
+	comprimentoMinimo++;
+	int vert[MAX_N]; // guarda os vértices da clique
 	std::vector<int> vert2;
 	vector< vector<double> > custos_vector;
 	int nv = rg.IRandom(comprimentoMinimo, n);
@@ -100,13 +101,9 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
    // double custosdf = 0;
     for (int i=0; i<path.size(); i++){
     	sol->cidades.push_back(vert[path[i]]);
-    	sol->bonus.push_back(1);
+    	sol->bonus.push_back(true);
     	//cout<<vert[path[i]]<<" ";
        // custosdf +=  custos_vector[path[i]][path[i+1]];
-    }
-    for(int i=0; i<l; i++){
-    	sol->embarques.push_back(0);
-    	sol->desembarques.push_back(0);
     }
    // cout<<endl;
     // cout<<path[path.size()-1]<<" ";
@@ -124,7 +121,10 @@ void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 	for (int i=0; i<POPSIZE; i++){
 		populacao[i] = new Solucao(rg);
 		getIndividuo(rg, populacao[i]);
-		
+		populacao[i]->printSolucao();
+		populacao[i]->carregamentoAleatorio();
+		// populacao[i]->calcularFitiness();
+		//
 	}
 }
 

@@ -37,6 +37,7 @@ double **tempo; // matriz de tempo das arestas
 double **L; // matriz lx4 de passageiros: tarifa maxxima, tempo maximo, origem e destino
 double **penalidades; // matriz lxn de penalidades: penalidade[i][j] = penalidade de desembarcar i em j
 double **vertices; // matriz nx2 do bonus e delay de cada vértice 
+std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz (a lista de) os passageiros que esparam embarcar em i
 
 Solucao *populacao[POPSIZE]; // populaçao 
 
@@ -55,7 +56,7 @@ void leituraDaInstancia(){
 	L = new double*[l]; // matriz lx4 de passageiros: tarifa maxxima, tempo maximo, origem e destino
 	penalidades = new double*[l]; // matriz lxn de penalidades: penalidade[i][j] = penalidade de desembarcar i em j
 	vertices = new double*[n]; // matriz nx2 do bonus e delay de cada vértice 
-
+	passageirosPorVertice = new std::vector<int>[n];
 
 	for (int i=0; i<n; i++){ // inicializa e ler custos das arestas
 		custos[i] = new double[n];
@@ -76,6 +77,8 @@ void leituraDaInstancia(){
 		}
         L[i][2]--; /*a instância fornecida indica a origem entre 1 e n, mas o probrama numera os vértices de 0 a n*/
         L[i][3]--; /*idem*/
+        int vert_origem = (int) L[i][2];
+        passageirosPorVertice[vert_origem].push_back(i); // passageiro i deseja embarcar em L[i][2]
 	}
 
 	for (int i=0; i<l; i++){
@@ -106,7 +109,14 @@ int main(int argc, char *argv[]){
 	TRandomMersenne rg(atoi(argv[1]));
 	leituraDaInstancia(); // semente
 	populacaoInicial(rg,populacao);
-
+	
+	// for (int i=0; i<n; i++){
+	// 	cout<<"No vértice "<<i+1<<" desejam embrcar os passageiros : ";
+	// 	for (int p=0; p<passageirosPorVertice[i].size(); p++){
+	// 		cout<<passageirosPorVertice[i][p]<<" ";
+	// 	}
+	// 	cout<<endl;
+	// }
 
 	return 0;
 }

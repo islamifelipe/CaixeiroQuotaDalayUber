@@ -22,7 +22,7 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 
 #define MAX_N 1000 // quantidade maxima de vértices
 
-#define POPSIZE 5 //tamanho da populaçao de cromossomos
+#define POPSIZE 1 //tamanho da populaçao de cromossomos
 
 /*parâmetros dos cromossomos*/
 

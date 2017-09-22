@@ -269,11 +269,24 @@ class Solucao {
 				}
 			}
 			if (pir!=pppp && minPenalidadeDesembarque!=pir && minPenalidadeDesembarque!=-1){ // embarcou!!!
+				calcularFitiness(); // TODO: pode melhorar a chamada a esse calculo do fitness. Pra nao ficar chamando toda vida
+				double fitnessAnt =fitness;
 				embarques[passageiroP] = pir;
 				desembarques[passageiroP] = minPenalidadeDesembarque;
 				int fimmmm = minPenalidadeDesembarque;
 				if (minPenalidadeDesembarque==0) fimmmm = cidades.size();
 				for (int poss=pir; poss<fimmmm; poss++) passageirosPorAresta[poss]++;
+				calcularFitiness();
+				double fitnessDepois = fitness;
+				if (fitnessDepois>fitnessAnt){
+					fitness = fitnessAnt;
+					embarques[passageiroP] = -1;
+					desembarques[passageiroP] = -1;
+					fimmmm = minPenalidadeDesembarque;
+					if (minPenalidadeDesembarque==0) fimmmm = cidades.size();
+					for (int poss=pir; poss<fimmmm; poss++) passageirosPorAresta[poss]--;
+				
+				}
 			}
 		}
 		for (int i = 0; i<cidades.size(); i++){

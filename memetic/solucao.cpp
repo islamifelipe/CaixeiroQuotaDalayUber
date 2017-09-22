@@ -41,6 +41,30 @@ class Solucao {
 
 	// Este método assume que a soluçao é viavel
 	void calcularFitiness(){
+		fitness = 0;
+		int embarcouOnde, desembarcouOnde; // index (do vetor "cidades")
+		std::vector<int> passageirosPorAresta; // inicia tudo com 1, por causa do motorista (caixeiro)
+		//passageirosPorAresta.size() deve ser cidades.size()
+		for (int i = 0; i<cidades.size(); i++) passageirosPorAresta.push_back(1);
+
+		for (int i=0; i<l; i++){
+			if (embarques[i]!=-1){
+				embarcouOnde = embarques[i]; 
+				desembarcouOnde = desembarques[i]; 
+				if (desembarcouOnde==0) desembarcouOnde = cidades.size();
+				for (int j=embarcouOnde; j<desembarcouOnde; j++) passageirosPorAresta[j]++;
+				fitness+=penalidades[i][cidades[desembarques[i]]]; // contabiliza as penalidades
+			}
+		}
+		int c1, c2;
+		for (int i = 0; i<cidades.size()-1; i++){
+			c1 = cidades[i];
+			c2 = cidades[i+1];
+			fitness+=custos[c1][c2]/passageirosPorAresta[i];
+		}
+		c1 = cidades[cidades.size()-1];
+		c2 = cidades[0];
+		fitness+=custos[c1][c2]/passageirosPorAresta[cidades.size()-1];
 
 	}
 
@@ -51,7 +75,6 @@ class Solucao {
 	// ATANCAO: NAO CONFUNDIR TEMPO DA ARESTA (i,j) COM O CUSTO DA ARESTA (i,j)
 	// retorna true se a soluçao atende a todas as restriçoes do problema
 	// O delay do bonus é contabilizado para o passageiro apenas na origem
-	// TODO: falta testar
 	bool isViavel(){
 		if (cidades.size()==0) return false;
 
@@ -167,6 +190,7 @@ class Solucao {
 	// Nao se preocupa se o fitness é bom ou nao
 	// a soluçao, ao final deste método, deve continuar viável
 	// TODO: ordenar decrescente tarifa maxima dos passageiros
+	// TODO: decidir o desembarque pela menor penalidade
 	void carregamentoAleatorio(){
 		int contPassageiros=0; // deve ser menor que R
 		std::vector<int> amostral;
@@ -190,6 +214,8 @@ class Solucao {
 		desembarques[14] = 3;
 
 		cout<<"isViavel() = "<<isViavel() <<endl;
+		calcularFitiness();
+		cout<<"fitness = "<<getFitness()<<endl;
 		//cout<<"isViavel() = "<<isViavel()<<endl;;
 		// for (int i=0; i<cidades.size() && contPassageiros<R; i++){
 		// 	index = rg->IRandom(0, passageirosPorVertice[i].size()-1); // sorteia um passageiro aleatorio

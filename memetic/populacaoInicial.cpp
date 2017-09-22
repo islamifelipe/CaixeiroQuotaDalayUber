@@ -122,7 +122,8 @@ void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 		populacao[i] = new Solucao(rg);
 		getIndividuo(rg, populacao[i]);
 		populacao[i]->printSolucao();
-		populacao[i]->carregamentoAleatorio();
+		populacao[i]->heuristicaDeCarregamento1();
+		cout<<endl;
 		// populacao[i]->calcularFitiness();
 		//
 	}

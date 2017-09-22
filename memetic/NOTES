@@ -16,7 +16,7 @@
 	(3) Com temperatura alta, ha maior probabilidade de soluçao pior ser aceita.
 	(4) Ideia:
 		(4.1) Escolhe-se um passageiro p aleatorio 
-		(4.2) Se p nao estiver embarcado, tenta-se embarcá-lo e desembarcá-lo em algum vértice (de modo que a soluçao continue viavel)
+		(4.2) Se p nao estiver embarcado, tenta-se embarcá-lo e desembarcá-lo em algum vértice (de modo que a soluçao continue viavel) (USAR???)
 		(4.3) Se p estiver embarcado, tenta-se mudar o desembarque ou retirar p do cromossomo (p nao embarcou), de modo que a soluçao continue viavel
 		(4.4) Se o fitness do cromossomo melhorar, aceita
 		(4.5) Se o fitness do cromosso piorar, aceita-se com probabilidade do SA

@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <iostream>
+#include <climits>
 using namespace std;
 /*O comprimento do cromossomo é variável*/
 
@@ -23,6 +24,11 @@ class Solucao {
 		os vetores "embarques" e "desembarques" têm o comprimento da quantidade de passageiros (total, de todos os vértices)
 
 	*/
+
+	private:
+	bool static compara(int a1, int a2){ // passageiro a1,a2
+		return L[a1][0]>L[a2][0];
+	}
 
 	public:
 	Solucao(){
@@ -125,21 +131,22 @@ class Solucao {
 				embarcouOnde = embarques[i]; 
 				desembarcouOnde = desembarques[i]; 
 				delayPassageiro = tempoAteVerticeI[desembarcouOnde] - tempoAteVerticeI[embarcouOnde] + vertices[cidades[embarcouOnde]][1]*bonus[embarcouOnde] - vertices[cidades[desembarcouOnde]][1]*bonus[desembarcouOnde]; // adiciona o delay de origem e retira e do chegada
-				cout<<"Passageiro "<<i+1<<" Embarcou em "<<cidades[embarcouOnde];
+				// cout<<"Passageiro "<<i+1<<" Embarcou em "<<cidades[embarcouOnde]+1;
 				if (desembarcouOnde==0) {
 					desembarcouOnde = tempoAteVerticeI.size()-1; // desembarcou na origem, apos a volta completa do caixeiro
 					delayPassageiro = tempoAteVerticeI[desembarcouOnde] - tempoAteVerticeI[embarcouOnde] + vertices[cidades[embarcouOnde]][1]*bonus[embarcouOnde] - vertices[cidades[0]][1]*bonus[0]; // adiciona o delay de origem e retira e do chegada
-					cout<<" e Desembarcou em "<<cidades[0]<<endl;
-				} else cout<<" e Desembarcou em "<<cidades[desembarcouOnde]<<endl;
+					// cout<<" e Desembarcou em "<<cidades[0]+1<<endl;
+				} //else cout<<" e Desembarcou em "<<cidades[desembarcouOnde]+1<<endl;
 
-				cout<<"delayPassageiro = "<<delayPassageiro<<endl;
+				// cout<<"delayPassageiro = "<<delayPassageiro<<endl;
 				if (delayPassageiro>L[i][1]) {
 					cout<<"PROBLEMA DELAY = "<<delayPassageiro<<" X "<<L[i][1]<<endl;
 					return false;
 				}
 				for (int j=embarcouOnde; j<desembarcouOnde; j++){
 					passageirosPorAresta[j]++; // contabiliza passageiros por aresta
-					if (passageirosPorAresta[j]>R) {
+					if (passageirosPorAresta[j]>R+1) {
+						cout<<passageirosPorAresta[j]<<endl;
 						cout<<"PROBLEMA CAPACIDADE DO CARRO "<<endl;;
 						return false;
 					} 
@@ -170,7 +177,7 @@ class Solucao {
 				c2 = cidades[indexFim];
 				sumCusto += custos[c1][c2]/(double)passageirosPorAresta[desembarcouOnde-1];
 				
-				cout<<"sumCusto = "<<sumCusto<<endl;
+				// cout<<"sumCusto = "<<sumCusto<<endl;
 				if (sumCusto > L[i][0]) {
 					cout<<"PROBLEMA CUSTO MAXIMO = "<<sumCusto <<" X "<< L[i][0]<<endl;
 					return false;
@@ -180,47 +187,122 @@ class Solucao {
 		return true;
 	}
 
-	/*tenta carregar i em algum vértice e descarregar em algum outro vértice na sequência do caminho
-	Se conseguir, retorna true*/
-	bool carrega(int i){
+	// tenta carregar i em algum vértice e descarregar em algum outro vértice na sequência do caminho
+	// Se conseguir, retorna true
+	// bool carrega(int i){
 
-	}
+	// }
 
-	// determina embarques e desembarques aleatórios, mas sem violar as restriçoes do problema
-	// Nao se preocupa se o fitness é bom ou nao
-	// a soluçao, ao final deste método, deve continuar viável
-	// TODO: ordenar decrescente tarifa maxima dos passageiros
-	// TODO: decidir o desembarque pela menor penalidade
-	void carregamentoAleatorio(){
-		int contPassageiros=0; // deve ser menor que R
-		std::vector<int> amostral;
-		//int index = 0;
-		embarques[30] = 5;
-		desembarques[30] = 0;
+	/*Heuristica essencialmente gulosa
+	Ordena os passageiros aptos a embarcar em ordem decrescente, de acordo com a tarifa maxima
+	Se o i-ésimo passageiro desta ordenaçao puder embarcar, embarca-o e verifica-se, para os vértices onde ele está apto a desembarcar, aquele que tem menor penalidade
+	a soluçao, ao final deste método, deve continuar viável*/
+	void heuristicaDeCarregamento1(){
+		
+		std::vector<int> passageirosPorAresta; //passageirosPorAresta.size() deve ser cidades.size()
+		std::vector<double> tempoAteVerticeI; //tempoAteVerticeI.size() deve ser cidades.size()+1
+		tempoAteVerticeI.push_back(vertices[cidades[0]][1]*bonus[0]); // Inicialmente, considera-se somente o tempo de pegar o bonus em 's = cidades[0]', se for o caso
+		double acumulador=0;
+		for (int i = 1; i<cidades.size(); i++){
+			acumulador = tempoAteVerticeI[i-1]+vertices[cidades[i]][1]*bonus[i]+tempo[cidades[i-1]][cidades[i]];
+			tempoAteVerticeI.push_back(acumulador);
+			passageirosPorAresta.push_back(1); // vai somar mais na frente
+		}
+		acumulador = tempoAteVerticeI[cidades.size()-1]+tempo[cidades[cidades.size()-1]][cidades[0]];
+		tempoAteVerticeI.push_back(acumulador); //volta ao vértice inicial
+		passageirosPorAresta.push_back(1);// vai somar mais na frente
+		//tempoAteVerticeI[i] - tempoAteVerticeI[j] = chegada - origem = representa o tempo que passageiro permanecerá no carro ao se deslocar na cidade[j] à cidade[i],
+		//mas tal valor contabiliza o tempo de tomar o bonus na chegada, mas nao na origem. É preciso, pois, retirar o tempo da chegada e adicionar o da origem 
 
-		embarques[0] = 0;
-		desembarques[0] = 1;
+		std::vector<int> ordemCrescenteTarifas; //guarda as tarifas em ordem crescente
+		for (int i=0; i<cidades.size(); i++){
+			for (int p=0; p<passageirosPorVertice[cidades[i]].size(); p++){
+				ordemCrescenteTarifas.push_back(passageirosPorVertice[cidades[i]][p]);
+			}
+		}
+		sort(ordemCrescenteTarifas.begin(), ordemCrescenteTarifas.end(), compara);
+		double tarifaMaxima, tempoMaximo;
+		int passageiroP, embarcaEm, desembarcaEm;
+		//bool embarca = false;
+		for (int i=0; i<ordemCrescenteTarifas.size(); i++){ // tenta embacar o passageiro ordemCrescenteTarifas[i] no vértice L[ordemCrescenteTarifas[i]][2]
+			//embarca = false;
+			passageiroP = ordemCrescenteTarifas[i];
+			tarifaMaxima = L[passageiroP][0];
+			tempoMaximo = L[passageiroP][1];
+			embarcaEm = L[passageiroP][2];
+			double custoCompartilhado = 0, delayPassageiro;
+			int pir = 0, pppp;  // pir e pppp, possiveis embarques e desembaques, respectivamente, sao indixes de "cidades"
+			int c1, c2;
+			for ( ; pir<cidades.size() && cidades[pir]!=embarcaEm; pir++);
+			double minPenalidade = INT_MAX; // procura-se a penalidade minima entre os vértices onde o passageiro pode desembarcar
+			int minPenalidadeDesembarque = -1; // item 
+			for (pppp=pir+1; pppp<cidades.size(); pppp++){  
+				delayPassageiro = tempoAteVerticeI[pppp] - tempoAteVerticeI[pir] + vertices[cidades[pir]][1]*bonus[pir] - vertices[cidades[pppp]][1]*bonus[pppp]; // adiciona o delay de origem e retira e do chegada
+				c1 = cidades[pppp-1];
+				c2 = cidades[pppp];
+				custoCompartilhado+=custos[c1][c2]/(passageirosPorAresta[pppp-1]+1); // +1 por causa do novo passageiro que estamos prestes a embarcar
+				if ((passageirosPorAresta[pppp-1]+1)<R+1 && delayPassageiro<tempoMaximo && custoCompartilhado<tarifaMaxima){
+					//se entrar nesse if, significa dizer que o passageiro pode chegar ao vértice cidades[pppp].
+					//devemos continuar pra saber se ele pode ir mais adiante
+					if (penalidades[passageiroP][cidades[pppp]]<minPenalidade){
+						minPenalidade = penalidades[passageiroP][cidades[pppp]];
+						minPenalidadeDesembarque = pppp;
+					}
+				} else {
+					pppp--;
+					break;
+				}
+			}
+			if (pppp==cidades.size()){ // testa o possivel desembarque na origem
+				pppp = tempoAteVerticeI.size()-1;;
+				delayPassageiro = tempoAteVerticeI[pppp] - tempoAteVerticeI[pir] + vertices[cidades[pir]][1]*bonus[pir] - vertices[cidades[0]][1]*bonus[pppp]; // adiciona o delay de origem e retira e do chegada
+				c1 = cidades[cidades.size()-1];
+				c2 = cidades[0];
+				custoCompartilhado+=custos[c1][c2]/(passageirosPorAresta[cidades.size()-1]+1); // +1 por causa do novo passageiro que estamos prestes a embarcar
+				if (passageirosPorAresta[cidades.size()-1]+1<R+1 && delayPassageiro<tempoMaximo && custoCompartilhado<tarifaMaxima){
+					//se entrar nesse if, significa dizer que o passageiro pode chegar ao vértice cidades[0].
+					//devemos continuar pra saber se ele pode ir mais adiante
+					if (penalidades[passageiroP][cidades[0]]<minPenalidade){
+						minPenalidade = penalidades[passageiroP][cidades[0]];
+						minPenalidadeDesembarque = 0;
+					}
+				}
+			}
+			if (pir!=pppp && minPenalidadeDesembarque!=pir && minPenalidadeDesembarque!=-1){ // embarcou!!!
+				embarques[passageiroP] = pir;
+				desembarques[passageiroP] = minPenalidadeDesembarque;
+				int fimmmm = minPenalidadeDesembarque;
+				if (minPenalidadeDesembarque==0) fimmmm = cidades.size();
+				for (int poss=pir; poss<fimmmm; poss++) passageirosPorAresta[poss]++;
+			}
+		}
+		for (int i = 0; i<cidades.size(); i++){
+			cout<<passageirosPorAresta[i]<<" ";
+		}
+		cout<<endl;
+		// 3055.7
+		// embarques[30] = 5;
+		// desembarques[30] = 0;
 
-		embarques[1] = 0;
-		desembarques[1] = 2;
+		// embarques[0] = 0;
+		// desembarques[0] = 1;
 
-		embarques[2] = 0;
-		desembarques[2] = 2;
+		// embarques[1] = 0;
+		// desembarques[1] = 2;
 
-		embarques[5] = 0;
-		desembarques[5] = 2;
+		// embarques[2] = 0;
+		// desembarques[2] = 2;
 
-		embarques[14] = 1;
-		desembarques[14] = 3;
+		// embarques[5] = 0;
+		// desembarques[5] = 2;
+
+		// embarques[14] = 1;
+		// desembarques[14] = 3;
 
 		cout<<"isViavel() = "<<isViavel() <<endl;
 		calcularFitiness();
 		cout<<"fitness = "<<getFitness()<<endl;
-		//cout<<"isViavel() = "<<isViavel()<<endl;;
-		// for (int i=0; i<cidades.size() && contPassageiros<R; i++){
-		// 	index = rg->IRandom(0, passageirosPorVertice[i].size()-1); // sorteia um passageiro aleatorio
-
-		// }
+		
 	}
 
 
@@ -259,6 +341,7 @@ class Solucao {
 	// 	}
 	// 	return true;
 	// }
+
 };
 
 #endif

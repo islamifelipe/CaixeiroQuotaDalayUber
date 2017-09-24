@@ -214,19 +214,19 @@ class Solucao {
 		//tempoAteVerticeI[i] - tempoAteVerticeI[j] = chegada - origem = representa o tempo que passageiro permanecerá no carro ao se deslocar na cidade[j] à cidade[i],
 		//mas tal valor contabiliza o tempo de tomar o bonus na chegada, mas nao na origem. É preciso, pois, retirar o tempo da chegada e adicionar o da origem 
 
-		std::vector<int> ordemCrescenteTarifas; //guarda as tarifas em ordem crescente
+		std::vector<int> ordemDecrescenteTarifas; //guarda as tarifas em ordem descrescente
 		for (int i=0; i<cidades.size(); i++){
 			for (int p=0; p<passageirosPorVertice[cidades[i]].size(); p++){
-				ordemCrescenteTarifas.push_back(passageirosPorVertice[cidades[i]][p]);
+				ordemDecrescenteTarifas.push_back(passageirosPorVertice[cidades[i]][p]);
 			}
 		}
-		sort(ordemCrescenteTarifas.begin(), ordemCrescenteTarifas.end(), compara);
+		sort(ordemDecrescenteTarifas.begin(), ordemDecrescenteTarifas.end(), compara);
 		double tarifaMaxima, tempoMaximo;
-		int passageiroP, embarcaEm, desembarcaEm;
+		int passageiroP, embarcaEm;
 		//bool embarca = false;
-		for (int i=0; i<ordemCrescenteTarifas.size(); i++){ // tenta embacar o passageiro ordemCrescenteTarifas[i] no vértice L[ordemCrescenteTarifas[i]][2]
+		for (int i=0; i<ordemDecrescenteTarifas.size(); i++){ // tenta embacar o passageiro ordemDecrescenteTarifas[i] no vértice L[ordemDecrescenteTarifas[i]][2]
 			//embarca = false;
-			passageiroP = ordemCrescenteTarifas[i];
+			passageiroP = ordemDecrescenteTarifas[i];
 			tarifaMaxima = L[passageiroP][0];
 			tempoMaximo = L[passageiroP][1];
 			embarcaEm = L[passageiroP][2];
@@ -320,7 +320,7 @@ class Solucao {
 
 
 
-	void printSolucao(){ // TODO : completar
+	void printSolucao(){ // TODO: completar
 		cout<<"Sequência de cidades : ";
 		for (int i=0; i<cidades.size(); i++){
 			cout<<cidades[i]<<" ";

@@ -112,10 +112,10 @@ int main(int argc, char *argv[]){
 	populacaoInicial(rg,populacao);
 	 
 	for (int i=0; i<POPSIZE; i++){
-		populacao[i]->printSolucao();
+		//populacao[i]->printSolucao();
 		cout<<"Fitness = "<<populacao[i]->getFitness()<<endl;;
 		SA(*populacao[i],rg);
-		populacao[i]->printSolucao();
+		//populacao[i]->printSolucao();
 		cout<<"NOVO SA Fitness = "<<populacao[i]->getFitness()<<endl;;
 	}
 	

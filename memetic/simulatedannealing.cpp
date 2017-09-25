@@ -21,7 +21,7 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 	double temperature = TEMPERATURA;
 	double iteracaoK = ITERACAO_K/1.0;
 	int quantIteracaoK = (int) iteracaoK;
-	int v1, v2, v_aux;
+	int v1, v2;
 	double probabilidade;
 	double deltaC;
 	Solucao aux(rg);
@@ -32,14 +32,11 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 		for (int i=0; i<quantIteracaoK; i++){
 			//gera nova soluçao
 
-			v1 = rg.IRandom(1,aux.cidades.size()-1);
-			while ((v2 = rg.IRandom(1,aux.cidades.size()-1)) == v1);
+			v1 = rg.IRandom(1,aux.getSize()-1);
+			while ((v2 = rg.IRandom(1,aux.getSize()-1)) == v1);
 
-			v_aux = aux.cidades[v1];
-			aux.cidades[v1] = aux.cidades[v2];
-			aux.cidades[v2] = v_aux;
+			aux.trocaCidades(v1, v2);
 			aux.heuristicaDeCarregamento1();
-			//cout<<"v2 = "<<v2<<endl;
 			
 			deltaC = aux.getFitness() - xk.getFitness();
 			if (deltaC<=0){ // aceita soluçao
@@ -53,9 +50,7 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 				if (pp<probabilidade){
 					xk = aux;
 				} else { // volta o aux ao que era antes (ou seja, ao xk - anterior)
-					v_aux = aux.cidades[v1];
-					aux.cidades[v1] = aux.cidades[v2];
-					aux.cidades[v2] = v_aux;
+					aux.trocaCidades(v1, v2);
 				}
 			}
 		}

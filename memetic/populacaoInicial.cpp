@@ -97,8 +97,9 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
     vector<int> path = parser.LKHSolution(); // path tem os valores do vetor vert2, que correspondem ao index em vert
    // double custosdf = 0;
     for (int i=0; i<path.size(); i++){
-    	sol->cidades.push_back(vert[path[i]]);
-    	sol->bonus.push_back(true);
+    	sol->addCidade(vert[path[i]], true);
+    	// sol->cidades.push_back(vert[path[i]]);
+    	// sol->bonus.push_back(true);
     	//cout<<vert[path[i]]<<" ";
        // custosdf +=  custos_vector[path[i]][path[i+1]];
     }
@@ -116,7 +117,6 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
 void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 	cout<<"Gerando populaçao inicial"<<endl;
 	for (int i=0; i<POPSIZE; i++){
-		cout<<"i = "<<i<<endl;
 		populacao[i] = new Solucao(rg);
 		getIndividuo(rg, populacao[i]);
 		//populacao[i]->printSolucao();

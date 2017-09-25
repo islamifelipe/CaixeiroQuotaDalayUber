@@ -25,7 +25,7 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 #define MAX_N 1000 // quantidade maxima de vértices
 
 /*parâmetros dos cromossomos*/
-#define POPSIZE 100 //tamanho da populaçao de cromossomos
+#define POPSIZE 20 //tamanho da populaçao de cromossomos
 
 /*Parâmetros do GA*/
 #define TAXADECRUZAMENTO 0.97  // 98% por geraçao

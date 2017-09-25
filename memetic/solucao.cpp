@@ -198,7 +198,10 @@ class Solucao {
 	Se o i-ésimo passageiro desta ordenaçao puder embarcar, embarca-o e verifica-se, para os vértices onde ele está apto a desembarcar, aquele que tem menor penalidade
 	a soluçao, ao final deste método, deve continuar viável*/
 	void heuristicaDeCarregamento1(){
-		
+		for(int i=0; i<l; i++){
+	    	embarques[i] = -1; // nao embarcou
+	    	desembarques[i] = -1; // nao desembarcou
+  		}
 		std::vector<int> passageirosPorAresta; //passageirosPorAresta.size() deve ser cidades.size()
 		std::vector<double> tempoAteVerticeI; //tempoAteVerticeI.size() deve ser cidades.size()+1
 		tempoAteVerticeI.push_back(vertices[cidades[0]][1]*bonus[0]); // Inicialmente, considera-se somente o tempo de pegar o bonus em 's = cidades[0]', se for o caso
@@ -289,10 +292,11 @@ class Solucao {
 				}
 			}
 		}
-		for (int i = 0; i<cidades.size(); i++){
-			cout<<passageirosPorAresta[i]<<" ";
-		}
-		cout<<endl;
+		// for (int i = 0; i<cidades.size(); i++){
+		// 	cout<<passageirosPorAresta[i]<<" ";
+		// }
+		// cout<<endl;
+
 		// 3055.7
 		// embarques[30] = 5;
 		// desembarques[30] = 0;
@@ -312,9 +316,10 @@ class Solucao {
 		// embarques[14] = 1;
 		// desembarques[14] = 3;
 
-		cout<<"isViavel() = "<<isViavel() <<endl;
-		calcularFitiness();
-		cout<<"fitness = "<<getFitness()<<endl;
+		// cout<<"isViavel() = "<<isViavel() <<endl;
+		if (isViavel()) calcularFitiness();
+		else cout<<"ERROR CARREGAMENTO"<<endl;
+		// cout<<"fitness = "<<getFitness()<<endl;
 		
 	}
 

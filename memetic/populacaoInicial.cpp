@@ -55,9 +55,6 @@ bool getSubsetKVertices(int nv, int vert[MAX_N], TRandomMersenne &rg){
 	}
 }
 
-void getKliqueK(){
-
-}
 
 
 void getIndividuo(TRandomMersenne &rg, Solucao *sol){
@@ -119,11 +116,13 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
 void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 	cout<<"Gerando populaçao inicial"<<endl;
 	for (int i=0; i<POPSIZE; i++){
+		cout<<"i = "<<i<<endl;
 		populacao[i] = new Solucao(rg);
 		getIndividuo(rg, populacao[i]);
-		populacao[i]->printSolucao();
+		//populacao[i]->printSolucao();
 		populacao[i]->heuristicaDeCarregamento1();
-		cout<<endl;
+		//cout<<"Fintness = "<<populacao[i]->getFitness()<<endl;
+		//cout<<endl;
 		// populacao[i]->calcularFitiness();
 		//
 	}

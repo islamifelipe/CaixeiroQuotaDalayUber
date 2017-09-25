@@ -20,11 +20,26 @@ extern double **vertices; // matriz nx2 do bonus e delay de cada vértice
 extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz (a lista de) os passageiros que esparam embarcar em i
 
 
+#define EPS 1e-9 // quanquer coisa menor que esse valor, é considerado 0
+
 #define MAX_N 1000 // quantidade maxima de vértices
 
+/*parâmetros dos cromossomos*/
 #define POPSIZE 100 //tamanho da populaçao de cromossomos
 
-/*parâmetros dos cromossomos*/
+/*Parâmetros do GA*/
+#define TAXADECRUZAMENTO 0.97  // 98% por geraçao
+#define TAXADEMUTACAO 0.1 // 10% por geraçao
+#define QUANTGERACOES 30 // quantidade de iteracoes do M-GA
+
+/*Parâmetros para o Simulated Annealing*/
+#define TEMPERATURA 30 // vai sendo dividido por FATORDECAIMENTO
+#define FATORDECAIMENTO 1.8
+#define FATORDECAIMENTOITERACAO 1.8
+#define ITERACAO_K 15 // vai sendo multiplicado por FATORDECAIMENTOITERACAO
+// O algoritmo para quando a temperatura for menor que 1
+// quanto menor a temperatura, maior a quantidade de iteraçoes
+
 
 
 #endif

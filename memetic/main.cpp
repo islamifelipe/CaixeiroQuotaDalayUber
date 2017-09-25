@@ -22,6 +22,7 @@
 #include "param.h"
 #include "populacaoInicial.cpp"
 #include "Solucao.cpp"
+#include "simulatedannealing.cpp"
 
 using namespace std;
 
@@ -109,6 +110,14 @@ int main(int argc, char *argv[]){
 	TRandomMersenne rg(atoi(argv[1]));
 	leituraDaInstancia(); // semente
 	populacaoInicial(rg,populacao);
+	 
+	for (int i=0; i<POPSIZE; i++){
+		populacao[i]->printSolucao();
+		cout<<"Fitness = "<<populacao[i]->getFitness()<<endl;;
+		SA(*populacao[i],rg);
+		populacao[i]->printSolucao();
+		cout<<"NOVO SA Fitness = "<<populacao[i]->getFitness()<<endl;;
+	}
 	
 	// for (int i=0; i<n; i++){
 	// 	cout<<"No vértice "<<i+1<<" desejam embrcar os passageiros : ";

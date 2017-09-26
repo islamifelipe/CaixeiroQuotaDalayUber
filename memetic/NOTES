@@ -33,7 +33,6 @@
 
 +++ Um operador de mutaçao pra adicionar cidade 
 
-+++ Um operador para inverter a ordem de duas cidades adjacentes
 
 +++ *** Heuristica simples para a determinaçao de quais vértices o bonus deve ser coletado. 
 	(1) Ordena os bonus em ordem decrescente 
@@ -45,7 +44,7 @@
 	(1) 2-OPT nas cidades
 	(2) Escolhe os bonus tais que a soma seja maior ou igual a K
 	(3) Troca probabilistística do bonus (desliga um, liga outro), satisfazendo a restriçao do K
-	(4) Aplica SA para passageiros
+	(4) SA
 
  
 +++ TEMPERATURA GLOBAL ??????

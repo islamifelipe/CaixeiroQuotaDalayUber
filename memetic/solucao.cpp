@@ -15,9 +15,9 @@ using namespace std;
 class Solucao {
 	public:
 	TRandomMersenne *rg;
-	double fitness;
 
 	private:
+	double fitness;
 	double qutoa;
 	std::vector<int> cidades; // sequência de cidades do caixeiro 
 	std::vector<bool> bonus;// se true, entao o caixeiro pegou o bonus da cidade correspondente
@@ -101,6 +101,11 @@ class Solucao {
 
 	double getFitness(){
 		return fitness;
+	}
+
+	//  0 <=  i < cidades.size()
+	int getCidade(int i){ // retorna a i-ésima cidade da rota
+		return cidades[i];
 	}
 
 	// ATANCAO: NAO CONFUNDIR TEMPO DA ARESTA (i,j) COM O CUSTO DA ARESTA (i,j)
@@ -252,7 +257,7 @@ class Solucao {
 			}
 			if (pppp==cidades.size()){ // testa o possivel desembarque na origem
 				pppp = tempoAteVerticeI.size()-1;;
-				delayPassageiro = tempoAteVerticeI[pppp] - tempoAteVerticeI[pir] + vertices[cidades[pir]][1]*bonus[pir] - vertices[cidades[0]][1]*bonus[pppp]; // adiciona o delay de origem e retira e do chegada
+				delayPassageiro = tempoAteVerticeI[pppp] - tempoAteVerticeI[pir] + vertices[cidades[pir]][1]*bonus[pir] - vertices[cidades[0]][1]*bonus[pppp]; //TODO: *bonus[pppp]; está correto ? Nao seria *bonus[0]; ? // adiciona o delay de origem e retira e do chegada
 				c1 = cidades[cidades.size()-1];
 				c2 = cidades[0];
 				custoCompartilhado+=custos[c1][c2]/(passageirosPorAresta[cidades.size()-1]+1); // +1 por causa do novo passageiro que estamos prestes a embarcar
@@ -328,15 +333,15 @@ class Solucao {
 		for (int i=0; i<cidades.size(); i++){
 			cout<<bonus[i]<<" ";
 		}
-		int embarcouOnde, desembarcouOnde;
-		for (int i=0; i<l; i++){
-			if (embarques[i]!=-1) { 
-				embarcouOnde = embarques[i]; 
-				desembarcouOnde = desembarques[i];
-				cout<<"Passageiro "<<i+1<<" embarcou em "<<cidades[embarcouOnde]+1<<" e desembarcou em "<<cidades[desembarcouOnde]+1<<endl;
-			}
-		}
-		cout<<endl;
+		// int embarcouOnde, desembarcouOnde;
+		// for (int i=0; i<l; i++){
+		// 	if (embarques[i]!=-1) { 
+		// 		embarcouOnde = embarques[i]; 
+		// 		desembarcouOnde = desembarques[i];
+		// 		cout<<"Passageiro "<<i+1<<" embarcou em "<<cidades[embarcouOnde]+1<<" e desembarcou em "<<cidades[desembarcouOnde]+1<<endl;
+		// 	}
+		// }
+		// cout<<endl;
 	}
 
 	void operator=(Solucao &s) { // assign s to this object 
@@ -355,7 +360,64 @@ class Solucao {
 
 	}
 
-	void mutacao(){
+	bool mutacaoInverteBonus(Solucao *sol){
+		bool deuCerto = false;
+		int tentativa=0;
+		this->qutoa = 0;
+		double newQuota=0;
+		int i_alelo;
+		int multiplicador;
+		for (int i=0; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
+		do{
+			i_alelo = rg->IRandom(1, sol->getSize()-1);
+			multiplicador = bonus[i_alelo]==true ? -1 : 1; // inverte
+			newQuota = this->qutoa + vertices[cidades[i_alelo]][0]*multiplicador;
+			if (newQuota>=K) deuCerto = true;
+			tentativa++;
+		}while(tentativa<3 && deuCerto==false);
+
+		if(deuCerto == true){
+			this->qutoa = newQuota;
+			bonus[i_alelo] = !bonus[i_alelo];
+			heuristicaDeCarregamento1();
+		}
+		return deuCerto;
+	}
+
+	/*REmove uma cidade da rota. A cidade é sorteada randomicamente*/
+	bool mutacaoRemoveCidade(Solucao *sol){
+		if (sol->getSize()<=2) return false;
+		this->qutoa = 0;
+		int i_alelo = rg->IRandom(1, sol->getSize()-1);
+		for (int i=0; i<i_alelo; i++) this->addCidade(sol->getCidade(i), true);
+		for (int i=i_alelo+1; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
+		if (this->qutoa<K) return false;
+		heuristicaDeCarregamento1();
+		return true;
+	}
+	/* Adiciona cidade à rota (com bonus ativado) e faz carregamento
+	Um ponto i do cromossomo é sortado e uma cidade c também é sortada. Adiciona-se a cidade c na posiçao i+1
+	nao modifica a soluçao passada como argumento*/
+	bool mutacaoAddCidade(Solucao *sol){
+		if (sol->getSize()==n) return false;
+		this->qutoa = 0;
+		int i_alelo = rg->IRandom(1, sol->getSize()-1);
+		bool auxAmostral[MAX_N]; // 0 se a cidade nao estah na rota. 1 caso contrario
+		std::vector<int> amostral;
+		for (int i=0; i<n; i++) auxAmostral[i] = false;
+		for (int i=0; i<sol->getSize(); i++) {
+			auxAmostral[sol->getCidade(i)] = true;
+			if (i<i_alelo) this->addCidade(sol->getCidade(i), true);
+		}
+		for (int i=0; i<n; i++){
+			if (auxAmostral[i]==false) amostral.push_back(i);
+		}
+		// assert(amostra.size()>0)
+		int newCidadeIndex = rg->IRandom(0, amostral.size()-1);
+		this->addCidade(amostral[newCidadeIndex], true);
+		for (int i=i_alelo; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
+		heuristicaDeCarregamento1();
+		return true;
 
 	}
 	// bool operator==(Solucao &s) {

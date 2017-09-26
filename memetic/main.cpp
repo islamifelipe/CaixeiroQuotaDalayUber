@@ -112,11 +112,20 @@ int main(int argc, char *argv[]){
 	populacaoInicial(rg,populacao);
 	 
 	for (int i=0; i<POPSIZE; i++){
+		//cout<<"SOLUCAO POP: \n\t";
 		//populacao[i]->printSolucao();
-		cout<<"Fitness = "<<populacao[i]->getFitness()<<endl;;
-		SA(*populacao[i],rg);
-		//populacao[i]->printSolucao();
-		cout<<"NOVO SA Fitness = "<<populacao[i]->getFitness()<<endl;;
+		cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
+		//SA(*populacao[i],rg);
+		cout<<endl;
+		Solucao *nova = new Solucao(rg);
+		if (nova->mutacaoInverteBonus(populacao[i])){
+			//cout<<"SOLUCAO MUTANTE: \n\t";
+			//nova->printSolucao();
+			cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+			SA(*nova,rg);
+			cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+		}
+		cout<<endl;
 	}
 	
 	// for (int i=0; i<n; i++){

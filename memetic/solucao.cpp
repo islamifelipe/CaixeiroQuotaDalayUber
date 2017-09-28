@@ -324,6 +324,7 @@ class Solucao {
 
 
 
+
 	void printSolucao(){ 
 		cout<<"Sequência de cidades : ";
 		for (int i=0; i<cidades.size(); i++){
@@ -356,7 +357,31 @@ class Solucao {
 		qutoa = s.qutoa;
 	}
 
-	void crossover(Solucao &pai, Solucao &mae) {
+	/*Recombinação SPLIT
+	Sorteia, com probabilidade uniforme, um ponto de corte (alelo de divisao)
+	O cromossomo filho será constituido da primeira parte do pai e os alelos da mae que nao estao na primeira parte do pai
+	Aconcelha-se que o algoritmo memético chame crossover (pai, mae) e crossover(mae, pai) e tome o filho de melhor fitness
+	ATENCAO : utilizado somente para grafos completos
+	*/
+	bool crossover(Solucao &pai, Solucao &mae) {
+		this->qutoa = 0;
+		int i_alelo = rg->IRandom(1, pai.getSize()-1);
+		for (int i=0; i<i_alelo; i++) this->addCidade(pai.getCidade(i), true);
+		bool thereis = false;
+		for (int i=0; i<mae.getSize(); i++){
+			thereis = false;
+			for (int j=0; j<this->getSize() && thereis==false; j++){
+				if (this->getCidade(j)==mae.getCidade(i)) thereis = true;
+			}
+			if (thereis == false){
+				this->addCidade(mae.getCidade(i), true);
+			}
+		}
+		if (this->qutoa>=K) {
+			heuristicaDeCarregamento1();
+			return true;
+		}
+		return false;
 
 	}
 

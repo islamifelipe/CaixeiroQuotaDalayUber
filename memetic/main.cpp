@@ -110,23 +110,53 @@ int main(int argc, char *argv[]){
 	TRandomMersenne rg(atoi(argv[1]));
 	leituraDaInstancia(); // semente
 	populacaoInicial(rg,populacao);
-	 
-	for (int i=0; i<POPSIZE; i++){
-		//cout<<"SOLUCAO POP: \n\t";
-		//populacao[i]->printSolucao();
-		cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
-		//SA(*populacao[i],rg);
-		cout<<endl;
-		Solucao *nova = new Solucao(rg);
-		if (nova->mutacaoInverteBonus(populacao[i])){
-			//cout<<"SOLUCAO MUTANTE: \n\t";
-			//nova->printSolucao();
-			cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
-			SA(*nova,rg);
-			cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
-		}
-		cout<<endl;
+	
+	int pai = rg.IRandom(0, POPSIZE-1);
+	int mae = rg.IRandom(0, POPSIZE-1);
+
+	cout<<"SOLUCAO PAI: \n\t";
+	populacao[pai]->printSolucao();
+	cout<<"Fitness = "<<populacao[pai]->getFitness()<<endl;;
+
+	cout<<"SOLUCAO MAE: \n\t";
+	populacao[mae]->printSolucao();
+	cout<<"Fitness = "<<populacao[mae]->getFitness()<<endl;;
+
+	Solucao *filho1 = new Solucao(rg);
+	Solucao *filho2 = new Solucao(rg);
+
+	if (filho1->crossover(*populacao[pai], *populacao[mae])==true){
+		cout<<"SOLUCAO FILHO: \n\t";
+		filho1->printSolucao();
+		cout<<"Fitness antes filho1 = "<<filho1->getFitness()<<endl;;
+		SA(*filho1,rg);
+		cout<<"Fitness depois filho1 = "<<filho1->getFitness()<<endl;;
 	}
+
+	if (filho2->crossover(*populacao[mae], *populacao[pai])==true){
+		cout<<"SOLUCAO FILHO: \n\t";
+		filho2->printSolucao();
+		cout<<"Fitness antes filho2= "<<filho2->getFitness()<<endl;;
+		SA(*filho2,rg);
+		cout<<"Fitness depois filho2= "<<filho2->getFitness()<<endl;;
+	}
+
+	// for (int i=0; i<POPSIZE; i++){
+	// 	//cout<<"SOLUCAO POP: \n\t";
+	// 	//populacao[i]->printSolucao();
+	// 	cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
+	// 	//SA(*populacao[i],rg);
+	// 	cout<<endl;
+	// 	Solucao *nova = new Solucao(rg);
+	// 	if (nova->mutacaoInverteBonus(populacao[i])){
+	// 		//cout<<"SOLUCAO MUTANTE: \n\t";
+	// 		//nova->printSolucao();
+	// 		cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 		SA(*nova,rg);
+	// 		cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 	}
+	// 	cout<<endl;
+	// }
 	
 	// for (int i=0; i<n; i++){
 	// 	cout<<"No vértice "<<i+1<<" desejam embrcar os passageiros : ";

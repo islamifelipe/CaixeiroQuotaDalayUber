@@ -127,13 +127,22 @@ void elitimo(Solucao *newPop[POPSIZE], int sizeNovas){
 		
 
 	std::sort (uniao.begin(), uniao.end(), comparae2);
-	//cout<<"union[0] = "<<uniao[0]->getOWA()<<endl;
-	for (int i=0; i<POPSIZE; i++) *populacao[i]  = *uniao[i];
+	
+	*populacao[0]  = *uniao[0];
+	int  cont=1;
+	for (int i=1; cont<POPSIZE && i<uniao.size(); i++) {
+		if (abs(populacao[cont-1]->getFitness()-uniao[i]->getFitness())>EPS){
+			*populacao[cont++]  = *uniao[i];
+		}
+	}
+	cout<<"cont = "<<cont<<endl;
+	for (int i=1; cont<POPSIZE && i<uniao.size(); i++){
+		*populacao[cont++]  = *uniao[i];
+	}
 	
 
 } 
 
-// TODO: diversificar se o otimo nao mudar a cada 5 iteraçoes
 Solucao * memetic(TRandomMersenne &rg){
 	populacaoInicial(rg,populacao);
 	Solucao *filho1 = new Solucao(rg);
@@ -143,16 +152,36 @@ Solucao * memetic(TRandomMersenne &rg){
 	int pai, mae; // indexes
 	int p1,p2,p3,p4;
 	*otimo = *populacao[0];
+	int contSemMudanca = 0;
+	double otimoAntes = otimo->getFitness();
 	Solucao *newPop[POPSIZE]; // nova populaçao
 	int sizeNovas = 0;
 	for (int i=0; i<POPSIZE; i++)  newPop[i] = new Solucao(rg);
 	for (int i=0; i<QUANTGERACOES; i++){
 		setOtimo(otimo);
+	
+		if (otimoAntes == otimo->getFitness()){
+			contSemMudanca++;
+		} else {
+			otimoAntes = otimo->getFitness();
+			contSemMudanca=0;
+		}
+		if (contSemMudanca==5){
+			//contaRenovacao++;
+			cout<<"RENOVA"<<endl;
+			for (int cnontg = 0; cnontg<POPSIZE; cnontg++){
+				int ijf = rg.IRandom(0, POPSIZE-1);
+				populacao[ijf]->reset();
+				getIndividuo(rg, populacao[ijf]);
+				populacao[ijf]->heuristicaDeCarregamento1();
+				
+			}
+			contSemMudanca=0;
+		}
+		sizeNovas = 0;
 		for (int aap = 0; aap<POPSIZE; aap++){
 			cout<<populacao[aap]->getFitness()<<" "<<populacao[aap]->getSize()<<endl;
 		}
-		setOtimo(otimo);
-		sizeNovas = 0;
 		cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
 		for (int aap = 0; aap<POPSIZE; aap++){
 			/*SORTEIA 4 individuos*/

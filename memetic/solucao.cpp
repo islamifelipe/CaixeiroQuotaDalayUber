@@ -338,7 +338,7 @@ class Solucao {
 		// desembarques[14] = 3;
 
 		// cout<<"isViavel() = "<<isViavel() <<endl;
-		if (isViavel()) calcularFitiness();
+		if (isViavel()) calcularFitiness(); // TODO: sair?
 		if (isViavel() == false) cout<<"ERROR CARREGAMENTO"<<endl;
 		// cout<<"fitness = "<<getFitness()<<endl;
 		

@@ -142,7 +142,7 @@ void elitimo(Solucao *newPop[POPSIZE], int sizeNovas){
 	
 
 } 
-
+// TODO: loop infinito em /INST-B-20-4.txt 9839857
 Solucao * memetic(TRandomMersenne &rg){
 	populacaoInicial(rg,populacao);
 	Solucao *filho1 = new Solucao(rg);

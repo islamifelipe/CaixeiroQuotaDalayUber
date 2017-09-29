@@ -58,6 +58,20 @@ class Solucao {
 		qutoa=0;
 	}
 
+	void reset(){
+		cidades.clear();
+		bonus.clear();
+		passageirosPorAresta.clear();
+		tempoAteVerticeI.clear();
+		for(int i=0; i<l; i++){
+	    	embarques[i] = -1; // nao embarcou
+	    	desembarques[i]= -1; // nao desembarcou
+		}
+		tempoAteVerticeI.push_back(0);
+		qutoa=0;
+
+	}
+
 	void addCidade(int city, bool bonus1){
 		cidades.push_back(city);
     	bonus.push_back(bonus1); // city agora é a ultima cidade (index = cidades.size()-1)
@@ -68,10 +82,18 @@ class Solucao {
     	
 	}
 
+	double getQuota(){
+		return this->qutoa;
+	}
+
 	void trocaCidades(int c1, int c2){
 		int v_aux = cidades[c1];
 		cidades[c1] = cidades[c2];
 		cidades[c2] = v_aux;
+
+		bool b_aux = bonus[c1];
+		bonus[c1] = bonus[c2];
+		bonus[c2] = b_aux;
 	}
 
 	int getSize(){
@@ -316,7 +338,7 @@ class Solucao {
 		// desembarques[14] = 3;
 
 		// cout<<"isViavel() = "<<isViavel() <<endl;
-		//if (isViavel()) calcularFitiness();
+		if (isViavel()) calcularFitiness();
 		if (isViavel() == false) cout<<"ERROR CARREGAMENTO"<<endl;
 		// cout<<"fitness = "<<getFitness()<<endl;
 		
@@ -334,15 +356,15 @@ class Solucao {
 		for (int i=0; i<cidades.size(); i++){
 			cout<<bonus[i]<<" ";
 		}
-		// int embarcouOnde, desembarcouOnde;
-		// for (int i=0; i<l; i++){
-		// 	if (embarques[i]!=-1) { 
-		// 		embarcouOnde = embarques[i]; 
-		// 		desembarcouOnde = desembarques[i];
-		// 		cout<<"Passageiro "<<i+1<<" embarcou em "<<cidades[embarcouOnde]+1<<" e desembarcou em "<<cidades[desembarcouOnde]+1<<endl;
-		// 	}
-		// }
-		// cout<<endl;
+		int embarcouOnde, desembarcouOnde;
+		for (int i=0; i<l; i++){
+			if (embarques[i]!=-1) { 
+				embarcouOnde = embarques[i]; 
+				desembarcouOnde = desembarques[i];
+				cout<<"Passageiro "<<i+1<<" embarcou em "<<cidades[embarcouOnde]+1<<" e desembarcou em "<<cidades[desembarcouOnde]+1<<endl;
+			}
+		}
+		cout<<endl;
 	}
 
 	void operator=(Solucao &s) { // assign s to this object 
@@ -366,7 +388,7 @@ class Solucao {
 	bool crossover(Solucao &pai, Solucao &mae) {
 		this->qutoa = 0;
 		int i_alelo = rg->IRandom(1, pai.getSize()-1);
-		for (int i=0; i<i_alelo; i++) this->addCidade(pai.getCidade(i), true);
+		for (int i=0; i<i_alelo; i++) this->addCidade(pai.getCidade(i), pai.getBonus(i));
 		bool thereis = false;
 		for (int i=0; i<mae.getSize(); i++){
 			thereis = false;
@@ -374,7 +396,7 @@ class Solucao {
 				if (this->getCidade(j)==mae.getCidade(i)) thereis = true;
 			}
 			if (thereis == false){
-				this->addCidade(mae.getCidade(i), true);
+				this->addCidade(mae.getCidade(i), mae.getBonus(i));
 			}
 		}
 		if (this->qutoa>=K) {
@@ -385,37 +407,64 @@ class Solucao {
 
 	}
 
+	bool getBonus(int i){
+		return this->bonus[i];
+	}
+
+
+	/* Sorteia-se dois bonus. Tenta-sa inverter um e depois o outro. 
+	Aquele que reduzir o tempo consumido por capturar o bonus, é o escolhido
+	*/
 	bool mutacaoInverteBonus(Solucao *sol){
+		reset();
 		bool deuCerto = false;
 		int tentativa=0;
-		this->qutoa = 0;
-		double newQuota=0;
-		int i_alelo;
-		int multiplicador;
-		for (int i=0; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
-		do{
-			i_alelo = rg->IRandom(1, sol->getSize()-1);
-			multiplicador = bonus[i_alelo]==true ? -1 : 1; // inverte
-			newQuota = this->qutoa + vertices[cidades[i_alelo]][0]*multiplicador;
-			if (newQuota>=K) deuCerto = true;
-			tentativa++;
-		}while(tentativa<3 && deuCerto==false);
-
-		if(deuCerto == true){
-			this->qutoa = newQuota;
-			bonus[i_alelo] = !bonus[i_alelo];
-			heuristicaDeCarregamento1();
+		this->qutoa = 0; // Necessario, pois em addCidades, a quota é incrementada
+		this->fitness = sol->getFitness();
+		double newQuota1=0, newQuota2 = 0, novaQuotafinal;
+		int i_alelo, al1, al2;
+		int multiplicador1, multiplicador2;
+		double tempoBonus = 0;
+		for (int i=0; i<sol->getSize(); i++) {
+			this->addCidade(sol->getCidade(i), sol->getBonus(i));
+			tempoBonus += vertices[sol->getCidade(i)][1]*sol->getBonus(i);
 		}
+		do{
+			al1 = rg->IRandom(1, sol->getSize()-1);
+			al2 = rg->IRandom(1, sol->getSize()-1);
+			multiplicador1 = bonus[al1]==true ? -1 : 1; // inverte
+			multiplicador2 = bonus[al2]==true ? -1 : 1; // inverte
+			newQuota1 = this->qutoa + vertices[cidades[al1]][0]*multiplicador1;
+			newQuota2 = this->qutoa + vertices[cidades[al2]][0]*multiplicador2;
+			if (newQuota1>=K && newQuota2>=K) deuCerto = true;
+			tentativa++;
+		}while(tentativa<5 && deuCerto==false);
+		double tm1 = tempoBonus + vertices[cidades[al1]][1]*multiplicador1;
+		double tm2 = tempoBonus + vertices[cidades[al2]][1]*multiplicador2;
+		if (tm1<tm2) {
+			novaQuotafinal = newQuota1;
+			i_alelo = al1;
+		}
+		else {
+			novaQuotafinal = newQuota2;
+			i_alelo = al2;
+		}
+		if(deuCerto == true){
+			this->qutoa = novaQuotafinal;
+			bonus[i_alelo] = !sol->getBonus(i_alelo);
+			heuristicaDeCarregamento1();
+		} 
 		return deuCerto;
 	}
 
 	/*REmove uma cidade da rota. A cidade é sorteada randomicamente*/
 	bool mutacaoRemoveCidade(Solucao *sol){
 		if (sol->getSize()<=2) return false;
+		reset();
 		this->qutoa = 0;
 		int i_alelo = rg->IRandom(1, sol->getSize()-1);
-		for (int i=0; i<i_alelo; i++) this->addCidade(sol->getCidade(i), true);
-		for (int i=i_alelo+1; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
+		for (int i=0; i<i_alelo; i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
+		for (int i=i_alelo+1; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
 		if (this->qutoa<K) return false;
 		heuristicaDeCarregamento1();
 		return true;
@@ -425,6 +474,7 @@ class Solucao {
 	nao modifica a soluçao passada como argumento*/
 	bool mutacaoAddCidade(Solucao *sol){
 		if (sol->getSize()==n) return false;
+		reset();
 		this->qutoa = 0;
 		int i_alelo = rg->IRandom(1, sol->getSize()-1);
 		bool auxAmostral[MAX_N]; // 0 se a cidade nao estah na rota. 1 caso contrario
@@ -432,15 +482,15 @@ class Solucao {
 		for (int i=0; i<n; i++) auxAmostral[i] = false;
 		for (int i=0; i<sol->getSize(); i++) {
 			auxAmostral[sol->getCidade(i)] = true;
-			if (i<i_alelo) this->addCidade(sol->getCidade(i), true);
+			if (i<i_alelo) this->addCidade(sol->getCidade(i), sol->getBonus(i));
 		}
 		for (int i=0; i<n; i++){
 			if (auxAmostral[i]==false) amostral.push_back(i);
 		}
 		// assert(amostra.size()>0)
 		int newCidadeIndex = rg->IRandom(0, amostral.size()-1);
-		this->addCidade(amostral[newCidadeIndex], true);
-		for (int i=i_alelo; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), true);
+		this->addCidade(amostral[newCidadeIndex], false);
+		for (int i=i_alelo; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
 		heuristicaDeCarregamento1();
 		return true;
 

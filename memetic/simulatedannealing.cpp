@@ -17,7 +17,7 @@ DÁ CERTO SEMPRE PARA GRAFOS COMPLETOS*/
 // baseado no modelo classico de SA (notas de aula de Profa. Silvia e Beth)
 // a soluçao sol será modificada no final
 void SA(Solucao &sol,TRandomMersenne &rg){
-	//cout<<"Inicio do SA = "<<sol.getOWA()<<endl;
+	//cout<<"INICIO do SA = "<<sol.getFitness()<<endl;
 	double temperature = TEMPERATURA;
 	double iteracaoK = ITERACAO_K/1.0;
 	int quantIteracaoK = (int) iteracaoK;
@@ -63,7 +63,7 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 			sol = xk;
 		}
 	} while ((temperature-1.0)>EPS);
-	//cout<<"FIM do SA = "<<sol.getOWA()<<endl;
+	//cout<<"FIM do SA = "<<sol.getFitness()<<endl;
 
 }
 

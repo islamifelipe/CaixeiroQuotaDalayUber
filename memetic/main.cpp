@@ -103,61 +103,252 @@ void leituraDaInstancia(){
 	cout<<"Instância lida com sucesso!"<<endl;
 }
 
+void setOtimo(Solucao * otimo){
+	double valorOtimo = otimo->getFitness();
+	int index = -1;
+	for (int i=0; i<POPSIZE; i++){
+		if (populacao[i]->getFitness()<valorOtimo){
+			valorOtimo = populacao[i]->getFitness();
+			index = i;
+		}
+	}
+	if (index!=-1) *otimo = *populacao[index];
+}
 
+
+bool comparae2 (Solucao *s1, Solucao *s2) { 
+	return s1->getFitness()<s2->getFitness(); 
+} 
+ 
+void elitimo(Solucao *newPop[POPSIZE], int sizeNovas){
+	std::vector<Solucao *> uniao;
+	for (int oeir=0; oeir<POPSIZE; oeir++) uniao.push_back(populacao[oeir]);
+	for (int oeir=0; oeir<sizeNovas; oeir++) uniao.push_back(newPop[oeir]);
+		
+
+	std::sort (uniao.begin(), uniao.end(), comparae2);
+	//cout<<"union[0] = "<<uniao[0]->getOWA()<<endl;
+	for (int i=0; i<POPSIZE; i++) *populacao[i]  = *uniao[i];
+	
+
+} 
+
+// TODO: diversificar se o otimo nao mudar a cada 5 iteraçoes
+Solucao * memetic(TRandomMersenne &rg){
+	populacaoInicial(rg,populacao);
+	Solucao *filho1 = new Solucao(rg);
+	Solucao *filho2 = new Solucao(rg);
+	Solucao *filhoEscolhido = new Solucao(rg);
+	Solucao *otimo = new Solucao(rg);
+	int pai, mae; // indexes
+	int p1,p2,p3,p4;
+	*otimo = *populacao[0];
+	Solucao *newPop[POPSIZE]; // nova populaçao
+	int sizeNovas = 0;
+	for (int i=0; i<POPSIZE; i++)  newPop[i] = new Solucao(rg);
+	for (int i=0; i<QUANTGERACOES; i++){
+		setOtimo(otimo);
+		for (int aap = 0; aap<POPSIZE; aap++){
+			cout<<populacao[aap]->getFitness()<<" "<<populacao[aap]->getSize()<<endl;
+		}
+		setOtimo(otimo);
+		sizeNovas = 0;
+		cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
+		for (int aap = 0; aap<POPSIZE; aap++){
+			/*SORTEIA 4 individuos*/
+			/*Faz-se o torneio binario entre eles*/
+			p1 = rg.IRandom(0, POPSIZE-1);
+			p2 = rg.IRandom(0, POPSIZE-1);
+			p3 = rg.IRandom(0, POPSIZE-1);
+			p4 = rg.IRandom(0, POPSIZE-1);
+			if (populacao[p1]->getFitness()<populacao[p2]->getFitness()){
+				pai = p1;
+			} else {
+				pai = p2;
+			}
+
+			if (populacao[p3]->getFitness()<populacao[p4]->getFitness()){
+				mae = p3;
+			} else {
+				mae = p4;
+			}
+			filho1->reset(); // TODO : necessario?
+			filho2->reset(); // TODO : necessario?
+			filhoEscolhido->reset(); // TODO : necessario?
+			double p = rg.Random();
+			if (p<TAXADECRUZAMENTO){
+				// cout<<"crossover"<<endl;
+				bool f1 = filho1->crossover(*populacao[pai], *populacao[mae]);
+				bool f2 = filho2->crossover(*populacao[mae], *populacao[pai]);
+				if (f1==true && f2==true){
+					// cout<<"AQUI1"<<endl;
+					if (filho1->getFitness()<filho2->getFitness()){
+						*filhoEscolhido = *filho1;
+					} else{
+						*filhoEscolhido = *filho2;
+					}
+				} else {
+					if (f1==true){
+						// cout<<"AQUI2"<<endl;
+						*filhoEscolhido = *filho1;
+					} else if (f2==true){
+						// cout<<"AQUI3"<<endl;
+						*filhoEscolhido = *filho2;
+					}
+				}
+			} else {
+				if (populacao[pai]->getFitness()<populacao[mae]->getFitness()){
+					*filhoEscolhido = *populacao[pai];
+				} else{
+					*filhoEscolhido = *populacao[mae];
+				}
+			}
+			if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			p = rg.Random();
+			if (p<TAXAMUTACAO_bonus){	
+				if (newPop[sizeNovas]->mutacaoInverteBonus(filhoEscolhido)==true){
+					*filhoEscolhido = *newPop[sizeNovas];
+				}
+				if (newPop[sizeNovas]->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			}
+			p = rg.Random();
+			if (p<TAXAMUTACAO_removeCtiy){
+				if (newPop[sizeNovas]->mutacaoRemoveCidade(filhoEscolhido)==true){
+					*filhoEscolhido = *newPop[sizeNovas];
+				}
+				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			
+			}
+			p = rg.Random();
+			if (p<TAXAMUTACAO_addCity){
+				if (newPop[sizeNovas]->mutacaoAddCidade(filhoEscolhido)==true){
+					*filhoEscolhido = *newPop[sizeNovas];
+				}
+				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			
+			}
+			*newPop[sizeNovas++] = *filhoEscolhido;
+			SA(*newPop[sizeNovas-1],rg);
+		}
+		elitimo(newPop, sizeNovas);
+	}
+	return otimo;
+}
 
 
 int main(int argc, char *argv[]){
-	TRandomMersenne rg(atoi(argv[1]));
-	leituraDaInstancia(); // semente
-	populacaoInicial(rg,populacao);
+	TRandomMersenne rg(atoi(argv[1])); // semente
+	leituraDaInstancia(); 
+	//populacaoInicial(rg,populacao);
 	
-	int pai = rg.IRandom(0, POPSIZE-1);
-	int mae = rg.IRandom(0, POPSIZE-1);
+	Solucao *otimo =  memetic(rg);
 
-	cout<<"SOLUCAO PAI: \n\t";
-	populacao[pai]->printSolucao();
-	cout<<"Fitness = "<<populacao[pai]->getFitness()<<endl;;
+	cout<<"Solucao encontrada"<<endl;
+	otimo->printSolucao();
+	cout<<"Fitness = "<<otimo->getFitness()<<endl;
+	
 
-	cout<<"SOLUCAO MAE: \n\t";
-	populacao[mae]->printSolucao();
-	cout<<"Fitness = "<<populacao[mae]->getFitness()<<endl;;
+	// for (int cont = 0; cont<30; cont++){
+	// 	for (int i=0; i<POPSIZE; i++){
+	// 		//if (populacao[i]->getFitness()!=956.5) continue;
+	// 		//cout<<"SOLUCAO POP: \n\t";
+	// 		//cout<<"============ TESTE SOLUCAO "<<i<< " ============"<<endl;
+	// 		//populacao[i]->printSolucao();
+	// 		//cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
+	// 		//SA(*populacao[i],rg);
+	// 		//cout<<endl;
+	// 		Solucao *nova = new Solucao(rg);
+	// 		if (nova->mutacaoInverteBonus(populacao[i])){
+	// 			//cout<<"SOLUCAO MUTANTE: \n\t";
+	// 			//nova->printSolucao();
+	// 			//cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			SA(*nova,rg);
+	// 			//cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			//nova->printSolucao();
+	// 		}
+	// 		*populacao[i] = *nova;
+	// 		cout<<endl;
+	// 	}
+	// }
 
-	Solucao *filho1 = new Solucao(rg);
-	Solucao *filho2 = new Solucao(rg);
+	// for (int i=0; i<10; i++){
 
-	if (filho1->crossover(*populacao[pai], *populacao[mae])==true){
-		cout<<"SOLUCAO FILHO: \n\t";
-		filho1->printSolucao();
-		cout<<"Fitness antes filho1 = "<<filho1->getFitness()<<endl;;
-		SA(*filho1,rg);
-		cout<<"Fitness depois filho1 = "<<filho1->getFitness()<<endl;;
-	}
+	// 	int pai = rg.IRandom(0, POPSIZE-1);
+	// 	int mae = rg.IRandom(0, POPSIZE-1);
+	// 	//cout<<"================================================== TESTE  "<<i<< "=================================================="<<endl;
+	// 	// cout<<"SOLUCAO PAI: \n\t";
+	// 	// populacao[pai]->printSolucao();
+	// 	// cout<<"Fitness = "<<populacao[pai]->getFitness()<<endl;;
 
-	if (filho2->crossover(*populacao[mae], *populacao[pai])==true){
-		cout<<"SOLUCAO FILHO: \n\t";
-		filho2->printSolucao();
-		cout<<"Fitness antes filho2= "<<filho2->getFitness()<<endl;;
-		SA(*filho2,rg);
-		cout<<"Fitness depois filho2= "<<filho2->getFitness()<<endl;;
-	}
+	// 	// cout<<"SOLUCAO MAE: \n\t";
+	// 	// populacao[mae]->printSolucao();
+	// 	// cout<<"Fitness = "<<populacao[mae]->getFitness()<<endl;;
+
+	// 	Solucao *filho1 = new Solucao(rg);
+	// 	Solucao *filho2 = new Solucao(rg);
+
+	// 	if (filho1->crossover(*populacao[pai], *populacao[mae])==true){
+	// 		// cout<<"SOLUCAO FILHO: \n\t";
+	// 		// filho1->printSolucao();
+	// 		// cout<<"Fitness antes filho1 = "<<filho1->getFitness()<<endl;;
+	// 		SA(*filho1,rg);
+	// 		// cout<<"Fitness depois filho1 = "<<filho1->getFitness()<<endl;;
+	// 	}
+
+	// 	if (filho2->crossover(*populacao[mae], *populacao[pai])==true){
+	// 		// cout<<"SOLUCAO FILHO: \n\t";
+	// 		// filho2->printSolucao();
+	// 		// cout<<"Fitness antes filho2= "<<filho2->getFitness()<<endl;;
+	// 		SA(*filho2,rg);
+	// 		// cout<<"Fitness depois filho2= "<<filho2->getFitness()<<endl;;
+	// 	}
+	// }
+
+	// for (int cont = 0; cont<30; cont++){
+	// 	cout<<"EOFKROFKROKFORKFORKFORKFORKFOKRFOKROFKROKFORKFORKFORKFORKFORKFORKFOKRFOKROFKROFKORKFORKFORKFROFKROFKORFKOR"<<endl;
+	// 	for (int i=0; i<POPSIZE; i++){
+	// 		//if (populacao[i]->getFitness()!=956.5) continue;
+	// 		//cout<<"SOLUCAO POP: \n\t";
+	// 		//cout<<"============ TESTE SOLUCAO "<<i<< " ============"<<endl;
+	// 		//populacao[i]->printSolucao();
+	// 		//cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
+	// 		//SA(*populacao[i],rg);
+	// 		//cout<<endl;
+	// 		Solucao *nova = new Solucao(rg);
+	// 		if (nova->mutacaoInverteBonus(populacao[i])){
+	// 			//cout<<"SOLUCAO MUTANTE: \n\t";
+	// 			//nova->printSolucao();
+	// 			//cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			SA(*nova,rg);
+	// 			//cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			//nova->printSolucao();
+	// 		}
+	// 		*populacao[i] = *nova;
+	// 		cout<<endl;
+	// 	}
+	// }
 
 	// for (int i=0; i<POPSIZE; i++){
-	// 	//cout<<"SOLUCAO POP: \n\t";
-	// 	//populacao[i]->printSolucao();
-	// 	cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
-	// 	//SA(*populacao[i],rg);
-	// 	cout<<endl;
-	// 	Solucao *nova = new Solucao(rg);
-	// 	if (nova->mutacaoInverteBonus(populacao[i])){
-	// 		//cout<<"SOLUCAO MUTANTE: \n\t";
-	// 		//nova->printSolucao();
-	// 		cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
-	// 		SA(*nova,rg);
-	// 		cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 		//if (populacao[i]->getFitness()!=956.5) continue;
+	// 		//cout<<"SOLUCAO POP: \n\t";
+	// 		cout<<"============ TESTE SOLUCAO "<<i<< " ============"<<endl;
+	// 		populacao[i]->printSolucao();
+	// 		cout<<"Fitness POP = "<<populacao[i]->getFitness()<<endl;;
+	// 		//SA(*populacao[i],rg);
+	// 		//cout<<endl;
+	// 		Solucao *nova = new Solucao(rg);
+	// 		if (nova->mutacaoInverteBonus(populacao[i])){
+	// 			cout<<"SOLUCAO MUTANTE: \n\t";
+	// 			nova->printSolucao();
+	// 			cout<<"SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			SA(*nova,rg);
+	// 			cout<<"NOVA SA SOLUCAO MUTANTE Fitness = "<<nova->getFitness()<<endl;;
+	// 			nova->printSolucao();
+	// 		}
+	// 		*populacao[i] = *nova;
+	// 		cout<<endl;
 	// 	}
-	// 	cout<<endl;
-	// }
-	
+
 	// for (int i=0; i<n; i++){
 	// 	cout<<"No vértice "<<i+1<<" desejam embrcar os passageiros : ";
 	// 	for (int p=0; p<passageirosPorVertice[i].size(); p++){

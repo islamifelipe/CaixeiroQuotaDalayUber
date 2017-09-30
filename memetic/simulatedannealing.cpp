@@ -30,11 +30,8 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 	aux = xk;
 	do {
 		for (int i=0; i<quantIteracaoK; i++){
-			//gera nova soluçao
-
 			v1 = rg.IRandom(1,aux.getSize()-1);
 			while ((v2 = rg.IRandom(1,aux.getSize()-1)) == v1);
-
 			aux.trocaCidades(v1, v2);
 			aux.heuristicaDeCarregamento1();
 			

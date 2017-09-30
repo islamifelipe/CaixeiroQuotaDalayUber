@@ -142,7 +142,7 @@ void elitimo(Solucao *newPop[POPSIZE], int sizeNovas){
 	
 
 } 
-// TODO: loop infinito em /INST-B-20-4.txt 9839857
+
 Solucao * memetic(TRandomMersenne &rg){
 	populacaoInicial(rg,populacao);
 	Solucao *filho1 = new Solucao(rg);
@@ -201,12 +201,12 @@ Solucao * memetic(TRandomMersenne &rg){
 			} else {
 				mae = p4;
 			}
-			filho1->reset(); // TODO : necessario?
-			filho2->reset(); // TODO : necessario?
-			filhoEscolhido->reset(); // TODO : necessario?
+			filho1->reset(); 
+			filho2->reset();
+			filhoEscolhido->reset(); 
 			double p = rg.Random();
 			if (p<TAXADECRUZAMENTO){
-				// cout<<"crossover"<<endl;
+				//cout<<"crossover"<<endl;
 				bool f1 = filho1->crossover(*populacao[pai], *populacao[mae]);
 				bool f2 = filho2->crossover(*populacao[mae], *populacao[pai]);
 				if (f1==true && f2==true){
@@ -223,6 +223,12 @@ Solucao * memetic(TRandomMersenne &rg){
 					} else if (f2==true){
 						// cout<<"AQUI3"<<endl;
 						*filhoEscolhido = *filho2;
+					} else {
+						if (populacao[pai]->getFitness()<populacao[mae]->getFitness()){
+							*filhoEscolhido = *populacao[pai];
+						} else{
+							*filhoEscolhido = *populacao[mae];
+						}
 					}
 				}
 			} else {
@@ -234,11 +240,13 @@ Solucao * memetic(TRandomMersenne &rg){
 			}
 			if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
 			p = rg.Random();
-			if (p<TAXAMUTACAO_bonus){	
-				if (newPop[sizeNovas]->mutacaoInverteBonus(filhoEscolhido)==true){
-					*filhoEscolhido = *newPop[sizeNovas];
-				}
-				if (newPop[sizeNovas]->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			if (p<TAXAMUTACAO_bonus){
+				//for (int lklrk=0; lklrk<0; lklrk++ ){
+					if (newPop[sizeNovas]->mutacaoInverteBonus(filhoEscolhido)==true){
+						*filhoEscolhido = *newPop[sizeNovas];
+					}
+					if (newPop[sizeNovas]->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+				//}
 			}
 			p = rg.Random();
 			if (p<TAXAMUTACAO_removeCtiy){
@@ -246,18 +254,17 @@ Solucao * memetic(TRandomMersenne &rg){
 					*filhoEscolhido = *newPop[sizeNovas];
 				}
 				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
-			
 			}
 			p = rg.Random();
 			if (p<TAXAMUTACAO_addCity){
+				
 				if (newPop[sizeNovas]->mutacaoAddCidade(filhoEscolhido)==true){
 					*filhoEscolhido = *newPop[sizeNovas];
 				}
-				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
-			
+				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;	
 			}
 			*newPop[sizeNovas++] = *filhoEscolhido;
-			SA(*newPop[sizeNovas-1],rg);
+			SA(*newPop[sizeNovas-1],rg); 	
 		}
 		elitimo(newPop, sizeNovas);
 	}

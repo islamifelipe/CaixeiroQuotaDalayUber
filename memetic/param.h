@@ -28,10 +28,10 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 #define POPSIZE 20 //tamanho da populaçao de cromossomos
 
 /*Parâmetros do GA*/
-#define TAXADECRUZAMENTO 0.97  // 98% por geraçao
-#define TAXAMUTACAO_bonus 0.1 // 10% por geraçao
+#define TAXADECRUZAMENTO 0.98  // 98% por geraçao
+#define TAXAMUTACAO_bonus 0.4 // 10% por geraçao
 #define TAXAMUTACAO_addCity 0.05 // 10% por geraçao
-#define TAXAMUTACAO_removeCtiy 0.1 // 10% por geraçao
+#define TAXAMUTACAO_removeCtiy 0.4 // 10% por geraçao
 #define QUANTGERACOES 30 // quantidade de iteracoes do M-GA
 
 /*Parâmetros para o Simulated Annealing*/

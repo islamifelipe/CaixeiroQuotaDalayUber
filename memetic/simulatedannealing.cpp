@@ -36,7 +36,7 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 			aux.heuristicaDeCarregamento1();
 			
 			deltaC = aux.getFitness() - xk.getFitness();
-			if (deltaC<=0){ // aceita soluçao
+			if (deltaC<0){ // aceita soluçao
 				xk = aux;
 				if (xk.getFitness()<sol.getFitness()){ //descida
 					sol = xk;
@@ -62,6 +62,35 @@ void SA(Solucao &sol,TRandomMersenne &rg){
 	} while ((temperature-1.0)>EPS);
 	//cout<<"FIM do SA = "<<sol.getFitness()<<endl;
 
+}
+
+void buscalocal(Solucao &sol,TRandomMersenne &rg){
+	int v1, v2;
+	Solucao aux(rg);
+	Solucao aux2(rg);
+	aux = sol;
+	for (int i=0; i<ITARACAO_LS; i++){
+		v1 = rg.IRandom(1,aux.getSize()-1);
+		while ((v2 = rg.IRandom(1,aux.getSize()-1)) == v1);
+		aux.trocaCidades(v1, v2);
+		if (aux2.mutacaoRemoveCidade2(&aux)==true){
+			aux = aux2;
+		} else {
+			if (aux2.mutacaoInverteBonus(&aux)==true){
+				aux = aux2;
+			} else {
+				if (aux2.mutacaoAddCidade2(&aux)==true){
+					aux = aux2;
+				}
+				
+			}
+		}		
+		aux.heuristicaDeCarregamento1();
+		
+		if (aux.getFitness()<sol.getFitness()){ //descida
+			sol = aux;
+		}
+	}
 }
 
 #endif

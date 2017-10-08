@@ -338,7 +338,7 @@ class Solucao {
 		// desembarques[14] = 3;
 
 		// cout<<"isViavel() = "<<isViavel() <<endl;
-		if (isViavel()) calcularFitiness(); // TODO: sair?
+		//if (isViavel()) calcularFitiness(); // TODO: sair?
 		if (isViavel() == false) cout<<"ERROR CARREGAMENTO"<<endl;
 		// cout<<"fitness = "<<getFitness()<<endl;
 		
@@ -357,6 +357,7 @@ class Solucao {
 			cout<<bonus[i]<<" ";
 		}
 		int embarcouOnde, desembarcouOnde;
+		cout<<endl;
 		for (int i=0; i<l; i++){
 			if (embarques[i]!=-1) { 
 				embarcouOnde = embarques[i]; 
@@ -379,33 +380,7 @@ class Solucao {
 		qutoa = s.qutoa;
 	}
 
-	/*Recombinação SPLIT
-	Sorteia, com probabilidade uniforme, um ponto de corte (alelo de divisao)
-	O cromossomo filho será constituido da primeira parte do pai e os alelos da mae que nao estao na primeira parte do pai
-	Aconcelha-se que o algoritmo memético chame crossover (pai, mae) e crossover(mae, pai) e tome o filho de melhor fitness
-	ATENCAO : utilizado somente para grafos completos
-	*/
-	bool crossover(Solucao &pai, Solucao &mae) {
-		this->qutoa = 0;
-		int i_alelo = rg->IRandom(1, pai.getSize()-1);
-		for (int i=0; i<i_alelo; i++) this->addCidade(pai.getCidade(i), pai.getBonus(i));
-		bool thereis = false;
-		for (int i=0; i<mae.getSize(); i++){
-			thereis = false;
-			for (int j=0; j<this->getSize() && thereis==false; j++){
-				if (this->getCidade(j)==mae.getCidade(i)) thereis = true;
-			}
-			if (thereis == false){
-				this->addCidade(mae.getCidade(i), mae.getBonus(i));
-			}
-		}
-		if (this->qutoa>=K) {
-			heuristicaDeCarregamento1();
-			return true;
-		}
-		return false;
 
-	}
 
 	bool getBonus(int i){
 		return this->bonus[i];
@@ -469,6 +444,26 @@ class Solucao {
 		heuristicaDeCarregamento1();
 		return true;
 	}
+
+	/*REmove uma cidade da rota. Remove a cidade i tal que custo[i-1][i] seja maximo*/
+	bool mutacaoRemoveCidade2(Solucao *sol){
+		if (sol->getSize()<=2) return false;
+		reset();
+		this->qutoa = 0;
+		int index = 1;
+		double max = INT_MIN;
+		for (int i=1; i<sol->getSize(); i++){
+			if (custos[sol->getCidade(i-1)][sol->getCidade(i)]>max){
+				max = custos[sol->getCidade(i-1)][sol->getCidade(i)];
+				index = i; // 'index' é o index de cidades. 
+			}
+		}
+		for (int i=0; i<index; i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
+		for (int i=index+1; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
+		if (this->qutoa<K) return false;
+		heuristicaDeCarregamento1();
+		return true;
+	}
 	/* Adiciona cidade à rota (com bonus ativado) e faz carregamento
 	Um ponto i do cromossomo é sortado e uma cidade c também é sortada. Adiciona-se a cidade c na posiçao i+1
 	nao modifica a soluçao passada como argumento*/
@@ -489,18 +484,160 @@ class Solucao {
 		}
 		// assert(amostra.size()>0)
 		int newCidadeIndex = rg->IRandom(0, amostral.size()-1);
-		this->addCidade(amostral[newCidadeIndex], false);
+		this->addCidade(amostral[newCidadeIndex], true);
 		for (int i=i_alelo; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
 		heuristicaDeCarregamento1();
 		return true;
 
 	}
+	
+	/* Adiciona cidade à rota (com bonus ativado) e faz carregamento
+	uma cidade c também é sortada. Adiciona-se a cidade c na posiçao ultima posiçao
+	nao modifica a soluçao passada como argumento*/
+	bool mutacaoAddCidade2(Solucao *sol){
+		if (sol->getSize()==n) return false;
+		reset();
+		this->qutoa = 0;
+		bool auxAmostral[MAX_N]; // 0 se a cidade nao estah na rota. 1 caso contrario
+		for (int i=0; i<n; i++) auxAmostral[i] = false;
+		for (int i=0; i<sol->getSize(); i++) {
+			auxAmostral[sol->getCidade(i)] = true;
+			this->addCidade(sol->getCidade(i), sol->getBonus(i));
+		}
+		int ultima = sol->getCidade(sol->getSize()-1);
+		double min = INT_MAX;
+		int index = 0;
+		for (int i=0; i<n; i++){
+			if (auxAmostral[i]==false) {
+				if (custos[ultima][i]<min){
+					index = i;
+					min = custos[ultima][i];
+				}
+			}
+		}
+		this->addCidade(index, true);
+		if (this->qutoa>=K) {
+			heuristicaDeCarregamento1();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+
 	// bool operator==(Solucao &s) {
 	// 	for (int i=0; i<NUMOBJETIVOS; i++){
 	// 		if (fabs(s.getObj(i)-getObj(i)) >= EPS) return false;
 	// 	}
 	// 	return true;
 	// }
+
+		/*Recombinação SPLIT
+	Sorteia, com probabilidade uniforme, um ponto de corte (alelo de divisao)
+	O cromossomo filho será constituido da primeira parte do pai e os alelos da mae que nao estao na primeira parte do pai
+	Aconcelha-se que o algoritmo memético chame crossover (pai, mae) e crossover(mae, pai) e tome o filho de melhor fitness
+	ATENCAO : utilizado somente para grafos completos
+	*/
+	bool crossover(Solucao &pai, Solucao &mae) {
+		reset();
+		this->qutoa = 0;
+		int i_alelo = rg->IRandom(1, pai.getSize()-1);
+		for (int i=0; i<i_alelo; i++) this->addCidade(pai.getCidade(i), pai.getBonus(i));
+		bool thereis = false;
+		for (int i=0; i<mae.getSize(); i++){
+			thereis = false;
+			for (int j=0; j<this->getSize() && thereis==false; j++){
+				if (this->getCidade(j)==mae.getCidade(i)) thereis = true;
+			}
+			if (thereis == false){
+				this->addCidade(mae.getCidade(i), mae.getBonus(i));
+			}
+		}
+		if (this->qutoa>=K) {
+			heuristicaDeCarregamento1();
+			return true;
+		} else {
+			bool auxAmostral[MAX_N]; // 0 se a cidade nao estah na rota. 1 caso contrario
+			for (int i=0; i<n; i++) auxAmostral[i] = false;
+			for (int i=0; i<this->getSize(); i++) {
+				auxAmostral[this->getCidade(i)] = true;
+			}
+			int ultima = this->getCidade(this->getSize()-1);
+			double min = INT_MAX;
+			int index = 0;
+			for (int i=0; i<n; i++){
+				if (auxAmostral[i]==false) {
+					if (custos[ultima][i]<min){
+						index = i;
+						min = custos[ultima][i];
+					}
+				}
+			}
+			this->addCidade(index, true);
+			if (this->qutoa>=K) {
+				heuristicaDeCarregamento1();
+				return true;
+			} else return false;
+		}
+		return false;
+
+	}
+
+	//TODO: testar
+	bool crossoverCostrutivo(Solucao &pai, Solucao &mae) {
+		reset();
+		this->qutoa = 0;
+		this->addCidade(s, true);
+		int ultima = this->getCidade(this->getSize()-1);
+		bool marcado[MAX_N];
+		for (int i=0; i<n; i++) marcado[i] = false;
+		marcado[ultima]=true;
+		while (true){
+			int indexPai=-1, indexMae=-1;
+			double minPai = INT_MAX, minMae = INT_MAX;
+			for (int i=0; i<pai.getSize(); i++){
+				if (marcado[pai.getCidade(i)]==false){
+					if (custos[ultima][pai.getCidade(i)]<minPai){
+						minPai = custos[ultima][pai.getCidade(i)];
+						indexPai = i; // indexPai é index de cidades
+					}
+				}
+			}
+			for (int i=0; i<mae.getSize(); i++){
+				if (marcado[mae.getCidade(i)]==false){
+					if (custos[ultima][mae.getCidade(i)]<minMae){
+						minMae = custos[ultima][mae.getCidade(i)];
+						indexMae = i; // indexMae é index de cidades
+					}
+				}
+			}
+			if (indexMae!=-1 && indexPai!=-1){
+				if (custos[ultima][mae.getCidade(indexMae)] < custos[ultima][pai.getCidade(indexPai)]){ // adiciona vértice da mae
+					this->addCidade(mae.getCidade(indexMae), mae.getBonus(indexMae));
+					ultima = mae.getCidade(indexMae);
+				}else{ // adiciona vértice do  pai
+					this->addCidade(pai.getCidade(indexPai), pai.getBonus(indexPai));
+					ultima = pai.getCidade(indexPai);
+				}
+			} else {
+				if (indexMae!=-1){
+					this->addCidade(mae.getCidade(indexMae), mae.getBonus(indexMae));
+					ultima = mae.getCidade(indexMae);;
+				} else if (indexPai!=-1){
+					this->addCidade(pai.getCidade(indexPai), pai.getBonus(indexPai));
+					ultima = pai.getCidade(indexPai);
+				} else break;
+			}
+			marcado[ultima]=true;
+		}
+		if (this->qutoa>=K) {
+			heuristicaDeCarregamento1();
+			return true;
+		}
+		return false;
+
+	}
 
 };
 

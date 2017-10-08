@@ -5,6 +5,7 @@
 #include "rand/randomc.h"
 #include "param.h"
 #include "Solucao.cpp"
+#include "simulatedannealing.cpp"
 
 #include "LK_FILES/LKHParser.h"
 #include <vector>
@@ -57,7 +58,7 @@ bool getSubsetKVertices(int nv, int vert[MAX_N], TRandomMersenne &rg){
 
 
 
-void getIndividuo(TRandomMersenne &rg, Solucao *sol){
+void getIndividuo(double alfa, TRandomMersenne &rg, Solucao *sol){
 	//Solucao *sol = new Solucao(rg);
 	std::vector<int> verticesOrdenados; // gurda os vértices ordenados por bonus
 	for (int i=0; i<n; i++)verticesOrdenados.push_back(i); // o i-ésimo vértice
@@ -72,7 +73,9 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
 	int vert[MAX_N]; // guarda os vértices da clique
 	std::vector<int> vert2;
 	vector< vector<double> > custos_vector;
-	int nv = rg.IRandom(comprimentoMinimo, n);
+	int mmmmax = comprimentoMinimo*alfa;
+	if (mmmmax>=n) mmmmax = n;
+	int nv = rg.IRandom(comprimentoMinimo, mmmmax);
 	if(getSubsetKVertices(nv,vert, rg)==false){
 		vert[0] = s;
 		for(int i=1; i<nv; i++) vert[i] = verticesOrdenados[i-1];
@@ -114,13 +117,14 @@ void getIndividuo(TRandomMersenne &rg, Solucao *sol){
 	// cout<<"sumK = "<<sumK<<endl;
 }
 
-void populacaoInicial(TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
+void populacaoInicial(double alfa, TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
 	cout<<"Gerando populaçao inicial"<<endl;
 	for (int i=0; i<POPSIZE; i++){
 		populacao[i] = new Solucao(rg);
-		getIndividuo(rg, populacao[i]);
+		getIndividuo(alfa, rg, populacao[i]);
 		//populacao[i]->printSolucao();
 		populacao[i]->heuristicaDeCarregamento1();
+		buscalocal(*populacao[i],rg);
 		//cout<<"Fintness = "<<populacao[i]->getFitness()<<endl;
 		//cout<<endl;
 		// populacao[i]->calcularFitiness();

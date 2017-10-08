@@ -204,7 +204,7 @@ Solucao * memetic(TRandomMersenne &rg){
 				// int index = rg.IRandom(0, quantRepositorio-1);
 				// *populacao[ijf] = *repositorio[index];
 				populacao[ijf]->reset();
-				getIndividuo(1.4, rg, populacao[ijf]);
+				getIndividuo(1.35, rg, populacao[ijf]); // antes: 1.4
 				populacao[ijf]->heuristicaDeCarregamento1();
 				buscalocal(*populacao[ijf],rg);
 				

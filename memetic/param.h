@@ -28,16 +28,16 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 #define POPSIZE 100 //tamanho da populaçao de cromossomos
 #define SIZEREPOSITORIO (POPSIZE*3)
 
-#define ALFA 2.2//2.2 // valor para determinar a quantidade de vértices de uma soluçao inicial
+#define ALFA 2.1//2.2 // valor para determinar a quantidade de vértices de uma soluçao inicial
 
 /*Parâmetros do GA*/
 #define TAXADECRUZAMENTO 0.98  // 98% por geraçao
 #define TAXAMUTACAO_bonus 0.4 // 10% por geraçao
-#define TAXAMUTACAO_addCity 0.22 // 10% por geraçao
+#define TAXAMUTACAO_addCity 0.24 // 0.22 // 10% por geraçao
 #define TAXAMUTACAO_removeCtiy 0.33 // 10% por geraçao
 #define QUANTGERACOES 30 // quantidade de iteracoes do M-GA
 
-#define TAXAEXECUCAO_SA 0.9//0.9
+#define TAXAEXECUCAO_SA 0.95//0.9
 
 /*Parâmetros para o Simulated Annealing*/
 #define TEMPERATURA 5//6//11 // vai sendo dividido por FATORDECAIMENTO

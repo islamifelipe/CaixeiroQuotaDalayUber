@@ -26,16 +26,16 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 
 /*parâmetros dos cromossomos*/
 #define POPSIZE 100 //tamanho da populaçao de cromossomos
-#define SIZEREPOSITORIO (POPSIZE*3)
 
-#define ALFA 2.1//2.2 // valor para determinar a quantidade de vértices de uma soluçao inicial
+#define ALFA 2.2//2.2 // valor para determinar a quantidade de vértices de uma soluçao inicial
 
 /*Parâmetros do GA*/
 #define TAXADECRUZAMENTO 0.98  // 98% por geraçao
 #define TAXAMUTACAO_bonus 0.4 // 10% por geraçao
 #define TAXAMUTACAO_addCity 0.24 // 0.22 // 10% por geraçao
 #define TAXAMUTACAO_removeCtiy 0.33 // 10% por geraçao
-#define QUANTGERACOES 30 // quantidade de iteracoes do M-GA
+#define TAXAMUTACAO_inverteCity 0.2
+#define QUANTGERACOES 50 // quantidade de iteracoes do M-GA
 
 #define TAXAEXECUCAO_SA 0.95//0.9
 
@@ -44,10 +44,12 @@ extern std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz
 #define FATORDECAIMENTO 1.3
 #define FATORDECAIMENTOITERACAO 1.2
 #define ITERACAO_K 9 //11 // vai sendo multiplicado por FATORDECAIMENTOITERACAO
-#define ITARACAO_LS 15//15//
+#define ITARACAO_LS 15//15//15//
 // O algoritmo para quando a temperatura for menor que 1
 // quanto menor a temperatura, maior a quantidade de iteraçoes
 
+
+#define alfa_lrc 0.3 // usado pro LRC do grasp
 
 /*MELHORES PARAMETROS PARA O SA:
 

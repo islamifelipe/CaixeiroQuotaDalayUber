@@ -68,28 +68,45 @@ void buscalocal(Solucao &sol,TRandomMersenne &rg){
 	int v1, v2;
 	Solucao aux(rg);
 	Solucao aux2(rg);
-	aux = sol;
 	for (int i=0; i<ITARACAO_LS; i++){
+		aux = sol;
 		v1 = rg.IRandom(1,aux.getSize()-1);
 		while ((v2 = rg.IRandom(1,aux.getSize()-1)) == v1);
 		aux.trocaCidades(v1, v2);
-		if (aux2.mutacaoRemoveCidade2(&aux)==true){
-			aux = aux2;
-		} else {
-			if (aux2.mutacaoInverteBonus(&aux)==true){
-				aux = aux2;
-			} else {
-				if (aux2.mutacaoAddCidade2(&aux)==true){
-					aux = aux2;
-				}
-				
-			}
-		}		
 		aux.heuristicaDeCarregamento1();
 		
 		if (aux.getFitness()<sol.getFitness()){ //descida
 			sol = aux;
 		}
+
+		if (aux2.mutacaoRemoveCidade2(&aux)==true){
+			aux = aux2;
+			if (aux.getFitness()<sol.getFitness()){ //descida
+				sol = aux;
+			}
+		} 
+		if (aux2.mutacaoInverteBonus(&aux)==true){
+			aux = aux2;
+			if (aux.getFitness()<sol.getFitness()){ //descida
+				sol = aux;
+			}
+		} 
+
+		if (aux2.mutacaoAddCidade2(&aux)==true){
+			aux = aux2;
+			if (aux.getFitness()<sol.getFitness()){ //descida
+				sol = aux;
+			}
+		}
+
+		if (aux2.mutacaoInverteCidades(&aux)==true){
+			aux = aux2;
+			if (aux.getFitness()<sol.getFitness()){ //descida
+				sol = aux;
+			}
+		}
+				
+		
 	}
 }
 

@@ -57,6 +57,108 @@ bool getSubsetKVertices(int nv, int vert[MAX_N], TRandomMersenne &rg){
 }
 
 
+/*LRC = seja v o vértice que se liga ao ultimo e que bonus(v) seja maximo 
+Entao, LRC é composto pelos vértices v' tais que custo[ultima][v']<custo[ultima][v] e o bonus[v'] é no maximo custo[ultima][v]*(1+alfa_LRC)*/
+int constroiLRC2(int LRC[MAX_N], bool marcado[MAX_N], int ultima){
+	int size = 0;
+	int indexMin = 0;
+	for(; indexMin<n && marcado[indexMin]==true; indexMin++);
+	double minCusto = custos[ultima][indexMin];
+	for (int i=0; i<n; i++){
+		if (marcado[i]==false){
+			if (custos[ultima][i]<minCusto){
+				minCusto = custos[ultima][i];
+				indexMin = i;
+			}
+		}
+	}
+	LRC[size++] = indexMin;
+	for (int i=0; i<n; i++){
+		if (marcado[i]==false){
+			if (vertices[i][0]>vertices[indexMin][0]){
+				if (custos[ultima][i]<minCusto*(1+alfa_lrc)){
+					LRC[size++] = i;
+				}
+			}
+		}
+	}
+	return size;
+}	
+
+/*LRC = seja v o vértice tal que custo[ultima][v] seja minimo. 
+Entao, LRC é composto pelos vértices v' tais que bonus(v')>bonus(v) e custo[ultima][v'] é no maximo custo[ultima][v]*(1+alfa_LRC)*/
+int constroiLRC(int LRC[MAX_N], bool marcado[MAX_N], int ultima){
+	int size = 0;
+	int indexMin = 0;
+	for(; indexMin<n && marcado[indexMin]==true; indexMin++);
+	double minCusto = custos[ultima][indexMin];
+	for (int i=0; i<n; i++){
+		if (marcado[i]==false){
+			if (custos[ultima][i]<minCusto){
+				minCusto = custos[ultima][i];
+				indexMin = i;
+			}
+		}
+	}
+	LRC[size++] = indexMin;
+	for (int i=0; i<n; i++){
+		if (marcado[i]==false){
+			if (vertices[i][0]>vertices[indexMin][0]){
+				if (custos[ultima][i]<=minCusto*(1.0+alfa_lrc)){
+					LRC[size++] = i;
+				}
+			}
+		}
+	}
+	return size;
+}	
+
+void getIndividuo1(double alfa, TRandomMersenne &rg, Solucao *sol){
+	std::vector<int> verticesOrdenados; // gurda os vértices ordenados por bonus
+	for (int i=0; i<n; i++)verticesOrdenados.push_back(i); // o i-ésimo vértice
+	sort(verticesOrdenados.begin(),verticesOrdenados.end(), compare);
+	comprimentoMinimo=0; // a quantidade minima de vértices (com os maiores bonus), tal que é possivel atingir K
+	double sumK=0;
+	for (int i=0; i<n && sumK<K; i++) {
+		sumK+=vertices[verticesOrdenados[i]][0];
+		comprimentoMinimo++;
+	}
+	comprimentoMinimo++;
+	int mmmmax = comprimentoMinimo*alfa;
+	if (mmmmax>=n) mmmmax = n;
+	int nv = rg.IRandom(comprimentoMinimo, mmmmax);
+	sol->addCidade(s, true);
+	bool marcado[MAX_N]; // 0 se a cidade nao estah em sol. 1 caso contrario
+	for (int i=0; i<n; i++) marcado[i] = false;
+	marcado[s] = true;
+	for (int i=1; i<nv; i++){
+		int LRC[MAX_N]; // indices dos vértices que podem ser sortados
+		/*LRC = seja v o vértice tal que custo[ultima][v] seja minimo. 
+		Entao, LRC é composto pelos vértices v' tais que bonus(v')>bonus(v) e custo[ultima][v'] é no maximo custo[ultima][v]*(1+alfa_LRC)*/
+		int ultima = sol->getCidade(sol->getSize()-1);
+		int sizeLRC = constroiLRC(LRC, marcado, ultima);
+		int index = rg.IRandom(0, sizeLRC-1);
+		sol->addCidade(LRC[index], true);
+		marcado[LRC[index]] = true;
+	}
+	while (sol->getQuota()<K) {
+		double bonusMaximo = INT_MIN;
+		int index = -1;
+		for (int i=0; i<n; i++){
+			if (marcado[i]==false && bonusMaximo<vertices[i][0]){
+				bonusMaximo = vertices[i][0];
+				index = i;
+			}
+		}
+		sol->addCidade(index, true);
+		marcado[index] = true;
+	}
+
+	sol->heuristicaDeCarregamento1();
+	buscalocal(*sol,rg);
+
+}
+
 
 void getIndividuo(double alfa, TRandomMersenne &rg, Solucao *sol){
 	//Solucao *sol = new Solucao(rg);
@@ -125,6 +227,21 @@ void populacaoInicial(double alfa, TRandomMersenne &rg, Solucao *populacao[POPSI
 		//populacao[i]->printSolucao();
 		populacao[i]->heuristicaDeCarregamento1();
 		buscalocal(*populacao[i],rg);
+		//cout<<"Fintness = "<<populacao[i]->getFitness()<<endl;
+		//cout<<endl;
+		// populacao[i]->calcularFitiness();
+		//
+	}
+}
+
+void populacaoInicial1(double alfa, TRandomMersenne &rg, Solucao *populacao[POPSIZE]){
+	cout<<"Gerando populaçao inicial (com grasp)"<<endl;
+	for (int i=0; i<POPSIZE; i++){
+		populacao[i] = new Solucao(rg);
+		getIndividuo1(alfa, rg, populacao[i]);
+		//populacao[i]->printSolucao();
+		populacao[i]->heuristicaDeCarregamento1();
+		//buscalocal(*populacao[i],rg);
 		//cout<<"Fintness = "<<populacao[i]->getFitness()<<endl;
 		//cout<<endl;
 		// populacao[i]->calcularFitiness();

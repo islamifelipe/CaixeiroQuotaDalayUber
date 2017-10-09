@@ -525,6 +525,17 @@ class Solucao {
 
 	}
 
+	bool mutacaoInverteCidades(Solucao *sol){
+		int v1, v2;
+		reset();
+		this->qutoa = 0;
+		for (int i=0; i<sol->getSize(); i++) this->addCidade(sol->getCidade(i), sol->getBonus(i));
+		v1 = rg->IRandom(1,this->getSize()-1);
+		while ((v2 = rg->IRandom(1,this->getSize()-1)) == v1);
+		this->trocaCidades(v1, v2);
+		this->heuristicaDeCarregamento1();
+		return true;
+	}
 
 	// bool operator==(Solucao &s) {
 	// 	for (int i=0; i<NUMOBJETIVOS; i++){
@@ -584,7 +595,7 @@ class Solucao {
 
 	}
 
-	//TODO: testar
+	//TODO: testar e verificar viabilidade
 	bool crossoverCostrutivo(Solucao &pai, Solucao &mae) {
 		reset();
 		this->qutoa = 0;

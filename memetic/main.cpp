@@ -41,8 +41,7 @@ double **vertices; // matriz nx2 do bonus e delay de cada vértice
 std::vector<int> *passageirosPorVertice; // para cada i (vértice i), diz (a lista de) os passageiros que esparam embarcar em i
 
 Solucao *populacao[POPSIZE]; // populaçao 
-Solucao *repositorio[SIZEREPOSITORIO];
-int quantRepositorio;
+
 
 struct tms tempoAntes, tempoDepois, tempoDepois222;
 
@@ -148,29 +147,10 @@ void elitimo(Solucao *newPop[POPSIZE], int sizeNovas){
 
 } 
 
-void addRepositorio(Solucao *sol, TRandomMersenne &rg){
-	if (quantRepositorio < SIZEREPOSITORIO){
-		*repositorio[quantRepositorio++] = *sol;
-	} else {
-		int index = rg.IRandom(0, quantRepositorio-1);
-		// int index = 0;
-		// double max = INT_MIN;
-		// for (int i=0; i<quantRepositorio; i++){
-		// 	if (repositorio[i]->getFitness()>max){
-		// 		max = repositorio[i]->getFitness();
-		// 		index = i;
-		// 	}
-		// } 
-		*repositorio[index] = *sol;
-	}
-}
 
-/* TODO: aparentemente tem alguma coisa errada com o repositorio. Testar INST-B-40-3.txt e INST-A-40-4.txt  com e sem o repositorio*/
 
 Solucao * memetic(TRandomMersenne &rg){
-	quantRepositorio=0;
-	for (int i=0; i<SIZEREPOSITORIO; i++) repositorio[i] = new Solucao(rg);
-	populacaoInicial(ALFA, rg,populacao);
+	populacaoInicial1(ALFA, rg,populacao);
 	times(&tempoDepois);
 
 	fprintf(stdout,"Tempo(s) para calcular populaçao inicial = %.2lf\n", (double) (tempoDepois.tms_utime - tempoAntes.tms_utime) / 100.0 );
@@ -199,12 +179,22 @@ Solucao * memetic(TRandomMersenne &rg){
 		if (contSemMudanca==5){
 			//contaRenovacao++;
 			cout<<"RENOVA"<<endl;
-			for (int cnontg = 0; cnontg<POPSIZE/2; cnontg++){
+			for (int cnontg = 0; cnontg<POPSIZE/3; cnontg++){
 				int ijf = rg.IRandom(0, POPSIZE-1);
 				// int index = rg.IRandom(0, quantRepositorio-1);
 				// *populacao[ijf] = *repositorio[index];
 				populacao[ijf]->reset();
 				getIndividuo(1.35, rg, populacao[ijf]); // antes: 1.4
+				populacao[ijf]->heuristicaDeCarregamento1();
+				buscalocal(*populacao[ijf],rg);
+				
+			}
+			for (int cnontg = 0; cnontg<POPSIZE/3; cnontg++){
+				int ijf = rg.IRandom(0, POPSIZE-1);
+				// int index = rg.IRandom(0, quantRepositorio-1);
+				// *populacao[ijf] = *repositorio[index];
+				populacao[ijf]->reset();
+				getIndividuo1(1.35, rg, populacao[ijf]); // antes: 1.4
 				populacao[ijf]->heuristicaDeCarregamento1();
 				buscalocal(*populacao[ijf],rg);
 				
@@ -245,10 +235,8 @@ Solucao * memetic(TRandomMersenne &rg){
 				if (f1==true && f2==true){
 					if (filho1->getFitness()<filho2->getFitness()){
 						*filhoEscolhido = *filho1;
-						//addRepositorio(filho2,rg);
 					} else{
 						*filhoEscolhido = *filho2;
-						//addRepositorio(filho1,rg);
 					}
 				} else {
 					if (f1==true){
@@ -274,16 +262,22 @@ Solucao * memetic(TRandomMersenne &rg){
 			p = rg.Random();
 			if (p<TAXAMUTACAO_bonus){
 				if (newPop[sizeNovas]->mutacaoInverteBonus(filhoEscolhido)==true){
-						//addRepositorio(filhoEscolhido,rg);
 						*filhoEscolhido = *newPop[sizeNovas];
 				}
 				if (newPop[sizeNovas]->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
 				
 			}
 			p = rg.Random();
+			if (p<TAXAMUTACAO_inverteCity){
+				if (newPop[sizeNovas]->mutacaoInverteCidades(filhoEscolhido)==true){
+						*filhoEscolhido = *newPop[sizeNovas];
+				}
+				if (newPop[sizeNovas]->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
+			
+			}
+			p = rg.Random();
 			if (p<TAXAMUTACAO_removeCtiy){
 				if (newPop[sizeNovas]->mutacaoRemoveCidade2(filhoEscolhido)==true){
-					//addRepositorio(filhoEscolhido,rg);
 					*filhoEscolhido = *newPop[sizeNovas];
 				}
 				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;
@@ -291,7 +285,6 @@ Solucao * memetic(TRandomMersenne &rg){
 			p = rg.Random();
 			if (p<TAXAMUTACAO_addCity){
 				if (newPop[sizeNovas]->mutacaoAddCidade2(filhoEscolhido)==true){
-					//addRepositorio(filhoEscolhido,rg);
 					*filhoEscolhido = *newPop[sizeNovas];
 				}
 				if (filhoEscolhido->getFitness()<otimo->getFitness()) *otimo = *filhoEscolhido;	
@@ -299,7 +292,6 @@ Solucao * memetic(TRandomMersenne &rg){
 			*newPop[sizeNovas++] = *filhoEscolhido;
 			p = rg.Random();
 			if (p<TAXAEXECUCAO_SA){
-				//addRepositorio(newPop[sizeNovas-1],rg);
 				SA(*newPop[sizeNovas-1],rg); 
 			}	
 		}
@@ -307,7 +299,6 @@ Solucao * memetic(TRandomMersenne &rg){
 	}
 	return otimo;
 }
-/*TODO: Manter repositorio da populaçao (SA) pra renovaçao */
 
 int main(int argc, char *argv[]){
 	TRandomMersenne rg(atoi(argv[1])); // semente

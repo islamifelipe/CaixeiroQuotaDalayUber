@@ -1,0 +1,25 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 1.12
+Solucao encontrada
+Sequência de cidades : 1 9 3 29 13 19 24 4 16 7 27 10 21 8 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 4 embarcou em 1 e desembarcou em 9
+Passageiro 26 embarcou em 3 e desembarcou em 29
+Passageiro 27 embarcou em 3 e desembarcou em 29
+Passageiro 76 embarcou em 7 e desembarcou em 21
+Passageiro 79 embarcou em 7 e desembarcou em 10
+Passageiro 94 embarcou em 8 e desembarcou em 1
+Passageiro 107 embarcou em 9 e desembarcou em 3
+Passageiro 117 embarcou em 9 e desembarcou em 29
+Passageiro 122 embarcou em 10 e desembarcou em 21
+Passageiro 147 embarcou em 13 e desembarcou em 4
+Passageiro 148 embarcou em 13 e desembarcou em 4
+Passageiro 195 embarcou em 16 e desembarcou em 7
+Passageiro 197 embarcou em 16 e desembarcou em 7
+Passageiro 238 embarcou em 21 e desembarcou em 1
+Passageiro 261 embarcou em 24 e desembarcou em 16
+Passageiro 311 embarcou em 29 e desembarcou em 19
+
+Fitness = 632.417
+Tempo(s) Final = 80.36

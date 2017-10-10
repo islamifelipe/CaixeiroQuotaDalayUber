@@ -178,23 +178,23 @@ Solucao * memetic(TRandomMersenne &rg){
 		}
 		if (contSemMudanca==5){
 			//contaRenovacao++;
-			cout<<"RENOVA"<<endl;
-			for (int cnontg = 0; cnontg<POPSIZE/3; cnontg++){
+			//cout<<"RENOVA"<<endl;
+			for (int cnontg = 0; cnontg<POPSIZE/4; cnontg++){
 				int ijf = rg.IRandom(0, POPSIZE-1);
 				// int index = rg.IRandom(0, quantRepositorio-1);
 				// *populacao[ijf] = *repositorio[index];
 				populacao[ijf]->reset();
-				getIndividuo(1.35, rg, populacao[ijf]); // antes: 1.4
+				getIndividuo(1.35, rg, populacao[ijf]); // 1.35//antes: 1.4
 				populacao[ijf]->heuristicaDeCarregamento1();
 				buscalocal(*populacao[ijf],rg);
 				
 			}
-			for (int cnontg = 0; cnontg<POPSIZE/3; cnontg++){
+			for (int cnontg = 0; cnontg<POPSIZE/4; cnontg++){
 				int ijf = rg.IRandom(0, POPSIZE-1);
 				// int index = rg.IRandom(0, quantRepositorio-1);
 				// *populacao[ijf] = *repositorio[index];
 				populacao[ijf]->reset();
-				getIndividuo1(1.35, rg, populacao[ijf]); // antes: 1.4
+				getIndividuo1(1.35, rg, populacao[ijf]); // antes: 1.35
 				populacao[ijf]->heuristicaDeCarregamento1();
 				buscalocal(*populacao[ijf],rg);
 				
@@ -205,7 +205,7 @@ Solucao * memetic(TRandomMersenne &rg){
 		// for (int aap = 0; aap<POPSIZE; aap++){
 		// 	cout<<populacao[aap]->getFitness()<<" "<<populacao[aap]->getSize()<<endl;
 		// }
-		cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
+		//cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
 		for (int aap = 0; aap<POPSIZE; aap++){
 			/*SORTEIA 4 individuos*/
 			/*Faz-se o torneio binario entre eles*/

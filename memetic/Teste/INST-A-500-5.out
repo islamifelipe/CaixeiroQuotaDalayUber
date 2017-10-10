@@ -1,0 +1,22 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 183.74
+Solucao encontrada
+Sequência de cidades : 1 264 214 10 155 274 312 226 443 459 164 450 495 59 259 318 137 19 47 80 343 102 334 469 278 408 354 65 17 298 14 462 302 392 389 133 163 355 340 399 270 272 31 93 324 173 217 24 236 407 147 273 317 357 287 387 455 409 103 162 20 452 451 208 316 192 359 373 268 292 28 132 158 114 33 150 84 233 335 124 427 239 426 101 135 172 402 291 388 2 458 104 290 143 99 90 460 223 350 374 146 98 482 351 92 418 29 174 215 234 456 68 464 315 117 320 253 207 131 421 445 486 79 478 297 256 152 18 243 26 262 221 73 37 35 129 201 30 329 58 184 136 94 52 390 140 45 371 277 85 368 5 322 205 446 116 323 370 63 142 249 23 70 219 337 209 339 319 22 34 120 467 398 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 148 embarcou em 14 e desembarcou em 462
+Passageiro 219 embarcou em 22 e desembarcou em 34
+Passageiro 274 embarcou em 29 e desembarcou em 234
+Passageiro 459 embarcou em 47 e desembarcou em 343
+Passageiro 1168 embarcou em 114 e desembarcou em 33
+Passageiro 1239 embarcou em 120 e desembarcou em 1
+Passageiro 1630 embarcou em 158 e desembarcou em 114
+Passageiro 1791 embarcou em 174 e desembarcou em 215
+Passageiro 2257 embarcou em 215 e desembarcou em 68
+Passageiro 3508 embarcou em 340 e desembarcou em 272
+Passageiro 3513 embarcou em 340 e desembarcou em 272
+Passageiro 3626 embarcou em 351 e desembarcou em 418
+Passageiro 4004 embarcou em 389 e desembarcou em 163
+
+Fitness = 17069.8
+Tempo(s) Final = 9606.95

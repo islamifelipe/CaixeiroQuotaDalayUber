@@ -198,7 +198,7 @@ void getIndividuo(double alfa, TRandomMersenne &rg, Solucao *sol){
 	// for (int i=0; i<nv; i++) cout<<vertices[vert[i]][0]<<" + ";
 	// cout<<endl;
 	
-	LKHParser parser(LKH_PATH, LK_FILES_PATH, vert2, custos_vector, "augumacoisa", string("TSP"));
+	LKHParser parser(LKH_PATH, LK_FILES_PATH, vert2, custos_vector, "augumacoisa", string("ATSP"));
     vector<int> path = parser.LKHSolution(); // path tem os valores do vetor vert2, que correspondem ao index em vert
    // double custosdf = 0;
     for (int i=0; i<path.size(); i++){

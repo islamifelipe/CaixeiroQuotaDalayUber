@@ -1,0 +1,33 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 68.24
+Solucao encontrada
+Sequência de cidades : 1 163 110 9 71 14 170 121 48 122 100 112 158 69 16 103 133 183 62 66 184 178 149 162 33 104 137 99 78 5 199 169 189 106 132 76 180 88 154 38 73 3 37 151 181 56 111 10 93 172 135 175 116 52 123 83 187 168 50 79 20 54 190 152 22 91 30 98 139 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 64 embarcou em 5 e desembarcou em 169
+Passageiro 113 embarcou em 9 e desembarcou em 14
+Passageiro 121 embarcou em 9 e desembarcou em 170
+Passageiro 134 embarcou em 10 e desembarcou em 93
+Passageiro 140 embarcou em 10 e desembarcou em 172
+Passageiro 243 embarcou em 20 e desembarcou em 190
+Passageiro 688 embarcou em 50 e desembarcou em 54
+Passageiro 755 embarcou em 54 e desembarcou em 152
+Passageiro 1087 embarcou em 73 e desembarcou em 3
+Passageiro 1089 embarcou em 73 e desembarcou em 151
+Passageiro 1474 embarcou em 98 e desembarcou em 1
+Passageiro 1522 embarcou em 100 e desembarcou em 112
+Passageiro 1595 embarcou em 106 e desembarcou em 132
+Passageiro 1695 embarcou em 112 e desembarcou em 69
+Passageiro 2089 embarcou em 137 e desembarcou em 78
+Passageiro 2333 embarcou em 151 e desembarcou em 56
+Passageiro 2512 embarcou em 163 e desembarcou em 110
+Passageiro 2515 embarcou em 163 e desembarcou em 9
+Passageiro 2584 embarcou em 169 e desembarcou em 106
+Passageiro 2619 embarcou em 172 e desembarcou em 175
+Passageiro 2835 embarcou em 187 e desembarcou em 79
+Passageiro 2877 embarcou em 190 e desembarcou em 152
+Passageiro 3018 embarcou em 199 e desembarcou em 169
+Passageiro 3022 embarcou em 199 e desembarcou em 189
+
+Fitness = 6009
+Tempo(s) Final = 3654.12

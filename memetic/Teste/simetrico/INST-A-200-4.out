@@ -1,0 +1,31 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 31.36
+Solucao encontrada
+Sequência de cidades : 1 199 177 198 120 75 51 165 197 150 95 29 116 186 15 175 46 30 131 26 154 125 70 160 109 172 200 194 63 80 155 82 65 127 130 64 117 14 115 157 81 31 39 78 121 25 105 171 91 111 195 114 148 71 36 187 135 191 13 129 182 119 143 133 192 85 60 20 180 167 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 6 embarcou em 1 e desembarcou em 199
+Passageiro 120 embarcou em 14 e desembarcou em 115
+Passageiro 228 embarcou em 26 e desembarcou em 70
+Passageiro 631 embarcou em 64 e desembarcou em 14
+Passageiro 642 embarcou em 65 e desembarcou em 64
+Passageiro 693 embarcou em 70 e desembarcou em 109
+Passageiro 698 embarcou em 71 e desembarcou em 187
+Passageiro 779 embarcou em 78 e desembarcou em 105
+Passageiro 791 embarcou em 80 e desembarcou em 65
+Passageiro 1118 embarcou em 114 e desembarcou em 71
+Passageiro 1165 embarcou em 120 e desembarcou em 51
+Passageiro 1170 embarcou em 121 e desembarcou em 171
+Passageiro 1251 embarcou em 129 e desembarcou em 119
+Passageiro 1322 embarcou em 135 e desembarcou em 13
+Passageiro 1405 embarcou em 143 e desembarcou em 192
+Passageiro 1592 embarcou em 157 e desembarcou em 31
+Passageiro 1744 embarcou em 172 e desembarcou em 63
+Passageiro 1784 embarcou em 177 e desembarcou em 198
+Passageiro 1788 embarcou em 177 e desembarcou em 198
+Passageiro 1888 embarcou em 187 e desembarcou em 191
+Passageiro 1959 embarcou em 192 e desembarcou em 20
+Passageiro 2012 embarcou em 198 e desembarcou em 75
+
+Fitness = 6632.5
+Tempo(s) Final = 1753.61

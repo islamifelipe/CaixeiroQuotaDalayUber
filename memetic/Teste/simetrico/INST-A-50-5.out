@@ -1,0 +1,33 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 4.89
+Solucao encontrada
+Sequência de cidades : 1 26 11 23 47 33 37 9 39 44 29 36 49 38 14 28 46 8 5 34 10 40 41 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 1 1 
+Passageiro 128 embarcou em 9 e desembarcou em 39
+Passageiro 140 embarcou em 11 e desembarcou em 47
+Passageiro 197 embarcou em 14 e desembarcou em 28
+Passageiro 363 embarcou em 26 e desembarcou em 33
+Passageiro 475 embarcou em 33 e desembarcou em 37
+Passageiro 485 embarcou em 33 e desembarcou em 9
+Passageiro 486 embarcou em 33 e desembarcou em 44
+Passageiro 487 embarcou em 33 e desembarcou em 37
+Passageiro 491 embarcou em 34 e desembarcou em 40
+Passageiro 516 embarcou em 36 e desembarcou em 49
+Passageiro 559 embarcou em 38 e desembarcou em 14
+Passageiro 563 embarcou em 38 e desembarcou em 46
+Passageiro 583 embarcou em 39 e desembarcou em 44
+Passageiro 590 embarcou em 40 e desembarcou em 1
+Passageiro 628 embarcou em 41 e desembarcou em 1
+Passageiro 629 embarcou em 41 e desembarcou em 1
+Passageiro 661 embarcou em 44 e desembarcou em 36
+Passageiro 668 embarcou em 44 e desembarcou em 49
+Passageiro 670 embarcou em 44 e desembarcou em 29
+Passageiro 674 embarcou em 44 e desembarcou em 49
+Passageiro 709 embarcou em 46 e desembarcou em 10
+Passageiro 712 embarcou em 46 e desembarcou em 8
+Passageiro 713 embarcou em 46 e desembarcou em 8
+Passageiro 721 embarcou em 46 e desembarcou em 10
+
+Fitness = 1256.75
+Tempo(s) Final = 325.03

@@ -1,0 +1,98 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 4.32
+Geracao 1 Otimo = 1528
+Geracao 2 Otimo = 1528
+Geracao 3 Otimo = 1528
+Geracao 4 Otimo = 1528
+Geracao 5 Otimo = 1528
+Geracao 6 Otimo = 1528
+Geracao 7 Otimo = 1399.73
+Geracao 8 Otimo = 1399.73
+Geracao 9 Otimo = 1399.73
+Geracao 10 Otimo = 1399.73
+Geracao 11 Otimo = 1399.73
+Geracao 12 Otimo = 1399.73
+Geracao 13 Otimo = 1399.73
+Geracao 14 Otimo = 1399.73
+Geracao 15 Otimo = 1374.97
+Geracao 16 Otimo = 1374.97
+Geracao 17 Otimo = 1374.97
+Geracao 18 Otimo = 1374.97
+Geracao 19 Otimo = 1374.97
+Geracao 20 Otimo = 1374.97
+Geracao 21 Otimo = 1374.97
+Geracao 22 Otimo = 1374.97
+Geracao 23 Otimo = 1374.97
+Geracao 24 Otimo = 1374.97
+Geracao 25 Otimo = 1374.97
+Geracao 26 Otimo = 1374.97
+Geracao 27 Otimo = 1374.97
+Geracao 28 Otimo = 1374.97
+Geracao 29 Otimo = 1374.97
+Geracao 30 Otimo = 1374.97
+Geracao 31 Otimo = 1374.97
+Geracao 32 Otimo = 1374.97
+Geracao 33 Otimo = 1374.97
+Geracao 34 Otimo = 1374.97
+Geracao 35 Otimo = 1374.97
+Geracao 36 Otimo = 1374.97
+Geracao 37 Otimo = 1374.97
+Geracao 38 Otimo = 1374.97
+Geracao 39 Otimo = 1365.3
+Geracao 40 Otimo = 1365.3
+Geracao 41 Otimo = 1341.05
+Geracao 42 Otimo = 1341.05
+Geracao 43 Otimo = 1341.05
+Geracao 44 Otimo = 1319.83
+Geracao 45 Otimo = 1319.83
+Geracao 46 Otimo = 1319.83
+Geracao 47 Otimo = 1319.83
+Geracao 48 Otimo = 1319.83
+Geracao 49 Otimo = 1319.83
+Geracao 50 Otimo = 1319.83
+Solucao encontrada
+Sequência de cidades : 1 7 11 37 29 8 3 28 17 2 12 26 6 18 20 31 15 25 10 27 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 4 embarcou em 1 e desembarcou em 7
+Passageiro 5 embarcou em 1 e desembarcou em 11
+Passageiro 17 embarcou em 2 e desembarcou em 12
+Passageiro 20 embarcou em 2 e desembarcou em 12
+Passageiro 24 embarcou em 3 e desembarcou em 28
+Passageiro 30 embarcou em 3 e desembarcou em 28
+Passageiro 54 embarcou em 6 e desembarcou em 18
+Passageiro 55 embarcou em 6 e desembarcou em 20
+Passageiro 59 embarcou em 7 e desembarcou em 11
+Passageiro 61 embarcou em 7 e desembarcou em 37
+Passageiro 62 embarcou em 7 e desembarcou em 37
+Passageiro 70 embarcou em 8 e desembarcou em 28
+Passageiro 72 embarcou em 8 e desembarcou em 3
+Passageiro 83 embarcou em 10 e desembarcou em 27
+Passageiro 87 embarcou em 10 e desembarcou em 27
+Passageiro 101 embarcou em 12 e desembarcou em 6
+Passageiro 104 embarcou em 12 e desembarcou em 6
+Passageiro 107 embarcou em 12 e desembarcou em 26
+Passageiro 112 embarcou em 12 e desembarcou em 26
+Passageiro 134 embarcou em 15 e desembarcou em 10
+Passageiro 135 embarcou em 15 e desembarcou em 25
+Passageiro 141 embarcou em 15 e desembarcou em 10
+Passageiro 165 embarcou em 17 e desembarcou em 2
+Passageiro 166 embarcou em 17 e desembarcou em 2
+Passageiro 180 embarcou em 18 e desembarcou em 20
+Passageiro 199 embarcou em 20 e desembarcou em 31
+Passageiro 206 embarcou em 20 e desembarcou em 31
+Passageiro 243 embarcou em 25 e desembarcou em 10
+Passageiro 245 embarcou em 25 e desembarcou em 10
+Passageiro 255 embarcou em 26 e desembarcou em 6
+Passageiro 257 embarcou em 26 e desembarcou em 6
+Passageiro 264 embarcou em 27 e desembarcou em 1
+Passageiro 267 embarcou em 27 e desembarcou em 1
+Passageiro 273 embarcou em 28 e desembarcou em 2
+Passageiro 279 embarcou em 29 e desembarcou em 8
+Passageiro 280 embarcou em 29 e desembarcou em 8
+Passageiro 301 embarcou em 31 e desembarcou em 15
+Passageiro 307 embarcou em 31 e desembarcou em 15
+Passageiro 362 embarcou em 37 e desembarcou em 29
+
+Fitness = 1319.83
+Tempo(s) Final = 220.67

@@ -1,0 +1,38 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 1.64
+Solucao encontrada
+Sequência de cidades : 1 5 15 14 10 17 11 3 29 20 6 13 23 25 18 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 2 embarcou em 1 e desembarcou em 5
+Passageiro 3 embarcou em 1 e desembarcou em 5
+Passageiro 12 embarcou em 3 e desembarcou em 29
+Passageiro 13 embarcou em 3 e desembarcou em 29
+Passageiro 20 embarcou em 3 e desembarcou em 20
+Passageiro 40 embarcou em 5 e desembarcou em 15
+Passageiro 47 embarcou em 5 e desembarcou em 15
+Passageiro 49 embarcou em 6 e desembarcou em 13
+Passageiro 58 embarcou em 6 e desembarcou em 13
+Passageiro 59 embarcou em 6 e desembarcou em 13
+Passageiro 99 embarcou em 10 e desembarcou em 17
+Passageiro 100 embarcou em 10 e desembarcou em 17
+Passageiro 103 embarcou em 11 e desembarcou em 3
+Passageiro 106 embarcou em 11 e desembarcou em 3
+Passageiro 124 embarcou em 13 e desembarcou em 23
+Passageiro 127 embarcou em 13 e desembarcou em 23
+Passageiro 131 embarcou em 14 e desembarcou em 10
+Passageiro 132 embarcou em 14 e desembarcou em 10
+Passageiro 142 embarcou em 15 e desembarcou em 14
+Passageiro 165 embarcou em 17 e desembarcou em 11
+Passageiro 168 embarcou em 17 e desembarcou em 11
+Passageiro 170 embarcou em 17 e desembarcou em 11
+Passageiro 189 embarcou em 18 e desembarcou em 1
+Passageiro 205 embarcou em 20 e desembarcou em 6
+Passageiro 206 embarcou em 20 e desembarcou em 6
+Passageiro 231 embarcou em 23 e desembarcou em 18
+Passageiro 235 embarcou em 23 e desembarcou em 1
+Passageiro 237 embarcou em 23 e desembarcou em 25
+Passageiro 302 embarcou em 29 e desembarcou em 6
+
+Fitness = 912
+Tempo(s) Final = 97.59

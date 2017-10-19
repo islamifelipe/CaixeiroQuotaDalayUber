@@ -94,7 +94,8 @@ int main(int argc, char *argv[])
 
  	env.set(GRB_IntParam_Method, 1); // 1 é mais rapido //primal
   	env.set(GRB_IntParam_SiftMethod,1);
-
+    env.set(GRB_DoubleParam_TimeLimit, 30); 
+    env.set(GRB_DoubleParam_MIPGap,10);
 	/****************** VARIAVEIS DO MODELO ******************/
 
 	GRBVar *u; //usada pelas restricoes de subcilo
@@ -190,7 +191,7 @@ int main(int argc, char *argv[])
 
 
 	cout<<"Rota do caixeiro dada pelo LK = ";
-        LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("ATSP"));
+        LKHParser parser(LKH_PATH, LK_FILES_PATH, set_vertices, custos_vector, "augumacoisa", string("TSP"));
     vector<int> path = parser.LKHSolution();
         int custosdf = 0;
     for (int i=0; i<path.size()-1; i++){

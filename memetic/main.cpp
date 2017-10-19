@@ -205,7 +205,7 @@ Solucao * memetic(TRandomMersenne &rg){
 		// for (int aap = 0; aap<POPSIZE; aap++){
 		// 	cout<<populacao[aap]->getFitness()<<" "<<populacao[aap]->getSize()<<endl;
 		// }
-		//cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
+		cout<<"Geracao "<<i+1<<" Otimo = "<<otimo->getFitness()<<endl;
 		for (int aap = 0; aap<POPSIZE; aap++){
 			/*SORTEIA 4 individuos*/
 			/*Faz-se o torneio binario entre eles*/

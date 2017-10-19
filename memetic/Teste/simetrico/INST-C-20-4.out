@@ -1,0 +1,72 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.30
+Geracao 1 Otimo = 797
+Geracao 2 Otimo = 797
+Geracao 3 Otimo = 797
+Geracao 4 Otimo = 797
+Geracao 5 Otimo = 797
+Geracao 6 Otimo = 797
+Geracao 7 Otimo = 797
+Geracao 8 Otimo = 797
+Geracao 9 Otimo = 797
+Geracao 10 Otimo = 797
+Geracao 11 Otimo = 797
+Geracao 12 Otimo = 797
+Geracao 13 Otimo = 797
+Geracao 14 Otimo = 797
+Geracao 15 Otimo = 797
+Geracao 16 Otimo = 797
+Geracao 17 Otimo = 797
+Geracao 18 Otimo = 797
+Geracao 19 Otimo = 797
+Geracao 20 Otimo = 797
+Geracao 21 Otimo = 797
+Geracao 22 Otimo = 797
+Geracao 23 Otimo = 797
+Geracao 24 Otimo = 797
+Geracao 25 Otimo = 797
+Geracao 26 Otimo = 797
+Geracao 27 Otimo = 797
+Geracao 28 Otimo = 797
+Geracao 29 Otimo = 797
+Geracao 30 Otimo = 797
+Geracao 31 Otimo = 797
+Geracao 32 Otimo = 797
+Geracao 33 Otimo = 797
+Geracao 34 Otimo = 797
+Geracao 35 Otimo = 797
+Geracao 36 Otimo = 797
+Geracao 37 Otimo = 797
+Geracao 38 Otimo = 797
+Geracao 39 Otimo = 797
+Geracao 40 Otimo = 797
+Geracao 41 Otimo = 797
+Geracao 42 Otimo = 797
+Geracao 43 Otimo = 797
+Geracao 44 Otimo = 797
+Geracao 45 Otimo = 797
+Geracao 46 Otimo = 797
+Geracao 47 Otimo = 797
+Geracao 48 Otimo = 797
+Geracao 49 Otimo = 797
+Geracao 50 Otimo = 797
+Solucao encontrada
+Sequência de cidades : 1 20 2 17 10 6 8 19 5 3 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 
+Passageiro 2 embarcou em 1 e desembarcou em 20
+Passageiro 7 embarcou em 2 e desembarcou em 17
+Passageiro 12 embarcou em 3 e desembarcou em 1
+Passageiro 21 embarcou em 6 e desembarcou em 8
+Passageiro 22 embarcou em 6 e desembarcou em 8
+Passageiro 23 embarcou em 6 e desembarcou em 8
+Passageiro 29 embarcou em 8 e desembarcou em 19
+Passageiro 31 embarcou em 8 e desembarcou em 19
+Passageiro 40 embarcou em 10 e desembarcou em 6
+Passageiro 67 embarcou em 17 e desembarcou em 10
+Passageiro 75 embarcou em 19 e desembarcou em 5
+Passageiro 76 embarcou em 19 e desembarcou em 3
+Passageiro 78 embarcou em 20 e desembarcou em 2
+
+Fitness = 797
+Tempo(s) Final = 18.11

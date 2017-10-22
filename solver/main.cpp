@@ -567,6 +567,24 @@ int main(){
              model.addConstr(sum2 <= sum1,std::to_string(constrCont++)); 
            
 
+               //garante que na aresta ij, onde i é destino de l, nao trafega l
+        //RESTRICAO 24
+            for (int ll=0; ll<l; ll++){
+                for (int i=0; i<n; i++){
+                    if (L[ll][3] == i){ // i é destino de ll
+                        GRBLinExpr constraint = 0;
+                        for (int j = 0; j < n; j++) {
+                            if (i != j) {
+                                constraint += v[i][j][ll];
+                            }
+                        }
+                        model.addConstr(constraint == 0, "restG_passageiroNaoAvanca" + std::to_string(constrCont++));
+                
+                    }
+                }
+            }
+
+
 
 	//////////////////// FIM DA CONSTRUÇAO DO MODELO ////////////////////
 

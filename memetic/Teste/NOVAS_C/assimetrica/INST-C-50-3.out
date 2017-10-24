@@ -1,0 +1,95 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.83
+Geracao 1 Otimo = 2205.17
+Geracao 2 Otimo = 2205.17
+Geracao 3 Otimo = 2205.17
+Geracao 4 Otimo = 2205.17
+Geracao 5 Otimo = 2205.17
+Geracao 6 Otimo = 2205.17
+Geracao 7 Otimo = 2191.83
+Geracao 8 Otimo = 2191.83
+Geracao 9 Otimo = 2191.83
+Geracao 10 Otimo = 2191.83
+Geracao 11 Otimo = 2191.83
+Geracao 12 Otimo = 2191.83
+Geracao 13 Otimo = 2191.83
+Geracao 14 Otimo = 2191.83
+Geracao 15 Otimo = 2191.83
+Geracao 16 Otimo = 2191.83
+Geracao 17 Otimo = 2191.83
+Geracao 18 Otimo = 2191.83
+Geracao 19 Otimo = 2191.83
+Geracao 20 Otimo = 2191.83
+Geracao 21 Otimo = 2191.83
+Geracao 22 Otimo = 2191.83
+Geracao 23 Otimo = 2191.83
+Geracao 24 Otimo = 2191.83
+Geracao 25 Otimo = 2191.83
+Geracao 26 Otimo = 2191.83
+Geracao 27 Otimo = 2191.83
+Geracao 28 Otimo = 2191.83
+Geracao 29 Otimo = 2191.83
+Geracao 30 Otimo = 2191.83
+Geracao 31 Otimo = 2191.83
+Geracao 32 Otimo = 2191.83
+Geracao 33 Otimo = 2191.83
+Geracao 34 Otimo = 2191.83
+Geracao 35 Otimo = 2191.83
+Geracao 36 Otimo = 2146.17
+Geracao 37 Otimo = 2130.33
+Geracao 38 Otimo = 2064.5
+Geracao 39 Otimo = 2054
+Geracao 40 Otimo = 2005.67
+Geracao 41 Otimo = 2005.67
+Geracao 42 Otimo = 2005.67
+Geracao 43 Otimo = 2005.67
+Geracao 44 Otimo = 2005.67
+Geracao 45 Otimo = 2005.67
+Geracao 46 Otimo = 1986.83
+Geracao 47 Otimo = 1986.83
+Geracao 48 Otimo = 1976.33
+Geracao 49 Otimo = 1903.83
+Geracao 50 Otimo = 1903.83
+Solucao encontrada
+Sequência de cidades : 1 37 33 13 28 26 44 7 15 40 19 42 6 41 47 25 34 38 20 2 24 4 27 5 14 45 
+ Bonus : 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 37
+Passageiro 2 embarcou em 1 e desembarcou em 37
+Passageiro 4 embarcou em 2 e desembarcou em 4
+Passageiro 6 embarcou em 2 e desembarcou em 4
+Passageiro 11 embarcou em 4 e desembarcou em 27
+Passageiro 12 embarcou em 4 e desembarcou em 27
+Passageiro 13 embarcou em 5 e desembarcou em 14
+Passageiro 14 embarcou em 5 e desembarcou em 14
+Passageiro 18 embarcou em 6 e desembarcou em 41
+Passageiro 19 embarcou em 7 e desembarcou em 15
+Passageiro 21 embarcou em 7 e desembarcou em 15
+Passageiro 37 embarcou em 13 e desembarcou em 28
+Passageiro 39 embarcou em 13 e desembarcou em 28
+Passageiro 40 embarcou em 14 e desembarcou em 45
+Passageiro 42 embarcou em 14 e desembarcou em 45
+Passageiro 44 embarcou em 15 e desembarcou em 19
+Passageiro 45 embarcou em 15 e desembarcou em 19
+Passageiro 55 embarcou em 19 e desembarcou em 42
+Passageiro 58 embarcou em 20 e desembarcou em 2
+Passageiro 59 embarcou em 20 e desembarcou em 2
+Passageiro 74 embarcou em 25 e desembarcou em 34
+Passageiro 75 embarcou em 25 e desembarcou em 34
+Passageiro 77 embarcou em 26 e desembarcou em 44
+Passageiro 79 embarcou em 27 e desembarcou em 5
+Passageiro 82 embarcou em 28 e desembarcou em 26
+Passageiro 83 embarcou em 28 e desembarcou em 26
+Passageiro 102 embarcou em 34 e desembarcou em 38
+Passageiro 111 embarcou em 37 e desembarcou em 13
+Passageiro 114 embarcou em 38 e desembarcou em 20
+Passageiro 121 embarcou em 41 e desembarcou em 47
+Passageiro 124 embarcou em 42 e desembarcou em 6
+Passageiro 125 embarcou em 42 e desembarcou em 6
+Passageiro 131 embarcou em 44 e desembarcou em 7
+Passageiro 132 embarcou em 44 e desembarcou em 7
+Passageiro 135 embarcou em 45 e desembarcou em 1
+Passageiro 140 embarcou em 47 e desembarcou em 25
+
+Fitness = 1903.83
+Tempo(s) Final = 45.06

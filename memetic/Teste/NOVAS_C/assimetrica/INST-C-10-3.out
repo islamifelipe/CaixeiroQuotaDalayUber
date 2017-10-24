@@ -1,0 +1,67 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.13
+Geracao 1 Otimo = 611.667
+Geracao 2 Otimo = 534
+Geracao 3 Otimo = 534
+Geracao 4 Otimo = 534
+Geracao 5 Otimo = 534
+Geracao 6 Otimo = 534
+Geracao 7 Otimo = 534
+Geracao 8 Otimo = 534
+Geracao 9 Otimo = 534
+Geracao 10 Otimo = 534
+Geracao 11 Otimo = 534
+Geracao 12 Otimo = 534
+Geracao 13 Otimo = 534
+Geracao 14 Otimo = 534
+Geracao 15 Otimo = 534
+Geracao 16 Otimo = 534
+Geracao 17 Otimo = 534
+Geracao 18 Otimo = 534
+Geracao 19 Otimo = 534
+Geracao 20 Otimo = 534
+Geracao 21 Otimo = 534
+Geracao 22 Otimo = 534
+Geracao 23 Otimo = 534
+Geracao 24 Otimo = 534
+Geracao 25 Otimo = 534
+Geracao 26 Otimo = 534
+Geracao 27 Otimo = 534
+Geracao 28 Otimo = 534
+Geracao 29 Otimo = 534
+Geracao 30 Otimo = 534
+Geracao 31 Otimo = 534
+Geracao 32 Otimo = 534
+Geracao 33 Otimo = 507.333
+Geracao 34 Otimo = 507.333
+Geracao 35 Otimo = 507.333
+Geracao 36 Otimo = 507.333
+Geracao 37 Otimo = 507.333
+Geracao 38 Otimo = 507.333
+Geracao 39 Otimo = 507.333
+Geracao 40 Otimo = 507.333
+Geracao 41 Otimo = 507.333
+Geracao 42 Otimo = 507.333
+Geracao 43 Otimo = 507.333
+Geracao 44 Otimo = 507.333
+Geracao 45 Otimo = 507.333
+Geracao 46 Otimo = 507.333
+Geracao 47 Otimo = 507.333
+Geracao 48 Otimo = 507.333
+Geracao 49 Otimo = 507.333
+Geracao 50 Otimo = 507.333
+Solucao encontrada
+Sequência de cidades : 1 4 2 6 7 10 
+ Bonus : 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 4
+Passageiro 6 embarcou em 1 e desembarcou em 4
+Passageiro 15 embarcou em 2 e desembarcou em 7
+Passageiro 18 embarcou em 2 e desembarcou em 7
+Passageiro 25 embarcou em 4 e desembarcou em 2
+Passageiro 47 embarcou em 7 e desembarcou em 10
+Passageiro 49 embarcou em 7 e desembarcou em 1
+Passageiro 69 embarcou em 10 e desembarcou em 1
+
+Fitness = 507.333
+Tempo(s) Final = 11.64

@@ -90,12 +90,13 @@ int main(int argc, char *argv[])
 
 	GRBEnv env = GRBEnv();; 
  	//env.set("OutputFlag","0"); // desliga o output do solver
- 	GRBModel model = GRBModel(env);; // cria modelo
-
+ 	
  	env.set(GRB_IntParam_Method, 1); // 1 é mais rapido //primal
   	env.set(GRB_IntParam_SiftMethod,1);
-    env.set(GRB_DoubleParam_TimeLimit, 30); 
+    env.set(GRB_DoubleParam_TimeLimit, 10800); 
     env.set(GRB_DoubleParam_MIPGap,10);
+    GRBModel model = GRBModel(env);; // cria modelo
+
 	/****************** VARIAVEIS DO MODELO ******************/
 
 	GRBVar *u; //usada pelas restricoes de subcilo

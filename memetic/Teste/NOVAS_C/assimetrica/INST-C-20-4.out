@@ -1,0 +1,78 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.89
+Geracao 1 Otimo = 902.333
+Geracao 2 Otimo = 902.333
+Geracao 3 Otimo = 836.833
+Geracao 4 Otimo = 836.833
+Geracao 5 Otimo = 836.833
+Geracao 6 Otimo = 836.833
+Geracao 7 Otimo = 836.833
+Geracao 8 Otimo = 836.833
+Geracao 9 Otimo = 836.833
+Geracao 10 Otimo = 794.667
+Geracao 11 Otimo = 794.667
+Geracao 12 Otimo = 794.667
+Geracao 13 Otimo = 794.667
+Geracao 14 Otimo = 794.667
+Geracao 15 Otimo = 794.667
+Geracao 16 Otimo = 794.667
+Geracao 17 Otimo = 794.667
+Geracao 18 Otimo = 794.667
+Geracao 19 Otimo = 794.667
+Geracao 20 Otimo = 794.667
+Geracao 21 Otimo = 794.667
+Geracao 22 Otimo = 794.667
+Geracao 23 Otimo = 794.667
+Geracao 24 Otimo = 794.667
+Geracao 25 Otimo = 792.917
+Geracao 26 Otimo = 792.917
+Geracao 27 Otimo = 792.917
+Geracao 28 Otimo = 792.917
+Geracao 29 Otimo = 792.917
+Geracao 30 Otimo = 792.917
+Geracao 31 Otimo = 792.917
+Geracao 32 Otimo = 792.917
+Geracao 33 Otimo = 792.917
+Geracao 34 Otimo = 792.917
+Geracao 35 Otimo = 792.917
+Geracao 36 Otimo = 707.833
+Geracao 37 Otimo = 707.833
+Geracao 38 Otimo = 707.833
+Geracao 39 Otimo = 707.833
+Geracao 40 Otimo = 707.833
+Geracao 41 Otimo = 707.833
+Geracao 42 Otimo = 707.833
+Geracao 43 Otimo = 707.833
+Geracao 44 Otimo = 707.833
+Geracao 45 Otimo = 707.833
+Geracao 46 Otimo = 707.833
+Geracao 47 Otimo = 707.833
+Geracao 48 Otimo = 707.833
+Geracao 49 Otimo = 707.833
+Geracao 50 Otimo = 707.833
+Solucao encontrada
+Sequência de cidades : 1 16 15 17 20 11 8 19 3 5 6 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 15
+Passageiro 3 embarcou em 1 e desembarcou em 16
+Passageiro 4 embarcou em 1 e desembarcou em 16
+Passageiro 26 embarcou em 3 e desembarcou em 5
+Passageiro 27 embarcou em 3 e desembarcou em 6
+Passageiro 28 embarcou em 3 e desembarcou em 6
+Passageiro 42 embarcou em 5 e desembarcou em 1
+Passageiro 54 embarcou em 6 e desembarcou em 1
+Passageiro 75 embarcou em 8 e desembarcou em 19
+Passageiro 102 embarcou em 11 e desembarcou em 19
+Passageiro 105 embarcou em 11 e desembarcou em 19
+Passageiro 137 embarcou em 15 e desembarcou em 17
+Passageiro 143 embarcou em 15 e desembarcou em 17
+Passageiro 151 embarcou em 16 e desembarcou em 15
+Passageiro 159 embarcou em 17 e desembarcou em 20
+Passageiro 164 embarcou em 19 e desembarcou em 3
+Passageiro 165 embarcou em 19 e desembarcou em 3
+Passageiro 172 embarcou em 19 e desembarcou em 3
+Passageiro 177 embarcou em 20 e desembarcou em 11
+
+Fitness = 707.833
+Tempo(s) Final = 57.04

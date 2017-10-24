@@ -1,0 +1,75 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.52
+Geracao 1 Otimo = 942
+Geracao 2 Otimo = 942
+Geracao 3 Otimo = 942
+Geracao 4 Otimo = 942
+Geracao 5 Otimo = 942
+Geracao 6 Otimo = 942
+Geracao 7 Otimo = 811
+Geracao 8 Otimo = 811
+Geracao 9 Otimo = 811
+Geracao 10 Otimo = 811
+Geracao 11 Otimo = 811
+Geracao 12 Otimo = 811
+Geracao 13 Otimo = 811
+Geracao 14 Otimo = 811
+Geracao 15 Otimo = 811
+Geracao 16 Otimo = 811
+Geracao 17 Otimo = 811
+Geracao 18 Otimo = 811
+Geracao 19 Otimo = 811
+Geracao 20 Otimo = 811
+Geracao 21 Otimo = 811
+Geracao 22 Otimo = 811
+Geracao 23 Otimo = 811
+Geracao 24 Otimo = 811
+Geracao 25 Otimo = 811
+Geracao 26 Otimo = 811
+Geracao 27 Otimo = 811
+Geracao 28 Otimo = 811
+Geracao 29 Otimo = 811
+Geracao 30 Otimo = 811
+Geracao 31 Otimo = 811
+Geracao 32 Otimo = 811
+Geracao 33 Otimo = 811
+Geracao 34 Otimo = 811
+Geracao 35 Otimo = 811
+Geracao 36 Otimo = 811
+Geracao 37 Otimo = 811
+Geracao 38 Otimo = 811
+Geracao 39 Otimo = 811
+Geracao 40 Otimo = 811
+Geracao 41 Otimo = 811
+Geracao 42 Otimo = 811
+Geracao 43 Otimo = 811
+Geracao 44 Otimo = 811
+Geracao 45 Otimo = 811
+Geracao 46 Otimo = 811
+Geracao 47 Otimo = 811
+Geracao 48 Otimo = 811
+Geracao 49 Otimo = 811
+Geracao 50 Otimo = 811
+Solucao encontrada
+Sequência de cidades : 1 4 20 17 9 3 13 12 14 10 15 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 7 embarcou em 1 e desembarcou em 4
+Passageiro 10 embarcou em 1 e desembarcou em 20
+Passageiro 22 embarcou em 3 e desembarcou em 13
+Passageiro 26 embarcou em 3 e desembarcou em 13
+Passageiro 33 embarcou em 4 e desembarcou em 17
+Passageiro 82 embarcou em 9 e desembarcou em 3
+Passageiro 86 embarcou em 9 e desembarcou em 3
+Passageiro 97 embarcou em 10 e desembarcou em 1
+Passageiro 109 embarcou em 12 e desembarcou em 14
+Passageiro 114 embarcou em 13 e desembarcou em 14
+Passageiro 122 embarcou em 14 e desembarcou em 10
+Passageiro 123 embarcou em 14 e desembarcou em 10
+Passageiro 134 embarcou em 15 e desembarcou em 1
+Passageiro 145 embarcou em 17 e desembarcou em 9
+Passageiro 147 embarcou em 17 e desembarcou em 9
+Passageiro 159 embarcou em 20 e desembarcou em 17
+
+Fitness = 811
+Tempo(s) Final = 35.50

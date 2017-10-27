@@ -1,0 +1,72 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.14
+Geracao 1 Otimo = 512.6
+Geracao 2 Otimo = 512.6
+Geracao 3 Otimo = 512.6
+Geracao 4 Otimo = 512.6
+Geracao 5 Otimo = 512.6
+Geracao 6 Otimo = 512.6
+Geracao 7 Otimo = 495.267
+Geracao 8 Otimo = 495.267
+Geracao 9 Otimo = 495.267
+Geracao 10 Otimo = 495.267
+Geracao 11 Otimo = 495.267
+Geracao 12 Otimo = 495.267
+Geracao 13 Otimo = 495.267
+Geracao 14 Otimo = 495.267
+Geracao 15 Otimo = 495.267
+Geracao 16 Otimo = 495.267
+Geracao 17 Otimo = 495.267
+Geracao 18 Otimo = 495.267
+Geracao 19 Otimo = 495.267
+Geracao 20 Otimo = 495.267
+Geracao 21 Otimo = 495.267
+Geracao 22 Otimo = 495.267
+Geracao 23 Otimo = 495.267
+Geracao 24 Otimo = 495.267
+Geracao 25 Otimo = 495.267
+Geracao 26 Otimo = 495.267
+Geracao 27 Otimo = 495.267
+Geracao 28 Otimo = 495.267
+Geracao 29 Otimo = 495.267
+Geracao 30 Otimo = 495.267
+Geracao 31 Otimo = 495.267
+Geracao 32 Otimo = 495.267
+Geracao 33 Otimo = 495.267
+Geracao 34 Otimo = 495.267
+Geracao 35 Otimo = 495.267
+Geracao 36 Otimo = 495.267
+Geracao 37 Otimo = 495.267
+Geracao 38 Otimo = 495.267
+Geracao 39 Otimo = 495.267
+Geracao 40 Otimo = 495.267
+Geracao 41 Otimo = 495.267
+Geracao 42 Otimo = 495.267
+Geracao 43 Otimo = 495.267
+Geracao 44 Otimo = 495.267
+Geracao 45 Otimo = 495.267
+Geracao 46 Otimo = 495.267
+Geracao 47 Otimo = 495.267
+Geracao 48 Otimo = 495.267
+Geracao 49 Otimo = 495.267
+Geracao 50 Otimo = 495.267
+Solucao encontrada
+Sequência de cidades : 1 4 7 3 6 5 
+ Bonus : 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 4
+Passageiro 2 embarcou em 1 e desembarcou em 4
+Passageiro 11 embarcou em 3 e desembarcou em 6
+Passageiro 14 embarcou em 3 e desembarcou em 5
+Passageiro 16 embarcou em 4 e desembarcou em 3
+Passageiro 17 embarcou em 4 e desembarcou em 3
+Passageiro 18 embarcou em 4 e desembarcou em 3
+Passageiro 19 embarcou em 4 e desembarcou em 3
+Passageiro 21 embarcou em 5 e desembarcou em 1
+Passageiro 22 embarcou em 5 e desembarcou em 1
+Passageiro 23 embarcou em 5 e desembarcou em 1
+Passageiro 24 embarcou em 5 e desembarcou em 1
+Passageiro 30 embarcou em 6 e desembarcou em 5
+
+Fitness = 495.267
+Tempo(s) Final = 10.85

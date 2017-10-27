@@ -1,0 +1,80 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 2.17
+Geracao 1 Otimo = 1597.08
+Geracao 2 Otimo = 1510
+Geracao 3 Otimo = 1510
+Geracao 4 Otimo = 1449.58
+Geracao 5 Otimo = 1449.58
+Geracao 6 Otimo = 1424.67
+Geracao 7 Otimo = 1424.67
+Geracao 8 Otimo = 1424.67
+Geracao 9 Otimo = 1413.42
+Geracao 10 Otimo = 1413.42
+Geracao 11 Otimo = 1413.42
+Geracao 12 Otimo = 1413.42
+Geracao 13 Otimo = 1413.42
+Geracao 14 Otimo = 1413.42
+Geracao 15 Otimo = 1413.42
+Geracao 16 Otimo = 1413.42
+Geracao 17 Otimo = 1413.42
+Geracao 18 Otimo = 1413.42
+Geracao 19 Otimo = 1413.42
+Geracao 20 Otimo = 1413.42
+Geracao 21 Otimo = 1413.42
+Geracao 22 Otimo = 1413.42
+Geracao 23 Otimo = 1413.42
+Geracao 24 Otimo = 1413.42
+Geracao 25 Otimo = 1398.75
+Geracao 26 Otimo = 1398.75
+Geracao 27 Otimo = 1398.75
+Geracao 28 Otimo = 1398.75
+Geracao 29 Otimo = 1398.75
+Geracao 30 Otimo = 1398.75
+Geracao 31 Otimo = 1398.75
+Geracao 32 Otimo = 1361.25
+Geracao 33 Otimo = 1361.25
+Geracao 34 Otimo = 1357.17
+Geracao 35 Otimo = 1357.17
+Geracao 36 Otimo = 1349.58
+Geracao 37 Otimo = 1349.58
+Geracao 38 Otimo = 1349.58
+Geracao 39 Otimo = 1349.58
+Geracao 40 Otimo = 1349.58
+Geracao 41 Otimo = 1349.58
+Geracao 42 Otimo = 1349.58
+Geracao 43 Otimo = 1349.58
+Geracao 44 Otimo = 1349.58
+Geracao 45 Otimo = 1349.58
+Geracao 46 Otimo = 1349.58
+Geracao 47 Otimo = 1349.58
+Geracao 48 Otimo = 1349.58
+Geracao 49 Otimo = 1349.58
+Geracao 50 Otimo = 1349.58
+Solucao encontrada
+Sequência de cidades : 1 33 14 10 2 30 23 4 6 9 13 40 24 36 7 34 26 18 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 7 embarcou em 1 e desembarcou em 33
+Passageiro 43 embarcou em 6 e desembarcou em 9
+Passageiro 71 embarcou em 9 e desembarcou em 24
+Passageiro 78 embarcou em 9 e desembarcou em 40
+Passageiro 80 embarcou em 10 e desembarcou em 30
+Passageiro 114 embarcou em 13 e desembarcou em 24
+Passageiro 118 embarcou em 14 e desembarcou em 2
+Passageiro 145 embarcou em 18 e desembarcou em 1
+Passageiro 176 embarcou em 23 e desembarcou em 6
+Passageiro 182 embarcou em 23 e desembarcou em 6
+Passageiro 184 embarcou em 24 e desembarcou em 36
+Passageiro 187 embarcou em 24 e desembarcou em 36
+Passageiro 202 embarcou em 26 e desembarcou em 18
+Passageiro 230 embarcou em 30 e desembarcou em 4
+Passageiro 252 embarcou em 33 e desembarcou em 10
+Passageiro 261 embarcou em 34 e desembarcou em 18
+Passageiro 263 embarcou em 34 e desembarcou em 26
+Passageiro 279 embarcou em 36 e desembarcou em 34
+Passageiro 281 embarcou em 36 e desembarcou em 34
+Passageiro 282 embarcou em 36 e desembarcou em 7
+Passageiro 314 embarcou em 40 e desembarcou em 24
+
+Fitness = 1349.58
+Tempo(s) Final = 115.01

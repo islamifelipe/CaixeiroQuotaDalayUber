@@ -1,0 +1,68 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.17
+Geracao 1 Otimo = 465.667
+Geracao 2 Otimo = 465.667
+Geracao 3 Otimo = 465.667
+Geracao 4 Otimo = 465.667
+Geracao 5 Otimo = 465.667
+Geracao 6 Otimo = 465.667
+Geracao 7 Otimo = 465.667
+Geracao 8 Otimo = 465.667
+Geracao 9 Otimo = 465.667
+Geracao 10 Otimo = 465.667
+Geracao 11 Otimo = 465.667
+Geracao 12 Otimo = 465.667
+Geracao 13 Otimo = 465.667
+Geracao 14 Otimo = 465.667
+Geracao 15 Otimo = 465.667
+Geracao 16 Otimo = 465.667
+Geracao 17 Otimo = 465.667
+Geracao 18 Otimo = 465.667
+Geracao 19 Otimo = 465.667
+Geracao 20 Otimo = 465.667
+Geracao 21 Otimo = 465.667
+Geracao 22 Otimo = 465.667
+Geracao 23 Otimo = 465.667
+Geracao 24 Otimo = 465.667
+Geracao 25 Otimo = 465.667
+Geracao 26 Otimo = 465.667
+Geracao 27 Otimo = 465.667
+Geracao 28 Otimo = 465.667
+Geracao 29 Otimo = 465.667
+Geracao 30 Otimo = 465.667
+Geracao 31 Otimo = 465.667
+Geracao 32 Otimo = 465.667
+Geracao 33 Otimo = 465.667
+Geracao 34 Otimo = 465.667
+Geracao 35 Otimo = 465.667
+Geracao 36 Otimo = 465.667
+Geracao 37 Otimo = 465.667
+Geracao 38 Otimo = 465.667
+Geracao 39 Otimo = 465.667
+Geracao 40 Otimo = 465.667
+Geracao 41 Otimo = 465.667
+Geracao 42 Otimo = 465.667
+Geracao 43 Otimo = 465.667
+Geracao 44 Otimo = 465.667
+Geracao 45 Otimo = 465.667
+Geracao 46 Otimo = 465.667
+Geracao 47 Otimo = 465.667
+Geracao 48 Otimo = 465.667
+Geracao 49 Otimo = 465.667
+Geracao 50 Otimo = 465.667
+Solucao encontrada
+Sequência de cidades : 1 3 8 4 2 
+ Bonus : 1 1 1 1 1 
+Passageiro 2 embarcou em 1 e desembarcou em 3
+Passageiro 6 embarcou em 1 e desembarcou em 8
+Passageiro 8 embarcou em 1 e desembarcou em 8
+Passageiro 9 embarcou em 2 e desembarcou em 1
+Passageiro 10 embarcou em 2 e desembarcou em 1
+Passageiro 18 embarcou em 3 e desembarcou em 8
+Passageiro 24 embarcou em 4 e desembarcou em 2
+Passageiro 42 embarcou em 8 e desembarcou em 4
+Passageiro 46 embarcou em 8 e desembarcou em 4
+
+Fitness = 465.667
+Tempo(s) Final = 10.00

@@ -1,0 +1,122 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 39.70
+Geracao 1 Otimo = 3699.75
+Geracao 2 Otimo = 3699.75
+Geracao 3 Otimo = 3603.42
+Geracao 4 Otimo = 3603.42
+Geracao 5 Otimo = 3560.42
+Geracao 6 Otimo = 3560.42
+Geracao 7 Otimo = 3546.67
+Geracao 8 Otimo = 3546.67
+Geracao 9 Otimo = 3492.08
+Geracao 10 Otimo = 3488.83
+Geracao 11 Otimo = 3469.17
+Geracao 12 Otimo = 3465.83
+Geracao 13 Otimo = 3433
+Geracao 14 Otimo = 3431
+Geracao 15 Otimo = 3431
+Geracao 16 Otimo = 3393.17
+Geracao 17 Otimo = 3393.17
+Geracao 18 Otimo = 3393.17
+Geracao 19 Otimo = 3393.17
+Geracao 20 Otimo = 3390.42
+Geracao 21 Otimo = 3390.42
+Geracao 22 Otimo = 3390.42
+Geracao 23 Otimo = 3390.42
+Geracao 24 Otimo = 3390.42
+Geracao 25 Otimo = 3390.42
+Geracao 26 Otimo = 3183.92
+Geracao 27 Otimo = 3183.92
+Geracao 28 Otimo = 3183.92
+Geracao 29 Otimo = 3183.92
+Geracao 30 Otimo = 3183.92
+Geracao 31 Otimo = 3153.67
+Geracao 32 Otimo = 3153.67
+Geracao 33 Otimo = 3153.67
+Geracao 34 Otimo = 3153.67
+Geracao 35 Otimo = 3153.67
+Geracao 36 Otimo = 3153.67
+Geracao 37 Otimo = 3153.67
+Geracao 38 Otimo = 3153.67
+Geracao 39 Otimo = 3153.67
+Geracao 40 Otimo = 3153.67
+Geracao 41 Otimo = 3153.67
+Geracao 42 Otimo = 3153.67
+Geracao 43 Otimo = 3153.67
+Geracao 44 Otimo = 3153.67
+Geracao 45 Otimo = 3141.75
+Geracao 46 Otimo = 3141.75
+Geracao 47 Otimo = 3141.75
+Geracao 48 Otimo = 3135.33
+Geracao 49 Otimo = 3135.33
+Geracao 50 Otimo = 3135.33
+Solucao encontrada
+Sequência de cidades : 1 26 45 53 78 36 29 40 89 39 38 37 24 50 30 52 7 32 10 4 9 96 82 42 12 8 64 21 20 5 66 2 54 23 71 46 33 34 65 3 28 35 88 
+ Bonus : 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 26
+Passageiro 7 embarcou em 1 e desembarcou em 26
+Passageiro 23 embarcou em 2 e desembarcou em 54
+Passageiro 26 embarcou em 2 e desembarcou em 23
+Passageiro 39 embarcou em 3 e desembarcou em 28
+Passageiro 49 embarcou em 4 e desembarcou em 9
+Passageiro 55 embarcou em 5 e desembarcou em 66
+Passageiro 84 embarcou em 7 e desembarcou em 32
+Passageiro 85 embarcou em 7 e desembarcou em 32
+Passageiro 98 embarcou em 8 e desembarcou em 21
+Passageiro 105 embarcou em 9 e desembarcou em 96
+Passageiro 106 embarcou em 9 e desembarcou em 96
+Passageiro 119 embarcou em 10 e desembarcou em 9
+Passageiro 139 embarcou em 12 e desembarcou em 8
+Passageiro 153 embarcou em 12 e desembarcou em 8
+Passageiro 260 embarcou em 20 e desembarcou em 5
+Passageiro 264 embarcou em 20 e desembarcou em 5
+Passageiro 270 embarcou em 20 e desembarcou em 66
+Passageiro 318 embarcou em 24 e desembarcou em 50
+Passageiro 324 embarcou em 24 e desembarcou em 50
+Passageiro 358 embarcou em 26 e desembarcou em 45
+Passageiro 359 embarcou em 26 e desembarcou em 45
+Passageiro 386 embarcou em 28 e desembarcou em 88
+Passageiro 392 embarcou em 28 e desembarcou em 88
+Passageiro 411 embarcou em 30 e desembarcou em 52
+Passageiro 417 embarcou em 30 e desembarcou em 52
+Passageiro 458 embarcou em 32 e desembarcou em 4
+Passageiro 460 embarcou em 32 e desembarcou em 4
+Passageiro 465 embarcou em 33 e desembarcou em 65
+Passageiro 493 embarcou em 34 e desembarcou em 65
+Passageiro 508 embarcou em 35 e desembarcou em 88
+Passageiro 516 embarcou em 36 e desembarcou em 40
+Passageiro 517 embarcou em 36 e desembarcou em 40
+Passageiro 530 embarcou em 36 e desembarcou em 40
+Passageiro 534 embarcou em 37 e desembarcou em 24
+Passageiro 554 embarcou em 38 e desembarcou em 24
+Passageiro 557 embarcou em 38 e desembarcou em 24
+Passageiro 573 embarcou em 39 e desembarcou em 38
+Passageiro 577 embarcou em 40 e desembarcou em 89
+Passageiro 583 embarcou em 40 e desembarcou em 89
+Passageiro 584 embarcou em 40 e desembarcou em 89
+Passageiro 617 embarcou em 42 e desembarcou em 12
+Passageiro 644 embarcou em 45 e desembarcou em 36
+Passageiro 646 embarcou em 45 e desembarcou em 53
+Passageiro 648 embarcou em 45 e desembarcou em 36
+Passageiro 672 embarcou em 46 e desembarcou em 33
+Passageiro 734 embarcou em 50 e desembarcou em 30
+Passageiro 752 embarcou em 52 e desembarcou em 7
+Passageiro 765 embarcou em 53 e desembarcou em 78
+Passageiro 771 embarcou em 54 e desembarcou em 23
+Passageiro 774 embarcou em 54 e desembarcou em 23
+Passageiro 934 embarcou em 64 e desembarcou em 20
+Passageiro 942 embarcou em 64 e desembarcou em 20
+Passageiro 952 embarcou em 65 e desembarcou em 28
+Passageiro 963 embarcou em 66 e desembarcou em 2
+Passageiro 1024 embarcou em 71 e desembarcou em 33
+Passageiro 1194 embarcou em 82 e desembarcou em 42
+Passageiro 1266 embarcou em 88 e desembarcou em 1
+Passageiro 1278 embarcou em 88 e desembarcou em 1
+Passageiro 1294 embarcou em 89 e desembarcou em 38
+Passageiro 1296 embarcou em 89 e desembarcou em 38
+Passageiro 1300 embarcou em 89 e desembarcou em 39
+Passageiro 1396 embarcou em 96 e desembarcou em 82
+
+Fitness = 3135.33
+Tempo(s) Final = 1598.26

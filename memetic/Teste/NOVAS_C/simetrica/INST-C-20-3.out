@@ -1,0 +1,75 @@
+Instância lida com sucesso!
+Gerando populaçao inicial (com grasp)
+Tempo(s) para calcular populaçao inicial = 0.32
+Geracao 1 Otimo = 1040.33
+Geracao 2 Otimo = 924.5
+Geracao 3 Otimo = 924.5
+Geracao 4 Otimo = 924.5
+Geracao 5 Otimo = 924.5
+Geracao 6 Otimo = 924.5
+Geracao 7 Otimo = 924.5
+Geracao 8 Otimo = 859
+Geracao 9 Otimo = 859
+Geracao 10 Otimo = 859
+Geracao 11 Otimo = 859
+Geracao 12 Otimo = 859
+Geracao 13 Otimo = 859
+Geracao 14 Otimo = 859
+Geracao 15 Otimo = 859
+Geracao 16 Otimo = 859
+Geracao 17 Otimo = 859
+Geracao 18 Otimo = 859
+Geracao 19 Otimo = 859
+Geracao 20 Otimo = 859
+Geracao 21 Otimo = 859
+Geracao 22 Otimo = 859
+Geracao 23 Otimo = 859
+Geracao 24 Otimo = 859
+Geracao 25 Otimo = 859
+Geracao 26 Otimo = 859
+Geracao 27 Otimo = 859
+Geracao 28 Otimo = 859
+Geracao 29 Otimo = 859
+Geracao 30 Otimo = 859
+Geracao 31 Otimo = 859
+Geracao 32 Otimo = 859
+Geracao 33 Otimo = 859
+Geracao 34 Otimo = 859
+Geracao 35 Otimo = 859
+Geracao 36 Otimo = 859
+Geracao 37 Otimo = 859
+Geracao 38 Otimo = 859
+Geracao 39 Otimo = 859
+Geracao 40 Otimo = 859
+Geracao 41 Otimo = 859
+Geracao 42 Otimo = 859
+Geracao 43 Otimo = 859
+Geracao 44 Otimo = 859
+Geracao 45 Otimo = 859
+Geracao 46 Otimo = 859
+Geracao 47 Otimo = 859
+Geracao 48 Otimo = 859
+Geracao 49 Otimo = 859
+Geracao 50 Otimo = 859
+Solucao encontrada
+Sequência de cidades : 1 15 9 7 12 4 2 6 8 17 
+ Bonus : 1 1 1 1 1 1 1 1 1 1 
+Passageiro 1 embarcou em 1 e desembarcou em 9
+Passageiro 2 embarcou em 1 e desembarcou em 15
+Passageiro 20 embarcou em 4 e desembarcou em 2
+Passageiro 21 embarcou em 4 e desembarcou em 2
+Passageiro 31 embarcou em 6 e desembarcou em 8
+Passageiro 32 embarcou em 6 e desembarcou em 8
+Passageiro 34 embarcou em 7 e desembarcou em 12
+Passageiro 35 embarcou em 7 e desembarcou em 12
+Passageiro 39 embarcou em 8 e desembarcou em 17
+Passageiro 40 embarcou em 8 e desembarcou em 17
+Passageiro 46 embarcou em 9 e desembarcou em 7
+Passageiro 55 embarcou em 12 e desembarcou em 4
+Passageiro 58 embarcou em 12 e desembarcou em 4
+Passageiro 78 embarcou em 15 e desembarcou em 7
+Passageiro 87 embarcou em 17 e desembarcou em 1
+Passageiro 88 embarcou em 17 e desembarcou em 1
+
+Fitness = 859
+Tempo(s) Final = 19.92
